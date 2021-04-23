@@ -44,6 +44,10 @@ CMU and Adobe<br>
   <img src="docs/images/resize_circle_extended.png"  width="800" />
 <br>
 
+The inconsistencies among implementations can have a drastic effect of the evaluations metrics. The table below shows that FFHQ dataset images resized with  bicubic implementation from other libraries (OpenCV, PyTorch, TensorFlow, OpenCV) have a large FID score (≥ 6) when compared to the same images resized with the correctly implemented PIL-bicubic filter. Other correctly implemented filters from PIL (Lanczos, bilinear, box) all result in relatively smaller FID score (≤ 0.75).
+
+ <p align="center"><img src="docs/images/table_resize_sc.png"  width="500" /></p>
+
 **JPEG Image Compression**
 
   Image compression can have a surprisingly large effect on FID.  Images are perceptually indistinguishable from each other but have a large FID score. The FID scores under the images are calculated between all FFHQ images saved using the corresponding JPEG format and the PNG format.
