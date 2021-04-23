@@ -7,14 +7,16 @@
   </p>
 
 
-  <p align="center">
-    <img src="docs/images/resize_circle.jpg"  width="800" />
-  </p>
-  
+
 [**Project**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222)
 
 
 The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly.
+
+<p align="center">
+  <img src="docs/images/resize_circle.jpg"  width="800" />
+</p>
+
 
 We provide an easy-to-use library to address the above issues and make the FID scores comparable across different methods, papers, and groups.
 
