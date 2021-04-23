@@ -41,6 +41,9 @@ def make_resizer(library, quantize_after, filter, output_size):
             return x
 
     elif library == "PyTorch":
+        import warnings
+        # ignore the numpy warnings
+        warnings.filterwarnings("ignore")
         def func(x):
             x = torch.Tensor(x.transpose((2, 0, 1)))[None, ...]
             x = F.interpolate(x, size=output_size, mode=filter, align_corners=False)
@@ -50,6 +53,9 @@ def make_resizer(library, quantize_after, filter, output_size):
             return x
 
     elif library == "TensorFlow":
+        import warnings
+        # ignore the numpy warnings
+        warnings.filterwarnings("ignore")
         import tensorflow as tf
         def func(x):
             x = tf.constant(x)[tf.newaxis, ...]

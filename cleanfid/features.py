@@ -43,16 +43,16 @@ class InceptionV3W(nn.Module):
         return features
 
 
-def build_feature_extractor(name="torchscript_inception"):
+def build_feature_extractor(name="torchscript_inception", device=torch.device("cuda")):
     """
     returns a functions that takes an image in range [0,1]
     and outputs a feature embedding vector
     """
     if name == "torchscript_inception":
-        model = InceptionV3W("/tmp", download=True).cuda()
+        model = InceptionV3W("/tmp", download=True).to(device)
         def model_fn(x): return model(x * 255.0)
     elif name == "pytorch_inception":
-        model = InceptionV3(output_blocks=[3], resize_input=False).cuda()
+        model = InceptionV3(output_blocks=[3], resize_input=False).to(device)
         model.eval()
         def model_fn(x): return model(x)[0].squeeze(-1).squeeze(-1)
     else:
@@ -60,22 +60,26 @@ def build_feature_extractor(name="torchscript_inception"):
     return model_fn
 
 
-def get_reference_statistics(name, res, use_legacy_tf=False, use_legacy_pyt=False, seed=0, split="test"):
+def get_reference_statistics(name, res, mode="clean", seed=0, split="test"):
     base_url = "https://www.cs.cmu.edu/~clean-fid/stats/"
     if name == "FFHQ":
-        if use_legacy_tf:
+        if mode=="legacy_tensorflow":
             rel_url = f"FFHQ_{res}_Legacy_TF_FID_{seed}.npz"
-        elif use_legacy_pyt:
+        elif mode=="legacy_pytorch":
             rel_url = f"FFHQ_{res}_Legacy_PyT_FID_{seed}.npz"
-        else:
+        elif mode=="clean":
             rel_url = f"FFHQ_{res}_CleanFID_{seed}.npz"
-    elif name == "horse2zebra":
-        if use_legacy_tf:
-            rel_url = f"horse2zebra_LegacyTF_fid_{split}.npz"
-        elif use_legacy_pyt:
-            rel_url = f"horse2zebra_LegacyPyt_fid_{split}.npz"
         else:
+            raise ValueError(f"{mode} mode is not implemented")
+    elif name == "horse2zebra":
+        if mode=="legacy_tensorflow":
+            rel_url = f"horse2zebra_LegacyTF_fid_{split}.npz"
+        elif mode=="legacy_pytorch":
+            rel_url = f"horse2zebra_LegacyPyt_fid_{split}.npz"
+        elif mode=="clean":
             rel_url = f"horse2zebra_cleanfid_{split}.npz"
+        else:
+            raise ValueError(f"{mode} mode is not implemented")
     else:
         raise ValueError(f"{name}_{res} statistics are not computed yet")
     url = f"{base_url}/{rel_url}"

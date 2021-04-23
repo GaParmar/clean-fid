@@ -142,9 +142,9 @@ def fid_folder(fdir, dataset_name, dataset_res,
     # define the model if it is not specified
     if model is None:
         if mode=="legacy_pytorch":
-            model = build_feature_extractor(name="pytorch_inception")
+            model = build_feature_extractor(name="pytorch_inception", device=device)
         else:
-            model = build_feature_extractor(name="torchscript_inception")
+            model = build_feature_extractor(name="torchscript_inception", device=device)
     # Load reference FID statistics (download if needed)
     ref_mu, ref_sigma = get_reference_statistics(dataset_name, dataset_res, mode=mode, seed=0)
     fbname = os.path.basename(fdir)
@@ -162,16 +162,16 @@ Computes the FID score for a generator model for a specific dataset
 and a specific resolution
 """
 def fid_model(G, dataset_name, dataset_res,
-              model=None, z_dim=512, num_fid=50_000,
+              model=None, z_dim=512, num_gen=50_000,
               mode="clean",
               num_workers=0, batch_size=128,
               device=torch.device("cuda")):
     # define the model if it is not specified
     if model is None:
         if mode=="legacy_pytorch":
-            model = build_feature_extractor(name="pytorch_inception")
+            model = build_feature_extractor(name="pytorch_inception", device=device)
         else:
-            model = build_feature_extractor(name="torchscript_inception")
+            model = build_feature_extractor(name="torchscript_inception", device=device)
 
     # Load reference FID statistics (download if needed)
     ref_mu, ref_sigma = get_reference_statistics(dataset_name, dataset_res,
@@ -187,7 +187,7 @@ def fid_model(G, dataset_name, dataset_res,
         raise ValueError(f"spefied mode {mode} is not supported")
 
     # Generate test features
-    num_iters = int(np.ceil(num_fid // batch_size))
+    num_iters = int(np.ceil(num_gen // batch_size))
     l_feats = []
 
     for idx in tqdm(range(num_iters), desc=f"FID model: "):
@@ -203,7 +203,7 @@ def fid_model(G, dataset_name, dataset_res,
             resized_batch = torch.zeros(batch_size, 3, 299, 299)
             for idx in range(batch_size):
                 curr_img = img_batch[idx]
-                img_np = curr_img.cpu().numpy().transpose((1, 2, 0)))
+                img_np = curr_img.cpu().numpy().transpose((1, 2, 0))
                 img_resize = fn_resize(img_np)
                 resized_batch[idx] = torch.tensor(img_resize.transpose((2, 0, 1)))
             feat = get_batch_features(resized_batch, model, device)
@@ -218,33 +218,60 @@ def fid_model(G, dataset_name, dataset_res,
 """
 Computes the FID score between the two given folders
 """
-def compare_folders(fdir1, fdir2, num_workers=0,
-                    batch_size=8, device=torch.device("cuda"),
-                    mode="clean"):
-    if mode == "legacy_pytorch":
-        model = build_feature_extractor(name="pytorch_inception")
-    else:
-        model = build_feature_extractor(name="torchscript_inception")
-
+def compare_folders(fdir1, fdir2, feat_model, mode, num_workers=0,
+                    batch_size=8, device=torch.device("cuda")):
     # get all inception features for the first folder
     fbname1 = os.path.basename(fdir1)
-    np_feats1 = get_folder_features(fdir1, model, num_workers=num_workers,
+    np_feats1 = get_folder_features(fdir1, feat_model, num_workers=num_workers,
                                     batch_size=batch_size, device=device, mode=mode, 
                                     description=f"FID {fbname1} : ")
     mu1 = np.mean(np_feats1, axis=0)
     sigma1 = np.cov(np_feats1, rowvar=False)
-
-    
     # get all inception features for the second folder
     fbname2 = os.path.basename(fdir2)
-    np_feats2 = get_folder_features(fdir2, model, num_workers=num_workers,
+    np_feats2 = get_folder_features(fdir2, feat_model, num_workers=num_workers,
                                     batch_size=batch_size, device=device, mode=mode,
                                     description=f"FID {fbname2} : ")
-
     mu2 = np.mean(np_feats2, axis=0)
     sigma2 = np.cov(np_feats2, rowvar=False)
     fid = frechet_distance(mu1, sigma1, mu2, sigma2)
     return fid
 
 
+def compute_fid(fdir1=None, fdir2=None, gen=None, 
+            mode="clean", num_workers=12, batch_size=32,
+            device=torch.device("cuda"), dataset_name="FFHQ",
+            dataset_res=1024, num_gen=50_000, z_dim=512):
+    # build the feature extractor based on the mode
+    if mode == "legacy_pytorch":
+        feat_model = build_feature_extractor(name="pytorch_inception", device=device)
+    else:
+        feat_model = build_feature_extractor(name="torchscript_inception", device=device)
 
+    # if both dirs are specified, compute FID between folders
+    if fdir1 is not None and fdir2 is not None:
+        print("compute FID between two folders")
+        score = compare_folders(fdir1, fdir2, feat_model,
+            mode=mode, batch_size=batch_size,
+            num_workers=num_workers, device=device)
+        return score
+
+    # compute fid of a folder
+    elif fdir1 is not None and fdir2 is None:
+        print(f"compute FID of a folder with {dataset_name}-{dataset_res} statistics")
+        score = fid_folder(fdir1, dataset_name, dataset_res,
+            model=feat_model, mode=mode, num_workers=num_workers,
+            batch_size=batch_size, device=device)
+        return score
+
+    # compute fid for a generator
+    elif gen is not None:
+        print(f"compute FID of a model with {dataset_name}-{dataset_res} statistics")
+        score = fid_model(gen, dataset_name, dataset_res,
+                model=feat_model, z_dim=z_dim, num_gen=num_gen,
+                mode=mode, num_workers=num_workers, batch_size=batch_size,
+                device=device)
+        return score
+    
+    else:
+        raise ValueError(f"invalid combination of directories and models entered")

@@ -79,10 +79,7 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
     ```
     from cleanfid import fid
 
-    score = fid.compare_folders(fdir1, fdir2, num_workers=0,
-                batch_size=8, device=torch.device("cuda"),
-                use_legacy_pytorch=False,
-                use_legacy_tensorflow=False,)
+    score = fid.compute_fid(fdir1, fdir2)
     ```
 
 
@@ -90,10 +87,8 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
     ```
     from cleanfid import fid
 
-    score = fid.fid_folder(fdir, dataset_name="FFHQ", dataset_res=1024,
-               model=None, use_legacy_pytorch=False,
-               use_legacy_tensorflow=False, num_workers=12,
-               batch_size=128, device=torch.device("cuda"))
+    score = fid.compute_fid(fdir1, dataset_name="FFHQ", dataset_res=1024)
+    
     ```
 
 - FID inline
@@ -101,15 +96,14 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
     from cleanfid import fid
 
     # function that accepts a latent and returns an image in range[0,255]
-    gen = lambda z: return GAN(latent=z, ... , <other_flags>)
+    gen = lambda z: GAN(latent=z, ... , <other_flags>)
 
-    fid_score = fid.fid_model(gen, dataset_name="FFHQ, dataset_res=1024,
-              model=None, z_dim=512, num_fid=50_000,
-              use_legacy_pytorch=False, use_legacy_tensorflow=False,
-              num_workers=0, batch_size=128,
-              device=torch.device("cuda"))
+    score = fid.compute_fid(gen=gen, dataset_name="FFHQ",
+            dataset_res=256, num_gen=50_000)
+    
     ```
 
+<!-- - See [doc]() for a complete list of options -->
 ---
 ### Make Custom Dataset Statistics
 - *dataset_path*: folder where the dataset images are stored
