@@ -118,7 +118,9 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
   import numpy as np
   from cleanfid import fid
   dataset_path = ...
-  mu, sigma = fid.get_folder_features(dataset_path, num=50_000)
+  feat = fid.get_folder_features(dataset_path, num=50_000)
+  mu = np.mean(feats, axis=0)
+  sigma = np.cov(feats, rowvar=False)
   np.savez_compressed("stats.npz", mu=mu, sigma=sigma)
   ```
   

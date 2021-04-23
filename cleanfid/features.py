@@ -60,8 +60,8 @@ def build_feature_extractor(name="torchscript_inception"):
     return model_fn
 
 
-def get_reference_statistics(name, res, use_legacy_tf=False, use_legacy_pyt=False, seed=0):
-    base_url = "http://www.andrew.cmu.edu/user/gparmar/CleanFID/stats"
+def get_reference_statistics(name, res, use_legacy_tf=False, use_legacy_pyt=False, seed=0, split="test"):
+    base_url = "https://www.cs.cmu.edu/~clean-fid/stats/"
     if name == "FFHQ":
         if use_legacy_tf:
             rel_url = f"FFHQ_{res}_Legacy_TF_FID_{seed}.npz"
@@ -69,6 +69,13 @@ def get_reference_statistics(name, res, use_legacy_tf=False, use_legacy_pyt=Fals
             rel_url = f"FFHQ_{res}_Legacy_PyT_FID_{seed}.npz"
         else:
             rel_url = f"FFHQ_{res}_CleanFID_{seed}.npz"
+    elif name == "horse2zebra":
+        if use_legacy_tf:
+            rel_url = f"horse2zebra_LegacyTF_fid_{split}.npz"
+        elif use_legacy_pyt:
+            rel_url = f"horse2zebra_LegacyPyt_fid_{split}.npz"
+        else:
+            rel_url = f"horse2zebra_cleanfid_{split}.npz"
     else:
         raise ValueError(f"{name}_{res} statistics are not computed yet")
     url = f"{base_url}/{rel_url}"
