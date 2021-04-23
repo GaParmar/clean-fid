@@ -71,13 +71,22 @@ def get_reference_statistics(name, res, mode="clean", seed=0, split="test"):
             rel_url = f"FFHQ_{res}_CleanFID_{seed}.npz"
         else:
             raise ValueError(f"{mode} mode is not implemented")
-    elif name == "horse2zebra":
+    elif name == "horse2zebra" and res==256:
         if mode=="legacy_tensorflow":
             rel_url = f"horse2zebra_LegacyTF_fid_{split}.npz"
         elif mode=="legacy_pytorch":
             rel_url = f"horse2zebra_LegacyPyt_fid_{split}.npz"
         elif mode=="clean":
             rel_url = f"horse2zebra_cleanfid_{split}.npz"
+        else:
+            raise ValueError(f"{mode} mode is not implemented")
+    elif name == "horse2zebra" and res==128:
+        if mode=="legacy_tensorflow":
+            rel_url = f"horse2zebra_LegacyTF_fid_{split}_128.npz"
+        elif mode=="legacy_pytorch":
+            rel_url = f"horse2zebra_LegacyPyt_fid_{split}_128.npz"
+        elif mode=="clean":
+            rel_url = f"horse2zebra_cleanfid_{split}_128.npz"
         else:
             raise ValueError(f"{mode} mode is not implemented")
     else:

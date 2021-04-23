@@ -3,7 +3,7 @@
 <br>
 
 <p align="center">
-<img src="docs/images/cleanfid_demo_folders.gif" />
+<img src="https://github.com/GaParmar/clean-fid/blob/main/docs/images/cleanfid_demo_folders.gif" />
 </p>
 
 
@@ -14,7 +14,7 @@
 The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly.
 
 <p align="center">
-  <img src="docs/images/resize_circle.png"  width="800" />
+  <img src="https://github.com/GaParmar/clean-fid/blob/main/docs/images/resize_circle.png"  width="800" />
 </p>
 
 
@@ -104,6 +104,23 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
     ```
 
 <!-- - See [doc]() for a complete list of options -->
+---
+### Supported Precomputed Datasets
+
+We provide precompute statistics for the following configurations
+
+| Task             | Dataset   | Resolution   | split       | mode |
+| :-:              | :---:     | :-:          | :-:         |  :-:  |
+| Image Generation | FFHQ      | 256,1024 | `train+val` | `clean`, `legacy_pytorch`, `legacy_tensorflow`|
+| Image Generation | LSUN Outdoor Churches      | 256 | `train` | `clean`, `legacy_pytorch`, `legacy_tensorflow`|
+| Image to Image | horse2zebra | 128,256      | `train`, `test`, `train+test` | `clean`, `legacy_pytorch`, `legacy_tensorflow`|
+
+**Using precomputed statistics**
+In order to compute the FID score with the precomputed dataset statistics, use the corresponding options. For instance, to compute the clean-fid score on generated 256x256 FFHQ images use the command: 
+  ```
+  fid_score = fid.compute_fid(fdir1, dataset_name="FFHQ", dataset_res=256,  mode="clean")
+  ```
+
 ---
 ### Create Custom Dataset Statistics
 - *dataset_path*: folder where the dataset images are stored
