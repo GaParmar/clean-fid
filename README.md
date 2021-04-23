@@ -4,7 +4,7 @@
 
 ![FID Steps](docs/images/fid_steps.jpg)
 
-[**Project Page**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](TBD)
+[**Project Page**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222)
 
 
 The FID calculation involves many steps that can produce inconsistencies in the final metric. Different implementations use different low level image processing (which are often implemented incorrectly). We provide this library to address the issues found and make the FID values consistent across different methods. 
