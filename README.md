@@ -37,9 +37,9 @@ CMU and Adobe<br>
     <img src="docs/images/resize_circle.jpg"  width="800" />
   </p>
 
-  The definitions of resizing functions are mathematical and <em>should never be a function of the library being used</em>. Unfortunately, implementations differ across commonly-used libraries.
+  <!-- The definitions of resizing functions are mathematical and <em>should never be a function of the library being used</em>. Unfortunately, implementations differ across commonly-used libraries.
   <img src="docs/images/resize_circle_extended.png"  width="800" />
-<br>
+<br> -->
 
 **JPEG Image Compression**
 
