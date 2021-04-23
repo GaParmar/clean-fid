@@ -11,8 +11,9 @@ docs/test_real/*
 docs/temp.py
 test/TTUR*
 scripts/*
-
-CleanFID/__*
+.DS_Store
+../.DS_Store
+cleanfid/__*
 test/*
 *.npy
 
@@ -20,6 +21,5 @@ EXP/**/*
 *.pdf
 flake8_log.txt
 figures/*
-*.png
 setup.cfg
 examples/*

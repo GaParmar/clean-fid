@@ -42,7 +42,7 @@ CMU and Adobe<br>
   Image compression can have a surprisingly large effect on FID.  Images are perceptually indistinguishable from each other but have a large FID score. The FID scores under the images are calculated between all FFHQ images saved using the corresponding JPEG format and the PNG format.
 
 <p align="center">
-  <img src="docs/images/jpeg_effects.jpg"  width="800" />
+  <img src="docs/images/jpeg_effects.png"  width="800" />
 </p>
 
 Below, we study the effect of JPEG compression for StyleGAN2 models trained on the FFHQ dataset (left) and LSUN outdoor Church dataset (right). Note that LSUN dataset images were collected with JPEG compression (quality 75), whereas FFHQ images were collected as PNG. Interestingly, for LSUN dataset, the best FID score (3.48) is obtained when the generated images are compressed with JPEG quality 87.
