@@ -23,3 +23,5 @@ figures/*
 *.png
 setup.cfg
 examples/*
+
+tests/*
