@@ -187,7 +187,7 @@ def fid_model(G, dataset_name, dataset_res,
         raise ValueError(f"spefied mode {mode} is not supported")
 
     # Generate test features
-    num_iters = int(np.ceil(num_gen // batch_size))
+    num_iters = int(np.ceil(num_gen / batch_size))
     l_feats = []
 
     for idx in tqdm(range(num_iters), desc=f"FID model: "):
@@ -208,6 +208,7 @@ def fid_model(G, dataset_name, dataset_res,
                 resized_batch[idx] = torch.tensor(img_resize.transpose((2, 0, 1)))
             feat = get_batch_features(resized_batch, model, device)
         l_feats.append(feat)
+
     np_feats = np.concatenate(l_feats)
     mu = np.mean(np_feats, axis=0)
     sigma = np.cov(np_feats, rowvar=False)
