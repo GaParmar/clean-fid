@@ -158,7 +158,7 @@ Computed using test images
 
 If you find this repository useful for your research, please use the following.
 ```
-@article{park2020swapping,
+@article{parmar2021cleanfid,
   title={On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation},
   author={Parmar, Gaurav and Zhang, Richard and Zhu, Jun-Yan},
   journal={arXiv preprint arXiv:2104.11222},
