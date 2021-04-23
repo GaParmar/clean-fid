@@ -11,7 +11,7 @@ The FID calculation involves many steps that can produce inconsistencies in the 
 
 ---
 
-[On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation](TBD)  
+[On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation](https://www.cs.cmu.edu/~clean-fid/)
  [Gaurav Parmar](https://gauravparmar.com/), [Richard Zhang](https://richzhang.github.io/), [Jun-Yan Zhu](https://www.cs.cmu.edu/~junyanz/)<br>
 CMU and Adobe<br>
 
@@ -154,6 +154,19 @@ Computed using test images
 
 ---
 
+## Citation
+
+If you find this repository useful for your research, please use the following.
+```
+@article{park2020swapping,
+  title={On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation},
+  author={Parmar, Gaurav and Zhang, Richard and Zhu, Jun-Yan},
+  journal={arXiv preprint arXiv:2104.11222},
+  year={2021}
+}
+```
+
+---
 
 
 ### Credits
