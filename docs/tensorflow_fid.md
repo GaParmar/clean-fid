@@ -31,12 +31,12 @@ wget <to_be_hosted>.zip
     pip install tensorflow-gpu==1.14
     pip install imageio
     cd test && git clone https://github.com/bioinf-jku/TTUR
-    fid.py test_fake/ test_real/
+    python fid.py test_fake/ test_real/
     ```
     The above gets a score of **~8.97**
 
 
 ## Debugging Notes
   - The official TTUR repository is very sensitive to the the tensorflow version. 
-  - You may need to tune modify some shape operations
+  - You may need to tune and modify some shape operations
   - I tested with tensorflow 1.14 and python 3.6

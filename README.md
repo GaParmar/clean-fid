@@ -136,7 +136,7 @@ We provide two flags to reproduce the legacy FID score.
 
 
 - `use_legacy_tensorflow` <br>
-    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors. To use this flag, you need to additionally install tensorflow.
+    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors. To use this flag, you need to additionally install tensorflow. The tensorflow version may cause issues with the pytorch code. I have tested this with TensorFlow-cpu 2.2 (`pip install tensorflow-cpu==2.2)
 
 ---
 
