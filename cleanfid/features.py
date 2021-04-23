@@ -5,6 +5,7 @@ import os
 import numpy as np
 import torch
 import torch.nn as nn
+import cleanfid
 from cleanfid.downloads_helper import *
 from cleanfid.inception_pytorch import InceptionV3
 
@@ -75,7 +76,7 @@ def get_reference_statistics(name, res, mode="clean", seed=0, split="test"):
         if mode=="legacy_tensorflow":
             rel_url = f"{name}_LegacyTF_fid_{split}_{seed}_{res}.npz"
         elif mode=="legacy_pytorch":
-            rel_url = f"{name}_LegacyPyT_fid_{split}_{seed}_{res}.npz"
+            rel_url = f"{name}_LegacyPyt_fid_{split}_{seed}_{res}.npz"
         elif mode=="clean":
             rel_url = f"{name}_cleanfid_{split}_{seed}_{res}.npz"
         else:
@@ -101,7 +102,9 @@ def get_reference_statistics(name, res, mode="clean", seed=0, split="test"):
     else:
         raise ValueError(f"{name}_{res} statistics are not computed yet")
     url = f"{base_url}/{rel_url}"
-    fpath = check_download_url(local_folder="/tmp", url=url)
+    mod_path = os.path.dirname(cleanfid.__file__)
+    stats_folder = os.path.join(mod_path, "stats")
+    fpath = check_download_url(local_folder=stats_folder, url=url)
     stats = np.load(fpath)
     mu, sigma = stats["mu"], stats["sigma"]
     return mu, sigma

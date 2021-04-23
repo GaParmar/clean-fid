@@ -22,6 +22,8 @@ def check_download_url(local_folder, url):
     name = os.path.basename(url)
     local_path = os.path.join(local_folder, name)
     if not os.path.exists(local_path):
+        os.makedirs(local_folder, exist_ok=True)
+        print(f"downloading statistics to {local_path}")
         with urllib.request.urlopen(url) as response, open(local_path, 'wb') as f:
             shutil.copyfileobj(response, f)
     return local_path
