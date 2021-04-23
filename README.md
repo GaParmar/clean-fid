@@ -3,7 +3,7 @@
 <br>
 
 <p align="center">
-<img src="docs/images/cleanfid_demo_folders.gif" />
+<img src="https://github.com/GaParmar/clean-fid/blob/main/docs/images/cleanfid_demo_folders.gif" />
 </p>
 
 
@@ -14,13 +14,13 @@
 The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly.
 
 <p align="center">
-  <img src="docs/images/resize_circle.png"  width="800" />
+  <img src="https://github.com/GaParmar/clean-fid/blob/main/docs/images/resize_circle.png"  width="800" />
 </p>
 
 
 We provide an easy-to-use library to address the above issues and make the FID scores comparable across different methods, papers, and groups.
 
-![FID Steps](docs/images/fid_steps.jpg)
+![FID Steps](https://github.com/GaParmar/clean-fid/blob/main/docs/images/fid_steps.jpg)
 
 
 ---
@@ -41,25 +41,25 @@ CMU and Adobe<br>
 
   The definitions of resizing functions are mathematical and <em>should never be a function of the library being used</em>. Unfortunately, implementations differ across commonly-used libraries.  They are often implemented incorrectly by popular libraries.
 
-  <img src="docs/images/resize_circle_extended.png"  width="800" />
+  <img src="https://github.com/GaParmar/clean-fid/blob/main/docs/images/resize_circle_extended.png"  width="800" />
 <br>
 
 The inconsistencies among implementations can have a drastic effect of the evaluations metrics. The table below shows that FFHQ dataset images resized with  bicubic implementation from other libraries (OpenCV, PyTorch, TensorFlow, OpenCV) have a large FID score (≥ 6) when compared to the same images resized with the correctly implemented PIL-bicubic filter. Other correctly implemented filters from PIL (Lanczos, bilinear, box) all result in relatively smaller FID score (≤ 0.75).
 
- <p align="center"><img src="docs/images/table_resize_sc.png"  width="500" /></p>
+ <p align="center"><img src="https://github.com/GaParmar/clean-fid/blob/main/docs/images/table_resize_sc.png"  width="500" /></p>
 
 **JPEG Image Compression**
 
   Image compression can have a surprisingly large effect on FID.  Images are perceptually indistinguishable from each other but have a large FID score. The FID scores under the images are calculated between all FFHQ images saved using the corresponding JPEG format and the PNG format.
 
 <p align="center">
-  <img src="docs/images/jpeg_effects.png"  width="800" />
+  <img src="https://github.com/GaParmar/clean-fid/blob/main/docs/images/jpeg_effects.png"  width="800" />
 </p>
 
 Below, we study the effect of JPEG compression for StyleGAN2 models trained on the FFHQ dataset (left) and LSUN outdoor Church dataset (right). Note that LSUN dataset images were collected with JPEG compression (quality 75), whereas FFHQ images were collected as PNG. Interestingly, for LSUN dataset, the best FID score (3.48) is obtained when the generated images are compressed with JPEG quality 87.
 
 <p align="center">
-  <img src="docs/images/jpeg_plots.png"  width="800" />
+  <img src="https://github.com/GaParmar/clean-fid/blob/main/docs/images/jpeg_plots.png"  width="800" />
 </p>
 
 ---
@@ -128,7 +128,7 @@ We provide two flags to reproduce the legacy FID score.
     <br>
     The difference between using clean-fid with this option and [code](https://github.com/mseitzer/pytorch-fid/) is **~1.9e-06**
     <br>
-    See [doc](docs/pytorch_fid.md) for how the methods are compared
+    See [doc](https://github.com/GaParmar/clean-fid/blob/main/docs/pytorch_fid.md) for how the methods are compared
 
 
 - `mode="legacy_pytorch"` <br>
