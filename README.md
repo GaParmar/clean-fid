@@ -2,9 +2,9 @@
 
 <br>
 
-  <p align="center">
-  <img src="docs/images/clean_fid_demo.gif" />
-  </p>
+<p align="center">
+<img src="docs/images/clean_fid_demo.gif" />
+</p>
 
 
 
