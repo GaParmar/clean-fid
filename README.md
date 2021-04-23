@@ -121,7 +121,7 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
   mu, sigma = fid.get_folder_features(dataset_path, num=50_000)
   np.savez_compressed("stats.npz", mu=mu, sigma=sigma)
   ```
-- See `examples/ffhq_stats.py` for a concrete example
+  
 ---
 ## Backwards Compatibility
 
