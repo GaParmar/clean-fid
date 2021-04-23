@@ -1,18 +1,26 @@
-# clean-fid: Fixing Inconsistencies in FID 
+# clean-fid: Fixing Inconsistencies in FID
 
 <br>
 
+  <p align="center">
+  <img src="docs/images/clean_fid_demo.gif" />
+  </p>
+
+
+
+[**Project**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222)
+
+
+The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly. We provide this library to address the issues found and make the FID values comparable across different methods, papers, and groups.
+
 ![FID Steps](docs/images/fid_steps.jpg)
 
-[**Project Page**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222)
-
-
-The FID calculation involves many steps that can produce inconsistencies in the final metric. Different implementations use different low level image processing (which are often implemented incorrectly). We provide this library to address the issues found and make the FID values consistent across different methods. 
 
 ---
 
-[On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation](https://www.cs.cmu.edu/~clean-fid/)
+[On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation](https://www.cs.cmu.edu/~clean-fid/) <br>
  [Gaurav Parmar](https://gauravparmar.com/), [Richard Zhang](https://richzhang.github.io/), [Jun-Yan Zhu](https://www.cs.cmu.edu/~junyanz/)<br>
+In arXiv 1811.10959 <br>
 CMU and Adobe<br>
 
 ---
@@ -22,31 +30,33 @@ CMU and Adobe<br>
 
 **Buggy Resizing Operations** <br>
 
-  Resizing operation is often implemented incorrectly by popular libraries. 
-
-  ![ResizingCircle](docs/images/resize_circle.jpg)
+  Resizing operation is often implemented incorrectly by popular libraries.
+  <p align="center">
+    <img src="docs/images/resize_circle.jpg"  width="800" />
+  </p>
 
 <br>
 
 **JPEG Image Compression**
-  
-  Image compression can have a surprisingly large effect on FID. 
-  
+
+  Image compression can have a surprisingly large effect on FID.  Images are perceptually indistinguishable from each other but have a large FID score. The FID scores under the images are calculated between all FFHQ images saved using the corresponding JPEG format and the PNG format.
+
 <p align="center">
-  <img src="docs/images/jpeg_effects.jpg" width="40%" />
-  <img src="docs/images/jpeg_plots.png" width="50%" />
+  <img src="docs/images/jpeg_effects.jpg"  width="800" />
+</p>
+
+Below, we study the effect of JPEG compression for StyleGAN2 models trained on the FFHQ dataset (left) and LSUN outdoor Church dataset (right). Note that LSUN dataset images were collected with JPEG compression (quality 75), whereas FFHQ images were collected as PNG. Interestingly, for LSUN dataset, the best FID score (3.48) is obtained when the generated images are compressed with JPEG quality 87.
+
+<p align="center">
+  <img src="docs/images/jpeg_plots.png"  width="800" />
 </p>
 
 ---
 
 ## Quick Start
 
-  <p align="center">
-  <img src="docs/images/clean_fid_demo.gif" />
-  </p>
-  
 
-- install requirements 
+- install requirements
     ```
     pip install -r requirements.txt
     ```
@@ -78,7 +88,7 @@ CMU and Adobe<br>
 - FID inline
     ```
     from cleanfid import fid
-    
+
     # function that accepts a latent and returns an image in range[0,255]
     gen = lambda z: return GAN(latent=z, ... , <other_flags>)
 
@@ -89,9 +99,9 @@ CMU and Adobe<br>
               device=torch.device("cuda"))
     ```
 
---- 
+---
 ### Make Custom Dataset Statistics
-- *dataset_path*: folder where the dataset images are stored 
+- *dataset_path*: folder where the dataset images are stored
 - Generate and save the inception statistics
   ```
   import numpy as np
@@ -115,8 +125,7 @@ We provide two flags to reproduce the legacy FID score.
 
 
 - `use_legacy_tensorflow` <br>
-    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors. 
-    Note that in order to use this flag, you need to additionally install tensorflow. 
+    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors. To use this flag, you need to additionally install tensorflow.
 
 ---
 
@@ -156,7 +165,7 @@ Computed using test images
 
 ## Citation
 
-If you find this repository useful for your research, please use the following.
+If you find this repository useful for your research, please cite the following work.
 ```
 @article{parmar2021cleanfid,
   title={On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation},
