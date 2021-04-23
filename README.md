@@ -1,13 +1,20 @@
-# clean-fid: Fixing Inconsistencies in FID 
+# clean-fid: Fixing Inconsistencies in FID
 
 <br>
 
-![FID Steps](docs/images/fid_steps.jpg)
+  <p align="center">
+  <img src="docs/images/clean_fid_demo.gif" />
+  </p>
+
+
 
 [**Project Page**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222)
 
 
-The FID calculation involves many steps that can produce inconsistencies in the final metric. Different implementations use different low level image processing (which are often implemented incorrectly). We provide this library to address the issues found and make the FID values consistent across different methods. 
+The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly. We provide this library to address the issues found and make the FID values comparable across different methods, papers, and groups.
+
+![FID Steps](docs/images/fid_steps.jpg)
+
 
 ---
 
@@ -22,16 +29,16 @@ CMU and Adobe<br>
 
 **Buggy Resizing Operations** <br>
 
-  Resizing operation is often implemented incorrectly by popular libraries. 
+  Resizing operation is often implemented incorrectly by popular libraries.
 
   ![ResizingCircle](docs/images/resize_circle.jpg)
 
 <br>
 
 **JPEG Image Compression**
-  
-  Image compression can have a surprisingly large effect on FID. 
-  
+
+  Image compression can have a surprisingly large effect on FID.
+
 <p align="center">
   <img src="docs/images/jpeg_effects.jpg" width="40%" />
   <img src="docs/images/jpeg_plots.png" width="50%" />
@@ -41,12 +48,8 @@ CMU and Adobe<br>
 
 ## Quick Start
 
-  <p align="center">
-  <img src="docs/images/clean_fid_demo.gif" />
-  </p>
-  
 
-- install requirements 
+- install requirements
     ```
     pip install -r requirements.txt
     ```
@@ -78,7 +81,7 @@ CMU and Adobe<br>
 - FID inline
     ```
     from cleanfid import fid
-    
+
     # function that accepts a latent and returns an image in range[0,255]
     gen = lambda z: return GAN(latent=z, ... , <other_flags>)
 
@@ -89,9 +92,9 @@ CMU and Adobe<br>
               device=torch.device("cuda"))
     ```
 
---- 
+---
 ### Make Custom Dataset Statistics
-- *dataset_path*: folder where the dataset images are stored 
+- *dataset_path*: folder where the dataset images are stored
 - Generate and save the inception statistics
   ```
   import numpy as np
@@ -115,8 +118,7 @@ We provide two flags to reproduce the legacy FID score.
 
 
 - `use_legacy_tensorflow` <br>
-    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors. 
-    Note that in order to use this flag, you need to additionally install tensorflow. 
+    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors. To use this flag, you need to additionally install tensorflow.
 
 ---
 
@@ -156,7 +158,7 @@ Computed using test images
 
 ## Citation
 
-If you find this repository useful for your research, please use the following.
+If you find this repository useful for your research, please cite the following work.
 ```
 @article{parmar2021cleanfid,
   title={On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation},
