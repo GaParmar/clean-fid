@@ -1,0 +1,7 @@
+torch>=0.4.0
+torchvision>=0.2.1
+numpy>=1.14.3
+scipy>=1.0.1
+tqdm>=4.28.1
+pillow>=8.1
+requests==2.25.1
