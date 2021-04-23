@@ -21,5 +21,8 @@ EXP/**/*
 *.pdf
 flake8_log.txt
 figures/*
+
 setup.cfg
 examples/*
+
+tests/*

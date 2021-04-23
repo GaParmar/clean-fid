@@ -43,7 +43,7 @@ def make_resizer(library, quantize_after, filter, output_size):
     elif library == "PyTorch":
         def func(x):
             x = torch.Tensor(x.transpose((2, 0, 1)))[None, ...]
-            x = F.interpolate(x, size=output_size, mode=filter)
+            x = F.interpolate(x, size=output_size, mode=filter, align_corners=False)
             x = x[0, ...].cpu().data.numpy().transpose((1, 2, 0)).clip(0, 255)
             if quantize_after:
                 x = x.astype(np.uint8)

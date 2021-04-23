@@ -158,7 +158,7 @@ Computed using test images
 ## Building from source
    ```
    python setup.py bdist_wheel
-   pip install dist/clean_fid-0.0.1-py3-none-any.whl
+   pip install dist/*
    ```
 
 ---
