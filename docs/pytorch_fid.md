@@ -2,7 +2,7 @@
 *PyTorch-legacy-FID* refers to the popular PyTorch implementation of FID here [code](https://github.com/mseitzer/pytorch-fid/)
 
 Here we document the differences between *CleanFID* and *PyTorch-legacy-FID*. 
-Additionally, we outline the steps that can be used to verify that using the `use_legacy_pytorch` flag is equivalent to the popular PyTorch implementation . 
+Additionally, we outline the steps that can be used to verify that using the `mode="legacy_pytorch"` flag is equivalent to the popular PyTorch implementation . 
 
 The key details are listed below:
   - The Repository used weights that are ported by the authors of the implementation from the TensorFlow model [model](http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz) to PyTorch
@@ -20,8 +20,7 @@ wget <to_be_hosted>.zip
     ```
     from cleanfid import fid
 
-    score = fid.compare_folders("test_fake/", "test_real/", 
-                                    use_legacy_pytorch=True)
+    score = fid.compare_folders("test_fake/", "test_real/", mode="legacy_pytorch")
     ```
     The above gets a score of **8.966867513671616**
 

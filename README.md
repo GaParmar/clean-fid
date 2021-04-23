@@ -123,16 +123,16 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
 
 We provide two flags to reproduce the legacy FID score.
 
-- `use_legacy_pytorch` <br>
+- `mode="legacy_pytorch"` <br>
     This flag is equivalent to using the popular PyTorch FID implementation provided [here](https://github.com/mseitzer/pytorch-fid/)
     <br>
-    The difference between using CleanFID with `use_legacy_pytorch` flag and [code](https://github.com/mseitzer/pytorch-fid/) is **~1.9e-06**
+    The difference between using clean-fid with this option and [code](https://github.com/mseitzer/pytorch-fid/) is **~1.9e-06**
     <br>
     See [doc](docs/pytorch_fid.md) for how the methods are compared
 
 
-- `use_legacy_tensorflow` <br>
-    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors. To use this flag, you need to additionally install tensorflow. The tensorflow version may cause issues with the pytorch code. I have tested this with TensorFlow-cpu 2.2 (`pip install tensorflow-cpu==2.2)
+- `mode="legacy_pytorch"` <br>
+    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors. To use this flag, you need to additionally install tensorflow. The tensorflow cuda version may cause issues with the pytorch code. I have tested this with TensorFlow-cpu 2.2 (`pip install tensorflow-cpu==2.2)
 
 ---
 
