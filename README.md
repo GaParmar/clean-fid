@@ -11,7 +11,9 @@
 [**Project**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222)
 
 
-The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly. We provide this library to address the issues found and make the FID values comparable across different methods, papers, and groups.
+The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly.
+
+We provide an easy-to-use library to address the above issues and make the FID scores comparable across different methods, papers, and groups.
 
 ![FID Steps](docs/images/fid_steps.jpg)
 
@@ -35,6 +37,8 @@ CMU and Adobe<br>
     <img src="docs/images/resize_circle.jpg"  width="800" />
   </p>
 
+  The definitions of resizing functions are mathematical and <em>should never be a function of the library being used</em>. Unfortunately, implementations differ across commonly-used libraries.
+  <img src="docs/images/resize_circle_extended.png"  width="800" />
 <br>
 
 **JPEG Image Compression**
