@@ -7,7 +7,10 @@
   </p>
 
 
-
+  <p align="center">
+    <img src="docs/images/resize_circle.jpg"  width="800" />
+  </p>
+  
 [**Project**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222)
 
 
@@ -32,14 +35,12 @@ CMU and Adobe<br>
 
 **Buggy Resizing Operations** <br>
 
-  Resizing operation is often implemented incorrectly by popular libraries.
-  <p align="center">
-    <img src="docs/images/resize_circle.jpg"  width="800" />
-  </p>
 
-  <!-- The definitions of resizing functions are mathematical and <em>should never be a function of the library being used</em>. Unfortunately, implementations differ across commonly-used libraries.
+
+  The definitions of resizing functions are mathematical and <em>should never be a function of the library being used</em>. Unfortunately, implementations differ across commonly-used libraries.  They are often implemented incorrectly by popular libraries.
+
   <img src="docs/images/resize_circle_extended.png"  width="800" />
-<br> -->
+<br>
 
 **JPEG Image Compression**
 
