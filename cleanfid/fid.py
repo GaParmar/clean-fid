@@ -136,7 +136,7 @@ def fid_from_feats(feats1, feats2):
 Computes the FID score for a folder of images for a specific dataset 
 and a specific resolution
 """
-def fid_folder(fdir, dataset_name, dataset_res,
+def fid_folder(fdir, dataset_name, dataset_res, dataset_split,
                model=None, mode="clean", num_workers=12,
                batch_size=128, device=torch.device("cuda")):
     # define the model if it is not specified
@@ -146,12 +146,13 @@ def fid_folder(fdir, dataset_name, dataset_res,
         else:
             model = build_feature_extractor(name="torchscript_inception", device=device)
     # Load reference FID statistics (download if needed)
-    ref_mu, ref_sigma = get_reference_statistics(dataset_name, dataset_res, mode=mode, seed=0)
+    ref_mu, ref_sigma = get_reference_statistics(dataset_name, dataset_res, 
+                                    mode=mode, seed=0, split=dataset_split)
     fbname = os.path.basename(fdir)
     # get all inception features for folder images
     np_feats = get_folder_features(fdir, model, num_workers=num_workers,
-                                   batch_size=batch_size, device=device,
-                                   mode=mode, description=f"FID {fbname} : ")
+                                    batch_size=batch_size, device=device,
+                                    mode=mode, description=f"FID {fbname} : ")
     mu = np.mean(np_feats, axis=0)
     sigma = np.cov(np_feats, rowvar=False)
     fid = frechet_distance(mu, sigma, ref_mu, ref_sigma)
@@ -161,10 +162,9 @@ def fid_folder(fdir, dataset_name, dataset_res,
 Computes the FID score for a generator model for a specific dataset 
 and a specific resolution
 """
-def fid_model(G, dataset_name, dataset_res,
+def fid_model(G, dataset_name, dataset_res, dataset_split,
               model=None, z_dim=512, num_gen=50_000,
-              mode="clean",
-              num_workers=0, batch_size=128,
+              mode="clean", num_workers=0, batch_size=128,
               device=torch.device("cuda")):
     # define the model if it is not specified
     if model is None:
@@ -175,7 +175,7 @@ def fid_model(G, dataset_name, dataset_res,
 
     # Load reference FID statistics (download if needed)
     ref_mu, ref_sigma = get_reference_statistics(dataset_name, dataset_res,
-                                                 mode=mode, seed=0)
+                                                 mode=mode, seed=0, split=dataset_split)
     # build resizing function based on options
     if mode=="legacy_pytorch":
         fn_resize = make_resizer("PyTorch", False, "bilinear", (299, 299))
@@ -242,7 +242,7 @@ def compare_folders(fdir1, fdir2, feat_model, mode, num_workers=0,
 def compute_fid(fdir1=None, fdir2=None, gen=None, 
             mode="clean", num_workers=12, batch_size=32,
             device=torch.device("cuda"), dataset_name="FFHQ",
-            dataset_res=1024, num_gen=50_000, z_dim=512):
+            dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512):
     # build the feature extractor based on the mode
     if mode == "legacy_pytorch":
         feat_model = build_feature_extractor(name="pytorch_inception", device=device)
@@ -260,7 +260,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
     # compute fid of a folder
     elif fdir1 is not None and fdir2 is None:
         print(f"compute FID of a folder with {dataset_name}-{dataset_res} statistics")
-        score = fid_folder(fdir1, dataset_name, dataset_res,
+        score = fid_folder(fdir1, dataset_name, dataset_res, dataset_split,
             model=feat_model, mode=mode, num_workers=num_workers,
             batch_size=batch_size, device=device)
         return score
@@ -268,7 +268,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
     # compute fid for a generator
     elif gen is not None:
         print(f"compute FID of a model with {dataset_name}-{dataset_res} statistics")
-        score = fid_model(gen, dataset_name, dataset_res,
+        score = fid_model(gen, dataset_name, dataset_res, dataset_split,
                 model=feat_model, z_dim=z_dim, num_gen=num_gen,
                 mode=mode, num_workers=num_workers, batch_size=batch_size,
                 device=device)
