@@ -14,7 +14,7 @@
 The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly.
 
 <p align="center">
-  <img src="docs/images/resize_circle.jpg"  width="800" />
+  <img src="docs/images/resize_circle.png"  width="800" />
 </p>
 
 
