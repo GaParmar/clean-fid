@@ -75,7 +75,7 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
     ```
     pip install clean-fid
     ```
-- FID between two image folders
+- Compute FID between two image folders
     ```
     from cleanfid import fid
 
@@ -86,7 +86,7 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
     ```
 
 
-- FID of a folder of generated images
+- Compute FID between one folder of images and pre-computed datasets statistics (e.g., `FFHQ`)
     ```
     from cleanfid import fid
 
@@ -96,7 +96,7 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
                batch_size=128, device=torch.device("cuda"))
     ```
 
-- FID inline
+- Compute FID using a generative model and pre-computed dataset statistics:
     ```
     from cleanfid import fid
 
@@ -111,7 +111,7 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
     ```
 
 ---
-### Make Custom Dataset Statistics
+### Create Custom Dataset Statistics
 - *dataset_path*: folder where the dataset images are stored
 - Generate and save the inception statistics
   ```
