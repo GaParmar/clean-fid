@@ -3,7 +3,7 @@
 <br>
 
 <p align="center">
-<img src="docs/images/clean_fid_demo.gif" />
+<img src="docs/images/cleanfid_demo_folders.gif" />
 </p>
 
 
