@@ -148,7 +148,7 @@ We provide two flags to reproduce the legacy FID score.
     See [doc](https://github.com/GaParmar/clean-fid/blob/main/docs/pytorch_fid.md) for how the methods are compared
 
 
-- `mode="legacy_pytorch"` <br>
+- `mode="legacy_tensorflow"` <br>
     This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors. To use this flag, you need to additionally install tensorflow. The tensorflow cuda version may cause issues with the pytorch code. I have tested this with TensorFlow-cpu 2.2 (`pip install tensorflow-cpu==2.2)
 
 ---
