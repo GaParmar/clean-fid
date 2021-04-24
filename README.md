@@ -27,7 +27,7 @@ We provide an easy-to-use library to address the above issues and make the FID s
 
 [On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation](https://www.cs.cmu.edu/~clean-fid/) <br>
  [Gaurav Parmar](https://gauravparmar.com/), [Richard Zhang](https://richzhang.github.io/), [Jun-Yan Zhu](https://www.cs.cmu.edu/~junyanz/)<br>
-In arXiv 1811.10959 <br>
+arXiv 2104.11222, 2021 <br>
 CMU and Adobe<br>
 
 ---
