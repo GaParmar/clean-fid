@@ -190,8 +190,9 @@ def fid_model(G, dataset_name, dataset_res, dataset_split,
     # build resizing function based on options
     if mode=="legacy_pytorch":
         fn_resize = make_resizer("PyTorch", False, "bilinear", (299, 299))
+    # if using legacy tensorflow, do not manually resize outside the network
     elif mode=="legacy_tensorflow":
-        fn_resize = make_resizer("TensorFlow", False, "bilinear", (299, 299))
+        fn_resize = lambda x: x
     elif mode=="clean":
         fn_resize = make_resizer("PIL", False, "bicubic", (299, 299))
     else:
@@ -207,16 +208,16 @@ def fid_model(G, dataset_name, dataset_res, dataset_split,
             # generated image is in range [0,1]
             img_batch = G(z_batch)
 
-            # resize the images by wrapping the batch in a dataloader
-            # ds = TensorResizeDataset(img_batch.cpu(), fn_resize)
-            # dl = torch.utils.data.DataLoader(ds, batch_size=batch_size, num_workers=20, pin_memory=True)
-            # resized_batch = next(iter(dl))
-            resized_batch = torch.zeros(batch_size, 3, 299, 299)
-            for idx in range(batch_size):
-                curr_img = img_batch[idx]
-                img_np = curr_img.cpu().numpy().transpose((1, 2, 0))
-                img_resize = fn_resize(img_np)
-                resized_batch[idx] = torch.tensor(img_resize.transpose((2, 0, 1)))
+            # split into individual batches for resizing if needed
+            if mode != "legacy_tensorflow":
+                resized_batch = torch.zeros(batch_size, 3, 299, 299)
+                for idx in range(batch_size):
+                    curr_img = img_batch[idx]
+                    img_np = curr_img.cpu().numpy().transpose((1, 2, 0))
+                    img_resize = fn_resize(img_np)
+                    resized_batch[idx] = torch.tensor(img_resize.transpose((2, 0, 1)))
+            else:
+                resized_batch = img_batch
             feat = get_batch_features(resized_batch, model, device)
         l_feats.append(feat)
 
