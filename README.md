@@ -203,7 +203,7 @@ If you find this repository useful for your research, please cite the following 
 
 
 ### Credits
-PyTorch-StyleGAN2: [code](https://github.com/rosinality/stylegan2-pytorch)  | [LICENSE](ttps://github.com/rosinality/stylegan2-pytorch/blob/master/LICENSE)
+PyTorch-StyleGAN2: [code](https://github.com/rosinality/stylegan2-pytorch) | [LICENSE](https://github.com/rosinality/stylegan2-pytorch/blob/master/LICENSE)
 
 PyTorch-FID: [code](https://github.com/mseitzer/pytorch-fid/) | [License](https://github.com/mseitzer/pytorch-fid/blob/master/LICENSE)
 
