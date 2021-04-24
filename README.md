@@ -136,7 +136,7 @@ In order to compute the FID score with the precomputed dataset statistics, use t
   ```
   
 
-  
+
 ---
 ## Backwards Compatibility
 
@@ -145,13 +145,17 @@ We provide two flags to reproduce the legacy FID score.
 - `mode="legacy_pytorch"` <br>
     This flag is equivalent to using the popular PyTorch FID implementation provided [here](https://github.com/mseitzer/pytorch-fid/)
     <br>
-    The difference between using clean-fid with this option and [code](https://github.com/mseitzer/pytorch-fid/) is **~1.9e-06**
+    The difference between using clean-fid with this option and [code](https://github.com/mseitzer/pytorch-fid/) is **~2e-06**
     <br>
     See [doc](https://github.com/GaParmar/clean-fid/blob/main/docs/pytorch_fid.md) for how the methods are compared
 
 
 - `mode="legacy_tensorflow"` <br>
-    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors. To use this flag, you need to additionally install tensorflow. The tensorflow cuda version may cause issues with the pytorch code. I have tested this with TensorFlow-cpu 2.2 ( Can be installed using `pip install tensorflow-cpu==2.2`)
+    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors. 
+    <br>
+    The difference between using clean-fid with this option and [code](https://github.com/bioinf-jku/TTUR) is **~2e-05**
+    <br>
+  See [doc](https://github.com/GaParmar/clean-fid/blob/main/docs/tensorflow_fid.md) for detailed steps for how the methods are compared
 
 ---
 

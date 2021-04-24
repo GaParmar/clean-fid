@@ -23,7 +23,7 @@ wget <to_be_hosted>.zip
 
     score = fid.compare_folders("test_fake/", "test_real/", mode="legacy_tensorflow")
     ```
-    The above gets a score of **~8.97**
+    The above gets a score of **8.972544787448271**
 
   - Next compute the FID using the [code]((https://github.com/bioinf-jku/TTUR)
     ```
@@ -32,7 +32,7 @@ wget <to_be_hosted>.zip
     cd test && git clone https://github.com/bioinf-jku/TTUR
     python fid.py test_fake/ test_real/
     ```
-    The above gets a score of **~8.97**
+    The above gets a score of **8.972518580709163**
 
 
 ## Debugging Notes
