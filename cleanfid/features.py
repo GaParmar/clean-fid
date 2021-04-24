@@ -63,45 +63,8 @@ def build_feature_extractor(name="torchscript_inception", device=torch.device("c
 
 def get_reference_statistics(name, res, mode="clean", seed=0, split="test"):
     base_url = "https://www.cs.cmu.edu/~clean-fid/stats/"
-    if name == "FFHQ":
-        if mode=="legacy_tensorflow":
-            rel_url = f"FFHQ_{res}_Legacy_TF_FID_{seed}.npz"
-        elif mode=="legacy_pytorch":
-            rel_url = f"FFHQ_{res}_Legacy_PyT_FID_{seed}.npz"
-        elif mode=="clean":
-            rel_url = f"FFHQ_{res}_CleanFID_{seed}.npz"
-        else:
-            raise ValueError(f"{mode} mode is not implemented")
-    elif name == "lsun_church":
-        if mode=="legacy_tensorflow":
-            rel_url = f"{name}_LegacyTF_fid_{split}_{seed}_{res}.npz"
-        elif mode=="legacy_pytorch":
-            rel_url = f"{name}_LegacyPyt_fid_{split}_{seed}_{res}.npz"
-        elif mode=="clean":
-            rel_url = f"{name}_cleanfid_{split}_{seed}_{res}.npz"
-        else:
-            raise ValueError(f"{mode} mode is not implemented")
-    elif name == "horse2zebra" and res==256:
-        if mode=="legacy_tensorflow":
-            rel_url = f"horse2zebra_LegacyTF_fid_{split}.npz"
-        elif mode=="legacy_pytorch":
-            rel_url = f"horse2zebra_LegacyPyt_fid_{split}.npz"
-        elif mode=="clean":
-            rel_url = f"horse2zebra_cleanfid_{split}.npz"
-        else:
-            raise ValueError(f"{mode} mode is not implemented")
-    elif name == "horse2zebra" and res==128:
-        if mode=="legacy_tensorflow":
-            rel_url = f"horse2zebra_LegacyTF_fid_{split}_128.npz"
-        elif mode=="legacy_pytorch":
-            rel_url = f"horse2zebra_LegacyPyt_fid_{split}_128.npz"
-        elif mode=="clean":
-            rel_url = f"horse2zebra_cleanfid_{split}_128.npz"
-        else:
-            raise ValueError(f"{mode} mode is not implemented")
-    else:
-        raise ValueError(f"{name}_{res} statistics are not computed yet")
-    url = f"{base_url}/{rel_url}"
+    rel_path = (f"{name}_{mode}_{split}_{res}_{seed}.npz").lower()
+    url = f"{base_url}/{rel_path}"
     mod_path = os.path.dirname(cleanfid.__file__)
     stats_folder = os.path.join(mod_path, "stats")
     fpath = check_download_url(local_folder=stats_folder, url=url)

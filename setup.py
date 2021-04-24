@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='clean-fid',
-    version='0.1.4',
+    version='0.1.5',
     author="Gaurav Parmar",
     author_email="gparmar@andrew.cmu.edu",
     description="standardise the FID",
