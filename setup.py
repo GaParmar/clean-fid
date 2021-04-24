@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='clean-fid',
-    version='0.1.5',
+    version='0.1.6',
     author="Gaurav Parmar",
     author_email="gparmar@andrew.cmu.edu",
-    description="standardise the FID",
+    description="FID calculation in PyTorch with proper image resizing and quantization steps",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/GaParmar/clean-fid",

@@ -135,6 +135,8 @@ In order to compute the FID score with the precomputed dataset statistics, use t
   np.savez_compressed("stats.npz", mu=mu, sigma=sigma)
   ```
   
+
+  
 ---
 ## Backwards Compatibility
 

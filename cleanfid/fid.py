@@ -4,6 +4,7 @@ from glob import glob
 import torch
 import numpy as np
 from scipy import linalg
+import cleanfid
 from cleanfid.utils import *
 from cleanfid.features import *
 from cleanfid.resize import *
@@ -79,17 +80,21 @@ def get_files_features(l_files, model=None, num_workers=12,
     # define the model if it is not specified
     if model is None:
         if mode=="legacy_pytorch":
-            model = build_feature_extractor(name="pytorch_inception")
+            model = build_feature_extractor(name="pytorch_inception", resize_inside=False, device=device)
+        elif mode=="legacy_tensorflow":
+            model = build_feature_extractor(name="torchscript_inception", resize_inside=True, device=device)
         else:
-            model = build_feature_extractor(name="torchscript_inception")
+            model = build_feature_extractor(name="torchscript_inception", resize_inside=False, device=device)
     
     # build resizing function based on options
     if custom_fn_resize is not None:
         fn_resize = custom_fn_resize
     elif mode=="legacy_pytorch":
         fn_resize = make_resizer("PyTorch", False, "bilinear", (299, 299))
+    # if using legacy tensorflow, do not manually resize outside the network
     elif mode=="legacy_tensorflow":
-        fn_resize = make_resizer("TensorFlow", False, "bilinear", (299, 299))
+        # fn_resize = make_resizer("TensorFlow", False, "bilinear", (299, 299))
+        fn_resize = lambda x: x
     else:
         fn_resize = make_resizer("PIL", False, "bicubic", (299, 299))
     # wrap the images in a dataloader for parallelizing the resize operation
@@ -142,9 +147,12 @@ def fid_folder(fdir, dataset_name, dataset_res, dataset_split,
     # define the model if it is not specified
     if model is None:
         if mode=="legacy_pytorch":
-            model = build_feature_extractor(name="pytorch_inception", device=device)
+            model = build_feature_extractor(name="pytorch_inception", resize_inside=False, device=device)
+        elif mode=="legacy_tensorflow":
+            model = build_feature_extractor(name="torchscript_inception", resize_inside=True, device=device)
         else:
-            model = build_feature_extractor(name="torchscript_inception", device=device)
+            model = build_feature_extractor(name="torchscript_inception", resize_inside=False, device=device)
+    
     # Load reference FID statistics (download if needed)
     ref_mu, ref_sigma = get_reference_statistics(dataset_name, dataset_res, 
                                     mode=mode, seed=0, split=dataset_split)
@@ -169,9 +177,12 @@ def fid_model(G, dataset_name, dataset_res, dataset_split,
     # define the model if it is not specified
     if model is None:
         if mode=="legacy_pytorch":
-            model = build_feature_extractor(name="pytorch_inception", device=device)
+            model = build_feature_extractor(name="pytorch_inception", resize_inside=False, device=device)
+        elif mode=="legacy_tensorflow":
+            model = build_feature_extractor(name="torchscript_inception", resize_inside=True, device=device)
         else:
-            model = build_feature_extractor(name="torchscript_inception", device=device)
+            model = build_feature_extractor(name="torchscript_inception", resize_inside=False, device=device)
+    
 
     # Load reference FID statistics (download if needed)
     ref_mu, ref_sigma = get_reference_statistics(dataset_name, dataset_res,
@@ -238,17 +249,64 @@ def compare_folders(fdir1, fdir2, feat_model, mode, num_workers=0,
     fid = frechet_distance(mu1, sigma1, mu2, sigma2)
     return fid
 
+def remove_custom_stats(name, mode="clean"):
+    stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
+    split, res="custom", "na"
+    outname = f"{name}_{mode}_{split}_{res}_0.npz"
+    outf = os.path.join(stats_folder, outname)
+    if not os.path.exists(outf):
+        msg = f"The stats file {name} does not exist."
+        raise Exception(msg)
+    os.remove(outf)
+
+
+"""
+Cache a custom dataset statistics file
+"""
+def make_custom_stats(name, fdir, num=None, mode="clean", 
+                    num_workers=0, batch_size=64, device=torch.device("cuda")):
+    stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
+    split, res = "custom", "na"
+    outname = f"{name}_{mode}_{split}_{res}_0.npz"
+    outf = os.path.join(stats_folder, outname)
+    # if the custom stat file already exists
+    if os.path.exists(outf):
+        msg = f"The statistics file {name} already exists. "
+        msg += f"Use remove_custom_stats function to delete it first."
+        raise Exception(msg)
+
+    # define the model if it is not specified
+    if mode=="legacy_pytorch":
+        feat_model = build_feature_extractor(name="pytorch_inception", resize_inside=False, device=device)
+    elif mode=="legacy_tensorflow":
+        feat_model = build_feature_extractor(name="torchscript_inception", resize_inside=True, device=device)
+    else:
+        feat_model = build_feature_extractor(name="torchscript_inception", resize_inside=False, device=device)
+    
+    fbname = os.path.basename(fdir)
+    # get all inception features for folder images
+    np_feats = get_folder_features(fdir, feat_model, num_workers=num_workers, num=num,
+                                    batch_size=batch_size, device=device,
+                                    mode=mode, description=f"FID {fbname} : ")
+    mu = np.mean(np_feats, axis=0)
+    sigma = np.cov(np_feats, rowvar=False)
+    
+    print(f"saving custom stats to {outf}")
+    np.savez_compressed(outf, mu=mu, sigma=sigma)
 
 def compute_fid(fdir1=None, fdir2=None, gen=None, 
             mode="clean", num_workers=12, batch_size=32,
             device=torch.device("cuda"), dataset_name="FFHQ",
             dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512):
     # build the feature extractor based on the mode
-    if mode == "legacy_pytorch":
-        feat_model = build_feature_extractor(name="pytorch_inception", device=device)
+    # define the model if it is not specified
+    if mode=="legacy_pytorch":
+        feat_model = build_feature_extractor(name="pytorch_inception", resize_inside=False, device=device)
+    elif mode=="legacy_tensorflow":
+        feat_model = build_feature_extractor(name="torchscript_inception", resize_inside=True, device=device)
     else:
-        feat_model = build_feature_extractor(name="torchscript_inception", device=device)
-
+        feat_model = build_feature_extractor(name="torchscript_inception", resize_inside=False, device=device)
+    
     # if both dirs are specified, compute FID between folders
     if fdir1 is not None and fdir2 is not None:
         print("compute FID between two folders")
@@ -259,7 +317,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
 
     # compute fid of a folder
     elif fdir1 is not None and fdir2 is None:
-        print(f"compute FID of a folder with {dataset_name}-{dataset_res} statistics")
+        print(f"compute FID of a folder with {dataset_name} statistics")
         score = fid_folder(fdir1, dataset_name, dataset_res, dataset_split,
             model=feat_model, mode=mode, num_workers=num_workers,
             batch_size=batch_size, device=device)
