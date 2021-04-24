@@ -203,11 +203,10 @@ If you find this repository useful for your research, please cite the following 
 
 
 ### Credits
-PyTorch-StyleGAN2: [code](https://github.com/rosinality/stylegan2-pytorch)  | [License](ttps://github.com/rosinality/stylegan2-pytorch/blob/master/LICENSE)
-
+PyTorch-StyleGAN2: [code](https://github.com/rosinality/stylegan2-pytorch)  | [LICENSE](ttps://github.com/rosinality/stylegan2-pytorch/blob/master/LICENSE)
 
 PyTorch-FID: [code](https://github.com/mseitzer/pytorch-fid/) | [License](https://github.com/mseitzer/pytorch-fid/blob/master/LICENSE)
 
 StyleGAN2: [code](https://github.com/NVlabs/stylegan2) | [LICENSE](https://nvlabs.github.io/stylegan2/license.html)
 
-converted FFHQ weights: [code](https://github.com/eladrich/pixel2style2pixel) |  [License](https://github.com/eladrich/pixel2style2pixel/blob/master/LICENSE)
+converted FFHQ weights: [code](https://github.com/eladrich/pixel2style2pixel) |  [LICENSE](https://github.com/eladrich/pixel2style2pixel/blob/master/LICENSE)
