@@ -124,15 +124,18 @@ In order to compute the FID score with the precomputed dataset statistics, use t
 ---
 ### Create Custom Dataset Statistics
 - *dataset_path*: folder where the dataset images are stored
-- Generate and save the inception statistics
+- *custom_name*: name to be used for the statistics
+- Generating custom statistics
   ```
-  import numpy as np
   from cleanfid import fid
-  dataset_path = ...
-  feat = fid.get_folder_features(dataset_path, num=50_000)
-  mu = np.mean(feats, axis=0)
-  sigma = np.cov(feats, rowvar=False)
-  np.savez_compressed("stats.npz", mu=mu, sigma=sigma)
+  fid.make_custom_stats(custom_name, dataset_path, mode="clean")
+  ```
+
+- Using the generated custom statistics
+  ```
+  from cleanfid import fid
+  score = fid.compute_fid("folder_fake", dataset_name=custom_name, 
+            mode="clean", dataset_split="custom")
   ```
   
 
