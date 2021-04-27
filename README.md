@@ -44,7 +44,7 @@ CMU and Adobe<br>
   <img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/resize_circle_extended.png"  width="800" />
 <br>
 
-The inconsistencies among implementations can have a drastic effect of the evaluations metrics. The table below shows that FFHQ dataset images resized with  bicubic implementation from other libraries (OpenCV, PyTorch, TensorFlow, OpenCV) have a large FID score (≥ 6) when compared to the same images resized with the correctly implemented PIL-bicubic filter. Other correctly implemented filters from PIL (Lanczos, bilinear, box) all result in relatively smaller FID score (≤ 0.75). Note that since TF 2.0, the new flag `antialias` (default: `False`) can produce results close to PIL. However, it was not used in the existing TensorFlow-FID repo and set as `False` by default. 
+The inconsistencies among implementations can have a drastic effect of the evaluations metrics. The table below shows that FFHQ dataset images resized with  bicubic implementation from other libraries (OpenCV, PyTorch, TensorFlow, OpenCV) have a large FID score (≥ 6) when compared to the same images resized with the correctly implemented PIL-bicubic filter. Other correctly implemented filters from PIL (Lanczos, bilinear, box) all result in relatively smaller FID score (≤ 0.75). Note that since TF 2.0, the new flag `antialias` (default: `False`) can produce results close to PIL. However, it was not used in the existing TF-FID repo and set as `False` by default.
 
  <p align="center"><img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/table_resize_sc.png"  width="500" /></p>
 
@@ -210,8 +210,9 @@ If you find this repository useful for your research, please cite the following 
 ---
 
 ### Related Projects
-[torch-fidelity](https://github.com/toshas/torch-fidelity): High-fidelity performance metrics for generative models in PyTorch
-[TTUR](https://github.com/bioinf-jku/TTUR): Two time-scale update rule for training GANs
+[torch-fidelity](https://github.com/toshas/torch-fidelity): High-fidelity performance metrics for generative models in PyTorch. <br>
+[TTUR](https://github.com/bioinf-jku/TTUR): Two time-scale update rule for training GANs. <br>
+[LPIPS](https://github.com/richzhang/PerceptualSimilarity): Perceptual Similarity Metric and Dataset. <br>
 
 
 ### Credits
