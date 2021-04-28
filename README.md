@@ -1,4 +1,4 @@
-# clean-fid: FID Repo with proper image processing steps
+# clean-fid for Evaluating Generative Models
 
 <br>
 
