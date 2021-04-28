@@ -1,4 +1,4 @@
-# clean-fid: FID calculation with proper image resizing and quantization steps
+# clean-fid: FID Repo with proper image processing steps
 
 <br>
 
