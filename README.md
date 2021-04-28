@@ -124,7 +124,7 @@ In order to compute the FID score with the precomputed dataset statistics, use t
 ### Create Custom Dataset Statistics
 - *dataset_path*: folder where the dataset images are stored
 - *custom_name*: name to be used for the statistics
-- Generating custom statistics
+- Generating custom statistics (saved to local cache)
   ```
   from cleanfid import fid
   fid.make_custom_stats(custom_name, dataset_path, mode="clean")
@@ -137,6 +137,11 @@ In order to compute the FID score with the precomputed dataset statistics, use t
             mode="clean", dataset_split="custom")
   ```
 
+- Removing the custom stats
+  ```
+  from cleanfid import fid
+  fid.remove_custom_stats(custom_name, mode="clean")
+  ```
 
 
 ---
