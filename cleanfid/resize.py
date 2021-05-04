@@ -17,6 +17,17 @@ dict_name_to_filter = {
     },
 }
 
+def build_resizer(mode):
+    if mode=="clean":
+        return make_resizer("PIL", False, "bicubic", (299,299))
+    # if using legacy tensorflow, do not manually resize outside the network
+    elif mode == "legacy_tensorflow":
+        return lambda x: x
+    elif mode == "legacy_pytorch":
+        return make_resizer("PyTorch", False, "bilinear", (299, 299))
+    else:
+        raise ValueError(f"Invalid mode {mode} specified")
+
 """
 Construct a function that resizes a numpy image based on the
 flags passed in. 

@@ -50,13 +50,14 @@ class InceptionV3W(nn.Module):
         return features
 
 
-def build_feature_extractor(name="torchscript_inception", device=torch.device("cuda"), resize_inside=False):
-    """
-    returns a functions that takes an image in range [0,1]
-    and outputs a feature embedding vector
-    """
+"""
+returns a functions that takes an image in range [0,1]
+and outputs a feature embedding vector
+"""
+def feature_extractor(name="torchscript_inception", device=torch.device("cuda"), resize_inside=False):
     if name == "torchscript_inception":
         model = InceptionV3W("/tmp", download=True, resize_inside=resize_inside).to(device)
+        model.eval()
         def model_fn(x): return model(x * 255.0)
     elif name == "pytorch_inception":
         model = InceptionV3(output_blocks=[3], resize_input=False).to(device)
@@ -66,6 +67,15 @@ def build_feature_extractor(name="torchscript_inception", device=torch.device("c
         raise ValueError(f"{name} feature extractor not implemented")
     return model_fn
 
+
+def build_feature_extractor(mode, device=torch.device("cuda")):
+    if mode=="legacy_pytorch":
+        feat_model = feature_extractor(name="pytorch_inception", resize_inside=False, device=device)
+    elif mode=="legacy_tensorflow":
+        feat_model = feature_extractor(name="torchscript_inception", resize_inside=True, device=device)
+    elif mode=="clean":
+        feat_model = feature_extractor(name="torchscript_inception", resize_inside=False, device=device)
+    return feat_model
 
 def get_reference_statistics(name, res, mode="clean", seed=0, split="test"):
     base_url = "https://www.cs.cmu.edu/~clean-fid/stats/"
