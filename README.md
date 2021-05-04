@@ -1,4 +1,4 @@
-# clean-fid: Fixing Inconsistencies in FID
+# clean-fid for Evaluating Generative Models
 
 <br>
 
@@ -44,7 +44,7 @@ CMU and Adobe<br>
   <img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/resize_circle_extended.png"  width="800" />
 <br>
 
-The inconsistencies among implementations can have a drastic effect of the evaluations metrics. The table below shows that FFHQ dataset images resized with  bicubic implementation from other libraries (OpenCV, PyTorch, TensorFlow, OpenCV) have a large FID score (≥ 6) when compared to the same images resized with the correctly implemented PIL-bicubic filter. Other correctly implemented filters from PIL (Lanczos, bilinear, box) all result in relatively smaller FID score (≤ 0.75).
+The inconsistencies among implementations can have a drastic effect of the evaluations metrics. The table below shows that FFHQ dataset images resized with  bicubic implementation from other libraries (OpenCV, PyTorch, TensorFlow, OpenCV) have a large FID score (≥ 6) when compared to the same images resized with the correctly implemented PIL-bicubic filter. Other correctly implemented filters from PIL (Lanczos, bilinear, box) all result in relatively smaller FID score (≤ 0.75). Note that since TF 2.0, the new flag `antialias` (default: `False`) can produce results close to PIL. However, it was not used in the existing TF-FID repo and set as `False` by default.
 
  <p align="center"><img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/table_resize_sc.png"  width="500" /></p>
 
@@ -88,7 +88,7 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
     from cleanfid import fid
 
     score = fid.compute_fid(fdir1, dataset_name="FFHQ", dataset_res=1024)
-    
+
     ```
 
 - Compute FID using a generative model and pre-computed dataset statistics:
@@ -100,10 +100,9 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
 
     score = fid.compute_fid(gen=gen, dataset_name="FFHQ",
             dataset_res=256, num_gen=50_000)
-    
+
     ```
 
-<!-- - See [doc]() for a complete list of options -->
 ---
 ### Supported Precomputed Datasets
 
@@ -116,7 +115,7 @@ We provide precompute statistics for the following configurations
 | Image to Image | horse2zebra | 128,256      | `train`, `test`, `train+test` | `clean`, `legacy_pytorch`, `legacy_tensorflow`|
 
 **Using precomputed statistics**
-In order to compute the FID score with the precomputed dataset statistics, use the corresponding options. For instance, to compute the clean-fid score on generated 256x256 FFHQ images use the command: 
+In order to compute the FID score with the precomputed dataset statistics, use the corresponding options. For instance, to compute the clean-fid score on generated 256x256 FFHQ images use the command:
   ```
   fid_score = fid.compute_fid(fdir1, dataset_name="FFHQ", dataset_res=256,  mode="clean")
   ```
@@ -124,17 +123,25 @@ In order to compute the FID score with the precomputed dataset statistics, use t
 ---
 ### Create Custom Dataset Statistics
 - *dataset_path*: folder where the dataset images are stored
-- Generate and save the inception statistics
+- *custom_name*: name to be used for the statistics
+- Generating custom statistics (saved to local cache)
   ```
-  import numpy as np
   from cleanfid import fid
-  dataset_path = ...
-  feat = fid.get_folder_features(dataset_path, num=50_000)
-  mu = np.mean(feats, axis=0)
-  sigma = np.cov(feats, rowvar=False)
-  np.savez_compressed("stats.npz", mu=mu, sigma=sigma)
+  fid.make_custom_stats(custom_name, dataset_path, mode="clean")
   ```
-  
+
+- Using the generated custom statistics
+  ```
+  from cleanfid import fid
+  score = fid.compute_fid("folder_fake", dataset_name=custom_name,
+            mode="clean", dataset_split="custom")
+  ```
+
+- Removing the custom stats
+  ```
+  from cleanfid import fid
+  fid.remove_custom_stats(custom_name, mode="clean")
+  ```
 
 
 ---
@@ -151,7 +158,7 @@ We provide two flags to reproduce the legacy FID score.
 
 
 - `mode="legacy_tensorflow"` <br>
-    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors. 
+    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors.
     <br>
     The difference between using clean-fid with this option and [code](https://github.com/bioinf-jku/TTUR) is **~2e-05**
     <br>
@@ -207,12 +214,17 @@ If you find this repository useful for your research, please cite the following 
 
 ---
 
+### Related Projects
+[torch-fidelity](https://github.com/toshas/torch-fidelity): High-fidelity performance metrics for generative models in PyTorch. <br>
+[TTUR](https://github.com/bioinf-jku/TTUR): Two time-scale update rule for training GANs. <br>
+[LPIPS](https://github.com/richzhang/PerceptualSimilarity): Perceptual Similarity Metric and Dataset. <br>
+
 
 ### Credits
-PyTorch-StyleGAN2: [code](https://github.com/rosinality/stylegan2-pytorch) | [LICENSE](https://github.com/rosinality/stylegan2-pytorch/blob/master/LICENSE)
+[PyTorch-StyleGAN2](https://github.com/rosinality/stylegan2-pytorch) ([LICENSE](https://github.com/rosinality/stylegan2-pytorch/blob/master/LICENSE))
 
-PyTorch-FID: [code](https://github.com/mseitzer/pytorch-fid/) | [License](https://github.com/mseitzer/pytorch-fid/blob/master/LICENSE)
+[PyTorch-FID](https://github.com/mseitzer/pytorch-fid/) ([LICENSE](https://github.com/mseitzer/pytorch-fid/blob/master/LICENSE))
 
-StyleGAN2: [code](https://github.com/NVlabs/stylegan2) | [LICENSE](https://nvlabs.github.io/stylegan2/license.html)
+[StyleGAN2](https://github.com/NVlabs/stylegan2) ([LICENSE](https://nvlabs.github.io/stylegan2/license.html))
 
 converted FFHQ weights: [code](https://github.com/eladrich/pixel2style2pixel) |  [LICENSE](https://github.com/eladrich/pixel2style2pixel/blob/master/LICENSE)

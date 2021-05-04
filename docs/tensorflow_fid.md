@@ -11,12 +11,6 @@ wget <to_be_hosted>.zip
 ```
 
 ## Compare the FID scores
-  - First install cpu-version of the TensorFlow 2.0
-    (The cuda version interfereces with PyTorch)
-    ```
-    pip install tensorflow-cpu
-    ```
-
   - First compute the FID score using the CleanFID with
     ```
     from cleanfid import fid
