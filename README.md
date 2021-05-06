@@ -95,7 +95,7 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
     ```
     from cleanfid import fid
 
-    # function that accepts a latent and returns an image in range[0,255]
+    # function that accepts a latent and returns an image in range[0,1]
     gen = lambda z: GAN(latent=z, ... , <other_flags>)
 
     score = fid.compute_fid(gen=gen, dataset_name="FFHQ",
