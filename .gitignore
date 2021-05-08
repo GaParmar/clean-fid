@@ -10,7 +10,6 @@ docs/test_fake/*
 docs/test_real/*
 docs/temp.py
 test/TTUR*
-scripts/*
 .DS_Store
 ../.DS_Store
 cleanfid/__*
@@ -26,4 +25,12 @@ setup.cfg
 examples/*
 
 tests/*
-scripts/*
+scripts/dataset_stats/*
+scripts/leaderboard/*
+scripts/pip_versions/*
+scripts/tf_flags/*
+scripts/upsampling_experiments/*
+*.json
+docs/tests.md
+models/*
+stats*

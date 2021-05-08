@@ -36,8 +36,6 @@ class InceptionV3W(nn.Module):
 
     def forward(self, x):
         bs = x.shape[0]
-        # features = self.base(x, return_features=True).view((bs, 2048))
-        # return features
         if self.resize_inside:
             features = self.base(x, return_features=True).view((bs, 2048))
         else:
@@ -51,18 +49,18 @@ class InceptionV3W(nn.Module):
 
 
 """
-returns a functions that takes an image in range [0,1]
+returns a functions that takes an image in range [0,255]
 and outputs a feature embedding vector
 """
 def feature_extractor(name="torchscript_inception", device=torch.device("cuda"), resize_inside=False):
     if name == "torchscript_inception":
         model = InceptionV3W("/tmp", download=True, resize_inside=resize_inside).to(device)
         model.eval()
-        def model_fn(x): return model(x * 255.0)
+        def model_fn(x): return model(x)
     elif name == "pytorch_inception":
         model = InceptionV3(output_blocks=[3], resize_input=False).to(device)
         model.eval()
-        def model_fn(x): return model(x)[0].squeeze(-1).squeeze(-1)
+        def model_fn(x): return model(x/255)[0].squeeze(-1).squeeze(-1)
     else:
         raise ValueError(f"{name} feature extractor not implemented")
     return model_fn
@@ -80,7 +78,7 @@ def build_feature_extractor(mode, device=torch.device("cuda")):
 def get_reference_statistics(name, res, mode="clean", seed=0, split="test"):
     base_url = "https://www.cs.cmu.edu/~clean-fid/stats/"
     if split=="custom": res = "na"
-    rel_path = (f"{name}_{mode}_{split}_{res}_{seed}.npz").lower()
+    rel_path = (f"{name}_{mode}_{split}_{res}.npz").lower()
     url = f"{base_url}/{rel_path}"
     mod_path = os.path.dirname(cleanfid.__file__)
     stats_folder = os.path.join(mod_path, "stats")

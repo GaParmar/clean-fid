@@ -33,48 +33,18 @@ class ResizeDataset(torch.utils.data.Dataset):
             img_np = np.load(path)
         else:
             img_pil = Image.open(path).convert('RGB')
-            img_np = np.asarray(img_pil)
+            img_np = np.array(img_pil)
 
         # fn_resize expects a np array and returns a np array
         img_resized = self.fn_resize(img_np)
 
         # ToTensor() converts to [0,1] only if input in uint8
         if img_resized.dtype == "uint8":
-            img_t = self.transforms(img_resized)
+            img_t = self.transforms(np.array(img_resized))*255
         elif img_resized.dtype == "float32":
-            img_t = self.transforms(img_resized) / 255.0
+            img_t = self.transforms(img_resized)
 
         return img_t
-
-
-class TensorResizeDataset(torch.utils.data.Dataset):
-    """
-    A placeholder Dataset that splits a batch and resizes each
-    image individually
-
-    batch: batch of images to be resized in range[0,1]
-    fn_resize: function that takes an np_array as input [0,255]
-    """
-
-    def __init__(self, batch, fn_resize=None):
-        # permute to match npy channel order
-        #self.batch = (batch.permute(0, 2, 3, 1) * 255).numpy()
-        self.batch = batch.cpu()
-        self.transforms = torchvision.transforms.ToTensor()
-        self.fn_resize = fn_resize
-
-    def __len__(self):
-        return self.batch.shape[0]
-
-    def __getitem__(self, i):
-        # curr img
-        #img_pil = torchvision.transforms.ToPILImage()()
-        #img_np = np.asarray(img_pil)
-        img_np = self.batch[i].numpy().transpose((1, 2, 0))
-
-        img_resized = self.fn_resize(img_np)
-        # convert back to torch tensors -> [0,1]
-        return self.transforms(img_resized)
 
 
 EXTENSIONS = {'bmp', 'jpg', 'jpeg', 'pgm', 'png', 'ppm',

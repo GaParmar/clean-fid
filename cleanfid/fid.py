@@ -1,4 +1,5 @@
 import os
+import random
 from tqdm import tqdm
 from glob import glob
 import torch
@@ -103,13 +104,16 @@ def get_files_features(l_files, model=None, num_workers=12,
 """
 Compute the inception features for a folder of features
 """
-def get_folder_features(fdir, model=None, num_workers=12,
-                        num=None, batch_size=128, device=torch.device("cuda"),
+def get_folder_features(fdir, model=None, num_workers=12, num=None,
+                        shuffle=False, seed=0, batch_size=128, device=torch.device("cuda"),
                         mode="clean", custom_fn_resize=None, description=""):
     # get all relevant files in the dataset
     files = sorted([file for ext in EXTENSIONS
                     for file in glob(os.path.join(fdir, f"*.{ext}"))])
     if num is not None:
+        if shuffle:
+            random.seed(seed)
+            random.shuffle(files)
         files = files[:num]
     np_feats = get_files_features(files, model, num_workers=num_workers,
                                   batch_size=batch_size, device=device,
