@@ -108,16 +108,23 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
 
 We provide precompute statistics for the following configurations
 
-| Task             | Dataset   | Resolution   | split       | mode |
-| :-:              | :---:     | :-:          | :-:         |  :-:  |
-| Image Generation | FFHQ      | 256,1024 | `train+val` | `clean`, `legacy_pytorch`, `legacy_tensorflow`|
-| Image Generation | LSUN Outdoor Churches      | 256 | `train` | `clean`, `legacy_pytorch`, `legacy_tensorflow`|
-| Image to Image | horse2zebra | 128,256      | `train`, `test`, `train+test` | `clean`, `legacy_pytorch`, `legacy_tensorflow`|
+| Task             | Dataset   | Resolution | split          | # reference images | mode |
+| :-:              | :---:     | :-:        | :-:            |  :-:          | :-: |
+| Image Generation | `cifar10`     | 32         | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | `cifar10`     | 32         | `test`         |  10,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | `ffhq`        | 1024, 256  | `train+val`    |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | `ffhq`        | 1024, 256  | `train+val70k` |  70,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | `lsun_church` | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | `lsun_horse`  | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | `lsun_cat`    | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+<!-- | Image to Image | horse2zebra | 256      | `train`, `test`, `train+test` | `clean`, `legacy_pytorch`, `legacy_tensorflow`|
+| Image to Image | cat2dog     | 256      | `train`, `test`, `train+test` | `clean`, `legacy_pytorch`, `legacy_tensorflow`| -->
+
 
 **Using precomputed statistics**
 In order to compute the FID score with the precomputed dataset statistics, use the corresponding options. For instance, to compute the clean-fid score on generated 256x256 FFHQ images use the command:
   ```
-  fid_score = fid.compute_fid(fdir1, dataset_name="FFHQ", dataset_res=256,  mode="clean")
+  fid_score = fid.compute_fid(fdir1, dataset_name="ffhq", dataset_res=256,  mode="clean", dataset_split="trainval70k")
   ```
 
 ---

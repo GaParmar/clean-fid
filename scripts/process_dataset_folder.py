@@ -21,7 +21,7 @@ if __name__ == "__main__":
         num = args.num_images
     np_feats = fid.get_folder_features(
         args.input_folder, num=num, shuffle=True, seed=args.seed,
-        batch_size=512, device=torch.device("cuda"), mode=args.mode)
+        batch_size=64, device=torch.device("cuda"), mode=args.mode)
     mu = np.mean(np_feats, axis=0)
     sigma = np.cov(np_feats, rowvar=False)
     np.savez_compressed(args.output_file, mu=mu, sigma=sigma)
