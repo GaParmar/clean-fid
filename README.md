@@ -112,8 +112,8 @@ We provide precompute statistics for the following configurations
 | :-:              | :---:     | :-:        | :-:            |  :-:          | :-: |
 | Image Generation | `cifar10`     | 32         | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Image Generation | `cifar10`     | 32         | `test`         |  10,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Image Generation | `ffhq`        | 1024, 256  | `train+val`    |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Image Generation | `ffhq`        | 1024, 256  | `train+val70k` |  70,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | `ffhq`        | 1024, 256  | `trainval`     |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | `ffhq`        | 1024, 256  | `trainval70k`  |  70,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Image Generation | `lsun_church` | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Image Generation | `lsun_horse`  | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Image Generation | `lsun_cat`    | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
