@@ -108,7 +108,7 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
 
 We provide precompute statistics for the following configurations
 
-| Task             | Dataset   | Resolution | split          | # reference images | mode |
+| Task             | Dataset   | Resolution | Reference Split          | # Reference Images | mode |
 | :-:              | :---:     | :-:        | :-:            |  :-:          | :-: |
 | Image Generation | `cifar10`     | 32         | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Image Generation | `cifar10`     | 32         | `test`         |  10,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
@@ -175,27 +175,7 @@ We provide two flags to reproduce the legacy FID score.
 
 ## CleanFID Leaderboard for common tasks
 
-<br>
-
-**FFHQ @ 1024x1024**
-| Model     | Legacy-FID    | Clean-FID  |
-| :---:     | :-:           | :-: |
-| StyleGAN2 | 2.85 ± 0.05  | 3.08 ± 0.05 |
-| StyleGAN  | 4.44 ± 0.04  | 4.82 ± 0.04 |
-| MSG-GAN   | 6.09 ± 0.04  | 6.58 ± 0.06 |
-
-<br>
-
-**Image-to-Image**
-(horse->zebra @ 256x256)
-Computed using test images
-
-| Model     | Legacy-FID  | Clean-FID  |
-| :--:     | :-:           | :-: |
-| CycleGAN  | 77.20 | 75.17 |
-| CUT       | 45.51 | 43.71 |
-
-
+We compute the FID scores using the corresponding methods used in the original papers and using the Clean-FID proposed here. See the [leaderboard](https://github.com/GaParmar/clean-fid/blob/main/docs/leaderboard.md) for benchmark comparision on several common tasks: Image Generation, Image-to-Image, and Few-Show Generation.
 
 ---
 
