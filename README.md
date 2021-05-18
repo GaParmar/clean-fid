@@ -169,7 +169,7 @@ All values are computed using 10 evaluation runs. We provide an API to query the
 the pip package. 
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/cleanfid_demo_leaderboard.gif" />
+<img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/demo_leaderboard.gif" />
 </p>
 
 **CIFAR-10**
