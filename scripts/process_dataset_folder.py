@@ -12,6 +12,8 @@ parser.add_argument("--mode", required=True)
 # if specified, only these many images are used
 parser.add_argument("--num_images", default=-1, type=int)
 parser.add_argument("--seed", type=int)
+parser.add_argument("--batch_size", type=int, default=64)
+parser.add_argument("--metric", default="FID")
 args = parser.parse_args()
 
 if __name__ == "__main__":
@@ -21,7 +23,10 @@ if __name__ == "__main__":
         num = args.num_images
     np_feats = fid.get_folder_features(
         args.input_folder, num=num, shuffle=True, seed=args.seed,
-        batch_size=64, device=torch.device("cuda"), mode=args.mode)
-    mu = np.mean(np_feats, axis=0)
-    sigma = np.cov(np_feats, rowvar=False)
-    np.savez_compressed(args.output_file, mu=mu, sigma=sigma)
+        batch_size=args.batch_size, device=torch.device("cuda"), mode=args.mode)
+    if args.metric=="FID":
+        mu = np.mean(np_feats, axis=0)
+        sigma = np.cov(np_feats, rowvar=False)
+        np.savez_compressed(args.output_file, mu=mu, sigma=sigma)
+    elif args.metric=="KID":
+        np.savez_compressed(args.output_file, feats=np_feats)

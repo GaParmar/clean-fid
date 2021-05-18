@@ -25,6 +25,7 @@ setup.cfg
 examples/*
 
 tests/*
+scripts/tmp/*
 scripts/dataset_stats/*
 scripts/leaderboard/*
 scripts/pip_versions/*

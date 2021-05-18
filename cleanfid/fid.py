@@ -63,6 +63,24 @@ def frechet_distance(mu1, sigma1, mu2, sigma2, eps=1e-6):
 
     return (diff.dot(diff) + np.trace(sigma1) + np.trace(sigma2) - 2 * tr_covmean)
 
+
+"""
+Compute the KID score given the sets of features
+"""
+def kernel_distance(feats1, feats2, num_subsets=100, max_subset_size=1000):
+    n = feats1.shape[1]
+    m = min(min(feats1.shape[0], feats2.shape[0]), max_subset_size)
+    t = 0
+    for _subset_idx in range(num_subsets):
+        x = feats2[np.random.choice(feats2.shape[0], m, replace=False)]
+        y = feats1[np.random.choice(feats1.shape[0], m, replace=False)]
+        a = (x @ x.T / n + 1) ** 3 + (y @ y.T / n + 1) ** 3
+        b = (x @ y.T / n + 1) ** 3
+        t += (a.sum() - np.diag(a).sum()) / (m - 1) - b.sum() * 2 / m
+    kid = t / num_subsets / m
+    return float(kid)
+
+
 """
 Compute the inception features for a batch of images
 """
@@ -158,12 +176,12 @@ Compute the FID stats from a generator model
 """
 def get_model_features(G, model, mode="clean", z_dim=512, 
         num_gen=50_000, batch_size=128,
-        device=torch.device("cuda")):
+        device=torch.device("cuda"), desc="FID model: "):
     fn_resize = build_resizer(mode)
     # Generate test features
     num_iters = int(np.ceil(num_gen / batch_size))
     l_feats = []
-    for idx in tqdm(range(num_iters), desc=f"FID model: "):
+    for idx in tqdm(range(num_iters), desc=desc):
         with torch.no_grad():
             z_batch = torch.randn((batch_size, z_dim)).to(device)
             # generated image is in range [0,1]
@@ -271,6 +289,41 @@ def make_custom_stats(name, fdir, num=None, mode="clean",
     sigma = np.cov(np_feats, rowvar=False)
     print(f"saving custom stats to {outf}")
     np.savez_compressed(outf, mu=mu, sigma=sigma)
+
+
+def compute_kid(fdir1=None, fdir2=None, gen=None, 
+            mode="clean", num_workers=12, batch_size=32,
+            device=torch.device("cuda"), dataset_name="FFHQ",
+            dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512):
+    # build the feature extractor based on the mode
+    feat_model = build_feature_extractor(mode, device)
+    
+    # if both dirs are specified, compute FID between folders
+    if fdir1 is not None and fdir2 is not None:
+        raise ValueError("not implemented yet")
+
+    # compute fid of a folder
+    elif fdir1 is not None and fdir2 is None:
+        raise ValueError("not implemented yet")
+
+    # compute fid for a generator
+    elif gen is not None:
+        print(f"compute KID of a model with {dataset_name}-{dataset_res} statistics")
+        # define the model if it is not specified
+        model = build_feature_extractor(mode, device)
+        ref_feats = get_reference_statistics(dataset_name, dataset_res,
+                            mode=mode, seed=0, split=dataset_split, metric="KID")
+        # build resizing function based on options
+        fn_resize = build_resizer(mode)
+        # Generate test features
+        np_feats = get_model_features(gen, model, mode=mode,
+            z_dim=z_dim, num_gen=num_gen, desc="KID model: ",
+            batch_size=batch_size, device=device)
+        score = kernel_distance(ref_feats, np_feats)
+        return score
+    
+    else:
+        raise ValueError(f"invalid combination of directories and models entered")
 
 
 def compute_fid(fdir1=None, fdir2=None, gen=None, 
