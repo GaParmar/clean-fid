@@ -159,26 +159,6 @@ In order to compute the FID score with the precomputed dataset statistics, use t
 
 
 ---
-## Backwards Compatibility
-
-We provide two flags to reproduce the legacy FID score.
-
-- `mode="legacy_pytorch"` <br>
-    This flag is equivalent to using the popular PyTorch FID implementation provided [here](https://github.com/mseitzer/pytorch-fid/)
-    <br>
-    The difference between using clean-fid with this option and [code](https://github.com/mseitzer/pytorch-fid/) is **~2e-06**
-    <br>
-    See [doc](https://github.com/GaParmar/clean-fid/blob/main/docs/pytorch_fid.md) for how the methods are compared
-
-
-- `mode="legacy_tensorflow"` <br>
-    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors.
-    <br>
-    The difference between using clean-fid with this option and [code](https://github.com/bioinf-jku/TTUR) is **~2e-05**
-    <br>
-  See [doc](https://github.com/GaParmar/clean-fid/blob/main/docs/tensorflow_fid.md) for detailed steps for how the methods are compared
-
----
 
 ## CleanFID Leaderboard for common tasks
 
@@ -199,14 +179,12 @@ All values are computed using 10 evaluation runs.
 <br>
 
 **FFHQ @ 1024x1024**
-
 | Model     | Checkpoint | Reported-FID | Legacy-FID (reproduced)    | Clean-FID  | Reference Split | # generated images used| # reference images used |
 | :---:     | :-: | :-:          | :-:          | :-:         | :-: | :-: | :-: |
  | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | 2.84 | 2.86 ± 0.025 | 3.07 ± 0.025 | trainval | 50,000 | 50,000 
  | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | N/A | 2.76 ± 0.025 | 2.98 ± 0.025 | trainval70k | 50,000 | 70,000 
  
  **LSUN Categories**
-
 | Category | Model     | Checkpoint | Reported-FID | Legacy-FID (reproduced)    | Clean-FID  | Reference Split | # generated images used | # reference images used | 
 |:-: | :---:     | :-: | :-:          | :-:          | :-:         | :-: | :-: | :-: |
 Outdoor Churches | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-church-config-f.pkl) | 3.86 | 3.87 ± 0.029 | 4.08 ± 0.028 | train | 50,000 | 50,000 
@@ -242,7 +220,6 @@ Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/sty
 <br>
 
 **AFHQ**
-
 | Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reported-KID (x 10^3)	| Legacy-KID (reproduced) (x 10^3)	| Clean-KID (x 10^3)	| Reference Split	| # reference images used	| # generated images used	| dataset_name	| dataset_res	| task_name	|
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | stylegan2	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/afhqdog-mirror-stylegan2-noaug.pkl)	| 19.37	| 19.34 ± 0.08	| 20.10 ± 0.08	| 9.62	| 9.56 ± 0.12	| 10.21 ± 0.11	| train	| 4739	| 50000	| afhq_dog	| 512	| few_shot_generation	|
@@ -264,6 +241,26 @@ Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/sty
 | CUT     | 76.2 | 76.21 | 77.58 | test | 500 | 500 |
 | FastCUT | 94.0 | 93.95 | 95.37 | test | 500 | 500 |
 
+---
+
+## Backwards Compatibility
+
+We provide two flags to reproduce the legacy FID score.
+
+- `mode="legacy_pytorch"` <br>
+    This flag is equivalent to using the popular PyTorch FID implementation provided [here](https://github.com/mseitzer/pytorch-fid/)
+    <br>
+    The difference between using clean-fid with this option and [code](https://github.com/mseitzer/pytorch-fid/) is **~2e-06**
+    <br>
+    See [doc](https://github.com/GaParmar/clean-fid/blob/main/docs/pytorch_fid.md) for how the methods are compared
+
+
+- `mode="legacy_tensorflow"` <br>
+    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors.
+    <br>
+    The difference between using clean-fid with this option and [code](https://github.com/bioinf-jku/TTUR) is **~2e-05**
+    <br>
+  See [doc](https://github.com/GaParmar/clean-fid/blob/main/docs/tensorflow_fid.md) for detailed steps for how the methods are compared
 
 ---
 
