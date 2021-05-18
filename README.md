@@ -167,6 +167,10 @@ In order to compute the FID score with the precomputed dataset statistics, use t
 We compute the FID scores using the corresponding methods used in the original papers and using the Clean-FID proposed here. 
 All values are computed using 10 evaluation runs. 
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/cleanfid_demo_leaderboard.gif" />
+</p>
+
 **CIFAR-10**
 | Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reference Split	| # reference images used 	| # generated images used	| dataset_name	| dataset_res	| task_name	|
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
