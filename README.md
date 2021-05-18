@@ -117,6 +117,13 @@ We provide precompute statistics for the following configurations
 | Image Generation | `lsun_church` | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Image Generation | `lsun_horse`  | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Image Generation | `lsun_cat`    | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | `lsun_cat`    | 256        | `trainfull`    |  1,657,264    |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Few Shot Generation | `afhq_cat`  | 512        | `train`       |  5153         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Few Shot Generation | `afhq_dog`  | 512        | `train`       |  4739         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Few Shot Generation | `afhq_wild` | 512        | `train`       |  4738         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Few Shot Generation | `brecahad`  | 512        | `train`       |  1944         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Few Shot Generation | `metfaces`  | 1024       | `train`       |  1336         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+
 <!-- | Image to Image | horse2zebra | 256      | `train`, `test`, `train+test` | `clean`, `legacy_pytorch`, `legacy_tensorflow`|
 | Image to Image | cat2dog     | 256      | `train`, `test`, `train+test` | `clean`, `legacy_pytorch`, `legacy_tensorflow`| -->
 
