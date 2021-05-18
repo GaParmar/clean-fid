@@ -123,6 +123,8 @@ We provide precompute statistics for the following commonly used configurations
 | Few Shot Generation | `afhq_wild` | 512        | `train`       |  4738         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Few Shot Generation | `brecahad`  | 512        | `train`       |  1944         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Few Shot Generation | `metfaces`  | 1024       | `train`       |  1336         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image to Image   | `horse2zebra`  | 256        | `test`        |  140          |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image to Image   | `cat2dog`      | 256        | `test`        |  500          |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 
 <!-- | Image to Image | horse2zebra | 256      | `train`, `test`, `train+test` | `clean`, `legacy_pytorch`, `legacy_tensorflow`|
 | Image to Image | cat2dog     | 256      | `train`, `test`, `train+test` | `clean`, `legacy_pytorch`, `legacy_tensorflow`| -->
