@@ -165,9 +165,10 @@ In order to compute the FID score with the precomputed dataset statistics, use t
 ## CleanFID Leaderboard for common tasks
 
 We compute the FID scores using the corresponding methods used in the original papers and using the Clean-FID proposed here. 
-All values are computed using 10 evaluation runs. We provide an API to query the results shown in the tables below directly from 
-the pip package. 
-
+All values are computed using 10 evaluation runs. <br>
+We provide an API to query the results shown in the tables below directly from 
+the pip package. The arguments `model_name`, `dataset_name`, `dataset_res`, `dataset_split`, `task_name` can be used to filter
+the results.
 <p align="center">
 <img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/demo_leaderboard.gif" />
 </p>
