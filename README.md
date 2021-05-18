@@ -203,8 +203,16 @@ All values are computed using 10 evaluation runs.
 | :---:     | :-: | :-:          | :-:          | :-:         | :-: | :-: | :-: |
  | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | 2.84 | 2.86 +- 0.025 | 3.07 +- 0.025 | trainval | 50,000 | 50,000 
  | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | N/A | 2.76 +- 0.025 | 2.98 +- 0.025 | trainval70k | 50,000 | 70,000 
+ 
+ **LSUN Categories**
 
-**FFHQ @ 256x256**
+| Category | Model     | Checkpoint | Reported-FID | Legacy-FID (reproduced)    | Clean-FID  | Reference Split | # generated images used | # reference images used | 
+|:-: | :---:     | :-: | :-:          | :-:          | :-:         | :-: | :-: | :-: |
+Outdoor Churches | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-church-config-f.pkl) | 3.86 | 3.87 +- 0.029 | 4.08 +- 0.028 | train | 50,000 | 50,000 
+Horses | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-horse-config-f.pkl) | 3.43 | 3.41 +- 0.021 | 3.62 +- 0.023 | train | 50,000 | 50,000 
+Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-cat-config-f.pkl) | 6.93 | 7.02 +- 0.039 | 7.47 +- 0.035 | train | 50,000 | 50,000 
+
+**FFHQ @ 256x256 (Few Show Generation)**
 | Model     | Checkpoint | Reported-FID | Legacy-FID (reproduced)    | Clean-FID  | Reference Split | # generated images used| # reference images used |
 | :---:     | :-: | :-:          | :-:          | :-:         | :-: | :-: | :-: |
 | stylegan2 1k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-1k.pkl) | 62.16 | 62.14 +- 0.108 | 64.17 +- 0.113 | trainval70k | 50,000 | 70,000 |
@@ -218,14 +226,6 @@ All values are computed using 10 evaluation runs.
 
 <br>
 
-**LSUN Categories**
-
-| Category | Model     | Checkpoint | Reported-FID | Legacy-FID (reproduced)    | Clean-FID  | Reference Split | # generated images used | # reference images used | 
-|:-: | :---:     | :-: | :-:          | :-:          | :-:         | :-: | :-: | :-: |
-Outdoor Churches | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-church-config-f.pkl) | 3.86 | 3.87 +- 0.029 | 4.08 +- 0.028 | train | 50,000 | 50,000 
-Horses | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-horse-config-f.pkl) | 3.43 | 3.41 +- 0.021 | 3.62 +- 0.023 | train | 50,000 | 50,000 
-Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-cat-config-f.pkl) | 6.93 | 7.02 +- 0.039 | 7.47 +- 0.035 | train | 50,000 | 50,000 
-
 **LSUN CAT (Few Shot Generation)**
 | Model	| Checkpoint | Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reference Split	| # reference images used	| # generated images used	| dataset_name	| dataset_res	| task_name	|
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -238,10 +238,26 @@ Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/sty
 | stylegan2-mirror-flips (1k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-1k.pkl)	| 182.85	| 182.80 +- 0.21	| 185.86+-0.21	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
 | stylegan2-diff-augment (1k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-1k.pkl)	| 42.26	| 42.07 +- 0.16	| 43.12+-0.16	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
 
+<br>
+
+**Horse2Zebra (Image to Image)**
+| Model     | Reported-FID | Legacy-FID (reproduced)    | Clean-FID  | Reference Split | # generated images used| # reference images used |
+| :---:     | :-:          | :-:          | :-:         | :-: | :-: | :-: |
+| CUT     | 45.5 | 45.51 | 43.71 | test | 120 | 140 |
+| FastCUT | 73.4 | 73.38 | 72.53 | test | 120 | 140 |
+
+<br>
+
+**Cat2Dog (Image to Image)**
+| Model     | Reported-FID | Legacy-FID (reproduced)    | Clean-FID  | Reference Split | # generated images used| # reference images used |
+| :---:     | :-:          | :-:          | :-:         | :-: | :-: | :-: |
+| CUT     | 76.2 | 76.21 | 77.58 | test | 500 | 500 |
+| FastCUT | 94.0 | 93.95 | 95.37 | test | 500 | 500 |
+
 
 ---
 
-## Building from source
+## Building clean-fid locally from source
    ```
    python setup.py bdist_wheel
    pip install dist/*
