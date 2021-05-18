@@ -188,12 +188,13 @@ All values are computed using 10 evaluation runs.
 **CIFAR-10**
 | Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reference Split	| # reference images used 	| # generated images used	| dataset_name	| dataset_res	| task_name	|
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| stylegan2-mirror-flips (100%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar10.pkl)	| 11.07	| 11.07 +- 0.10	| 12.96+-0.07	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
-| stylegan2-diff-augment (100%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar10.pkl)	| 9.89	| 9.90 +- 0.09	| 10.85+-0.10	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
-| stylegan2-mirror-flips (20%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar10-0.2.pkl)	| 23.08	| 23.01 +- 0.19	| 29.49+-0.17	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
-| stylegan2-diff-augment (20%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar10-0.2.pkl)	| 12.15	| 12.12 +- 0.15	| 14.18+-0.13	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
-| stylegan2-mirror-flips (10%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar10-0.1.pkl)	| 36.02	| 35.94 +- 0.17	| 43.60+-0.17	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
-| stylegan2-diff-augment (10%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar10-0.1.pkl)	| 14.50	| 14.53 +- 0.12	| 16.98+-0.18	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
+| stylegan2-mirror-flips (100%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar10.pkl)	| 11.07	| 11.07 ± 0.10	| 12.96 ± 0.07	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
+| stylegan2-diff-augment (100%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar10.pkl)	| 9.89	| 9.90 ± 0.09	| 10.85 ± 0.10	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
+| stylegan2-mirror-flips (20%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar10-0.2.pkl)	| 23.08	| 23.01 ± 0.19	| 29.49 ± 0.17	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
+| stylegan2-diff-augment (20%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar10-0.2.pkl)	| 12.15	| 12.12 ± 0.15	| 14.18 ± 0.13	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
+| stylegan2-mirror-flips (10%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar10-0.1.pkl)	| 36.02	| 35.94 ± 0.17	| 43.60 ± 0.17	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
+| stylegan2-diff-augment (10%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar10-0.1.pkl)	| 14.50	| 14.53 ± 0.12	| 16.98 ± 0.18	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
+
 
 <br>
 
@@ -201,42 +202,51 @@ All values are computed using 10 evaluation runs.
 
 | Model     | Checkpoint | Reported-FID | Legacy-FID (reproduced)    | Clean-FID  | Reference Split | # generated images used| # reference images used |
 | :---:     | :-: | :-:          | :-:          | :-:         | :-: | :-: | :-: |
- | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | 2.84 | 2.86 +- 0.025 | 3.07 +- 0.025 | trainval | 50,000 | 50,000 
- | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | N/A | 2.76 +- 0.025 | 2.98 +- 0.025 | trainval70k | 50,000 | 70,000 
+ | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | 2.84 | 2.86 ± 0.025 | 3.07 ± 0.025 | trainval | 50,000 | 50,000 
+ | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | N/A | 2.76 ± 0.025 | 2.98 ± 0.025 | trainval70k | 50,000 | 70,000 
  
  **LSUN Categories**
 
 | Category | Model     | Checkpoint | Reported-FID | Legacy-FID (reproduced)    | Clean-FID  | Reference Split | # generated images used | # reference images used | 
 |:-: | :---:     | :-: | :-:          | :-:          | :-:         | :-: | :-: | :-: |
-Outdoor Churches | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-church-config-f.pkl) | 3.86 | 3.87 +- 0.029 | 4.08 +- 0.028 | train | 50,000 | 50,000 
-Horses | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-horse-config-f.pkl) | 3.43 | 3.41 +- 0.021 | 3.62 +- 0.023 | train | 50,000 | 50,000 
-Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-cat-config-f.pkl) | 6.93 | 7.02 +- 0.039 | 7.47 +- 0.035 | train | 50,000 | 50,000 
+Outdoor Churches | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-church-config-f.pkl) | 3.86 | 3.87 ± 0.029 | 4.08 ± 0.028 | train | 50,000 | 50,000 
+Horses | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-horse-config-f.pkl) | 3.43 | 3.41 ± 0.021 | 3.62 ± 0.023 | train | 50,000 | 50,000 
+Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-cat-config-f.pkl) | 6.93 | 7.02 ± 0.039 | 7.47 ± 0.035 | train | 50,000 | 50,000 
 
 **FFHQ @ 256x256 (Few Show Generation)**
 | Model     | Checkpoint | Reported-FID | Legacy-FID (reproduced)    | Clean-FID  | Reference Split | # generated images used| # reference images used |
 | :---:     | :-: | :-:          | :-:          | :-:         | :-: | :-: | :-: |
-| stylegan2 1k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-1k.pkl) | 62.16 | 62.14 +- 0.108 | 64.17 +- 0.113 | trainval70k | 50,000 | 70,000 |
-| DiffAugment-stylegan2 1k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-1k.pkl) | 25.66 | 25.60 +- 0.071 | 27.26 +- 0.077 | trainval70k | 50,000 | 70,000 |
-| stylegan2 5k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-5k.pkl) | 26.60 | 26.64 +- 0.086 | 28.17 +- 0.090 | trainval70k | 50,000 | 70,000 |
-| DiffAugment-stylegan2 5k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-5k.pkl) | 10.45 | 10.45 +- 0.047 | 10.99 +- 0.050 | trainval70k | 50,000 | 70,000 |
-| stylegan2 10k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-10k.pkl) | 14.75 | 14.88 +- 0.070 | 16.04 +- 0.078 | trainval70k | 50,000 | 70,000 |
-| DiffAugment-stylegan2 10k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-10k.pkl) | 7.86 | 7.82 +- 0.045 | 8.12 +- 0.044 | trainval70k | 50,000 | 70,000 |
-| stylegan2 30k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-30k.pkl) | 6.16 | 6.14 +- 0.064 | 6.49 +- 0.068 | trainval70k | 50,000 | 70,000 |
-| DiffAugment-stylegan2 30k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-30k.pkl) | 5.05 | 5.07 +- 0.030 | 5.18 +- 0.032 | trainval70k | 50,000 | 70,000 |
+| stylegan2 1k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-1k.pkl) | 62.16 | 62.14 ± 0.108 | 64.17 ± 0.113 | trainval70k | 50,000 | 70,000 |
+| DiffAugment-stylegan2 1k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-1k.pkl) | 25.66 | 25.60 ± 0.071 | 27.26 ± 0.077 | trainval70k | 50,000 | 70,000 |
+| stylegan2 5k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-5k.pkl) | 26.60 | 26.64 ± 0.086 | 28.17 ± 0.090 | trainval70k | 50,000 | 70,000 |
+| DiffAugment-stylegan2 5k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-5k.pkl) | 10.45 | 10.45 ± 0.047 | 10.99 ± 0.050 | trainval70k | 50,000 | 70,000 |
+| stylegan2 10k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-10k.pkl) | 14.75 | 14.88 ± 0.070 | 16.04 ± 0.078 | trainval70k | 50,000 | 70,000 |
+| DiffAugment-stylegan2 10k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-10k.pkl) | 7.86 | 7.82 ± 0.045 | 8.12 ± 0.044 | trainval70k | 50,000 | 70,000 |
+| stylegan2 30k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-30k.pkl) | 6.16 | 6.14 ± 0.064 | 6.49 ± 0.068 | trainval70k | 50,000 | 70,000 |
+| DiffAugment-stylegan2 30k | [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-30k.pkl) | 5.05 | 5.07 ± 0.030 | 5.18 ± 0.032 | trainval70k | 50,000 | 70,000 |
 
 <br>
 
 **LSUN CAT (Few Shot Generation)**
 | Model	| Checkpoint | Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reference Split	| # reference images used	| # generated images used	| dataset_name	| dataset_res	| task_name	|
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| stylegan2-mirror-flips (30k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-30k.pkl)	| 10.12	| 10.15 +- 0.04	| 10.87+-0.04	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
-| stylegan2-diff-augment (30k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-30k.pkl)	| 9.68	| 9.70 +- 0.07	| 10.25+-0.07	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
-| stylegan2-mirror-flips (10k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-10k.pkl)	| 17.93	| 17.98 +- 0.09	| 18.71+-0.09	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
-| stylegan2-diff-augment (10k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-10k.pkl)	| 12.07	| 12.04 +- 0.08	| 12.53+-0.08	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
-| stylegan2-mirror-flips (5k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-5k.pkl)	| 34.69	| 34.66 +- 0.12	| 35.85+-0.12	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
-| stylegan2-diff-augment (5k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-5k.pkl)	| 16.11	| 16.11 +- 0.09	| 16.79+-0.09	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
-| stylegan2-mirror-flips (1k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-1k.pkl)	| 182.85	| 182.80 +- 0.21	| 185.86+-0.21	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
-| stylegan2-diff-augment (1k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-1k.pkl)	| 42.26	| 42.07 +- 0.16	| 43.12+-0.16	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-mirror-flips (30k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-30k.pkl)	| 10.12	| 10.15 ± 0.04	| 10.87 ± 0.04	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-diff-augment (30k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-30k.pkl)	| 9.68	| 9.70 ± 0.07	| 10.25 ± 0.07	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-mirror-flips (10k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-10k.pkl)	| 17.93	| 17.98 ± 0.09	| 18.71 ± 0.09	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-diff-augment (10k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-10k.pkl)	| 12.07	| 12.04 ± 0.08	| 12.53 ± 0.08	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-mirror-flips (5k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-5k.pkl)	| 34.69	| 34.66 ± 0.12	| 35.85 ± 0.12	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-diff-augment (5k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-5k.pkl)	| 16.11	| 16.11 ± 0.09	| 16.79 ± 0.09	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-mirror-flips (1k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-1k.pkl)	| 182.85	| 182.80 ± 0.21	| 185.86 ± 0.21	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-diff-augment (1k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-1k.pkl)	| 42.26	| 42.07 ± 0.16	| 43.12 ± 0.16	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+
+<br>
+
+**AFHQ**
+
+| Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reported-KID (x 10^3)	| Legacy-KID (reproduced) (x 10^3)	| Clean-KID (x 10^3)	| Reference Split	| # reference images used	| # generated images used	| dataset_name	| dataset_res	| task_name	|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| stylegan2	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/afhqdog-mirror-stylegan2-noaug.pkl)	| 19.37	| 19.34 ± 0.08	| 20.10 ± 0.08	| 9.62	| 9.56 ± 0.12	| 10.21 ± 0.11	| train	| 4739	| 50000	| afhq_dog	| 512	| few_shot_generation	|
+
 
 <br>
 
