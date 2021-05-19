@@ -1,0 +1,11 @@
+
+| model_name	| model_url	| reported_fid	| reproduced_fid	| clean_fid	| dataset_split	| num_reference_images	| num_generated_images	| dataset_name	| dataset_res	| task_name	|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| stylegan2-mirror-flips (30k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-30k.pkl)	| 10.12	| 10.15 ± 0.04	| 10.87 ± 0.04	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-diff-augment (30k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-30k.pkl)	| 9.68	| 9.70 ± 0.07	| 10.25 ± 0.07	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-mirror-flips (10k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-10k.pkl)	| 17.93	| 17.98 ± 0.09	| 18.71 ± 0.09	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-diff-augment (10k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-10k.pkl)	| 12.07	| 12.04 ± 0.08	| 12.53 ± 0.08	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-mirror-flips (5k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-5k.pkl)	| 34.69	| 34.66 ± 0.12	| 35.85 ± 0.12	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-diff-augment (5k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-5k.pkl)	| 16.11	| 16.11 ± 0.09	| 16.79 ± 0.09	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-mirror-flips (1k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-lsun-cat-1k.pkl)	| 182.85	| 182.80 ± 0.21	| 185.86 ± 0.21	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|
+| stylegan2-diff-augment (1k)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-lsun-cat-1k.pkl)	| 42.26	| 42.07 ± 0.16	| 43.12 ± 0.16	| trainfull	| 1657264	| 50000	| lsun_cat	| 256	| few_shot_generation	|

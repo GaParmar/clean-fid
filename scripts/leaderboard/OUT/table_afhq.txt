@@ -1,0 +1,4 @@
+
+| model_name	| model_url	| reported_fid	| reproduced_fid	| clean_fid	| reported_kid (x 10^3)	| reproduced_kid (x 10^3)	| clean_kid (x 10^3)	| dataset_split	| num_reference_images	| num_generated_images	| dataset_name	| dataset_res	| task_name	|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| stylegan2	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/afhqdog-mirror-stylegan2-noaug.pkl)	| 19.37	| 19.34 ± 0.08	| 20.10 ± 0.08	| 9.62	| 9.56 ± 0.12	| 10.21 ± 0.11	| train	| 4739	| 50000	| afhq_dog	| 512	| few_shot_generation	|
