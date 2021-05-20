@@ -36,3 +36,4 @@ docs/tests.md
 models/*
 stats*
 scripts/leaderboard/CONFIGS/__pycache__/*
+all_stats.tar.gz

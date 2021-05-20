@@ -19,16 +19,16 @@ L_EXPS = [
     #############################################
     # StyleGAN2-ADA
     #############################################
-    # {
-    #     "model_name"           : "stylegan2-ada",
-    #     "dataset_name"         : "brecahad",
-    #     "dataset_res"          : "512",
-    #     "dataset_split"        : "train",
-    #     "reported_fid"         : "15.71",
-    #     "reported_kid"         : "2.88",
-    #     "task_name"            : "few_shot_generation",
-    #     "model_url"            : f"{BASE_URL}/brecahad-mirror-stylegan2-noaug.pkl",
-    #     "num_generated_images" : 50_000
-    # }
+    {
+        "model_name"           : "stylegan2-ada",
+        "dataset_name"         : "metfaces",
+        "dataset_res"          : "1024",
+        "dataset_split"        : "train",
+        "reported_fid"         : "18.22",
+        "reported_kid"         : "2.41",
+        "task_name"            : "few_shot_generation",
+        "model_url"            : f"{BASE_URL}/metfaces-mirror-stylegan2-ada.pkl",
+        "num_generated_images" : 50_000
+    }
 ]
 

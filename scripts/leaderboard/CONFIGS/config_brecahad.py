@@ -27,7 +27,7 @@ L_EXPS = [
         "reported_fid"         : "15.71",
         "reported_kid"         : "2.88",
         "task_name"            : "few_shot_generation",
-        "model_url"            : f"{BASE_URL}/brecahad-mirror-stylegan2-noaug.pkl",
+        "model_url"            : f"{BASE_URL}/brecahad-mirror-paper512-ada.pkl",
         "num_generated_images" : 50_000
     }
 ]

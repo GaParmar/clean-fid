@@ -53,23 +53,23 @@ fi
 # #################################################
 # # BreCaHAD
 # #################################################
+for idx in 0 1; do
+    args_str="--config_file CONFIGS.config_brecahad --exp_idx $idx"
+    args_str="$args_str --batch_size 32 --output_table OUT/table_brecahad.json"
+    ./parallelize.sh $args_str --mode legacy_tensorflow
+    ./parallelize.sh $args_str --mode legacy_tensorflow --metric "KID"
+    ./parallelize.sh $args_str --mode clean
+    ./parallelize.sh $args_str --mode clean --metric "KID"
+done
+
+#################################################
+# MetFaces
+#################################################
 # for idx in 0 1; do
-#     args_str="--config_file CONFIGS.config_brecahad --exp_idx $idx"
-#     args_str="$args_str --batch_size 32 --output_table OUT/table_brecahad.json"
+#     args_str="--config_file CONFIGS.config_metfaces --exp_idx $idx"
+#     args_str="$args_str --batch_size 8 --output_table OUT/table_metfaces.json"
 #     ./parallelize.sh $args_str --mode legacy_tensorflow
 #     ./parallelize.sh $args_str --mode legacy_tensorflow --metric "KID"
 #     ./parallelize.sh $args_str --mode clean
 #     ./parallelize.sh $args_str --mode clean --metric "KID"
 # done
-
-#################################################
-# MetFaces
-#################################################
-for idx in 0; do
-    args_str="--config_file CONFIGS.config_metfaces --exp_idx $idx"
-    args_str="$args_str --batch_size 32 --output_table OUT/table_metfaces.json"
-    ./parallelize_2gpu.sh $args_str --mode legacy_tensorflow
-    ./parallelize_2gpu.sh $args_str --mode legacy_tensorflow --metric "KID"
-    # ./parallelize.sh $args_str --mode clean
-    # ./parallelize.sh $args_str --mode clean --metric "KID"
-done

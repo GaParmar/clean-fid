@@ -300,11 +300,34 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
     
     # if both dirs are specified, compute FID between folders
     if fdir1 is not None and fdir2 is not None:
-        raise ValueError("not implemented yet")
+        print("compute KID between two folders")
+        # get all inception features for the first folder
+        fbname1 = os.path.basename(fdir1)
+        np_feats1 = get_folder_features(fdir1, None, num_workers=num_workers,
+                            batch_size=batch_size, device=device, mode=mode, 
+                            description=f"FID {fbname1} : ")
+        # get all inception features for the second folder
+        fbname2 = os.path.basename(fdir2)
+        np_feats2 = get_folder_features(fdir2, None, num_workers=num_workers,
+                            batch_size=batch_size, device=device, mode=mode, 
+                            description=f"FID {fbname2} : ")
+        score = kernel_distance(np_feats1, np_feats2)
+        return score
 
     # compute fid of a folder
     elif fdir1 is not None and fdir2 is None:
-        raise ValueError("not implemented yet")
+        print(f"compute KID of a folder with {dataset_name} statistics")
+        # define the model if it is not specified
+        model = build_feature_extractor(mode, device)
+        ref_feats = get_reference_statistics(dataset_name, dataset_res,
+                            mode=mode, seed=0, split=dataset_split, metric="KID")
+        fbname = os.path.basename(fdir)
+        # get all inception features for folder images
+        np_feats = get_folder_features(fdir, model, num_workers=num_workers,
+                                        batch_size=batch_size, device=device,
+                                        mode=mode, description=f"KID {fbname} : ")
+        score = kernel_distance(ref_feats, np_feats)
+        return score
 
     # compute fid for a generator
     elif gen is not None:
