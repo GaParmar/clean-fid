@@ -1,0 +1,25 @@
+{
+    "EXP_0": {
+        "KID_legacy_tensorflow_0": 0.03559796420670672,
+        "KID_legacy_tensorflow_1": 0.0356416419019019,
+        "dataset_name": "metfaces",
+        "dataset_res": "1024",
+        "dataset_split": "train",
+        "legacy_tensorflow_0": 57.29241600407056,
+        "legacy_tensorflow_1": 57.32590642866859,
+        "legacy_tensorflow_2": 57.33779141432342,
+        "legacy_tensorflow_3": 57.51352773197979,
+        "legacy_tensorflow_4": 57.347331542652284,
+        "legacy_tensorflow_5": 57.15226919000105,
+        "legacy_tensorflow_6": 57.46404821084042,
+        "legacy_tensorflow_7": 57.475841649299554,
+        "legacy_tensorflow_8": 57.40462191950718,
+        "legacy_tensorflow_9": 57.296577274508934,
+        "model_name": "stylegan2",
+        "model_url": "https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/metfaces-mirror-stylegan2-noaug.pkl",
+        "num_generated_images": 50000,
+        "reported_fid": "57.26",
+        "reported_kid": "35.66",
+        "task_name": "few_shot_generation"
+    }
+}

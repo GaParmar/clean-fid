@@ -35,3 +35,4 @@ scripts/upsampling_experiments/*
 docs/tests.md
 models/*
 stats*
+scripts/leaderboard/CONFIGS/__pycache__/*

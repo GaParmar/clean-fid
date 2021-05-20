@@ -11,15 +11,15 @@ setuptools.setup(
     description="FID calculation in PyTorch with proper image resizing and quantization steps",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    install_requires=[
-        "torch>=0.4.0",
-        "torchvision>=0.2.1",
-        "numpy>=1.14.3",
-        "scipy>=1.0.1",
-        "tqdm>=4.28.1",
-        "pillow>=8.1",
-        "requests==2.25.1"
-    ],
+    # install_requires=[
+    #     "torch>=0.4.0",
+    #     "torchvision>=0.2.1",
+    #     "numpy>=1.14.3",
+    #     "scipy>=1.0.1",
+    #     "tqdm>=4.28.1",
+    #     "pillow>=8.1",
+    #     "requests==2.25.1"
+    # ],
     url="https://github.com/GaParmar/clean-fid",
     packages=['cleanfid'],
     include_package_data=True,
