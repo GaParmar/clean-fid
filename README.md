@@ -101,6 +101,24 @@ Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/sty
 | Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reported-KID (x 10^3)	| Legacy-KID (reproduced) (x 10^3)	| Clean-KID (x 10^3)	| Reference Split	| # reference images used	| # generated images used	| dataset_name	| dataset_res	| task_name	|
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | stylegan2	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/afhqdog-mirror-stylegan2-noaug.pkl)	| 19.37	| 19.34 ± 0.08	| 20.10 ± 0.08	| 9.62	| 9.56 ± 0.12	| 10.21 ± 0.11	| train	| 4739	| 50000	| afhq_dog	| 512	| few_shot_generation	|
+| stylegan2-ada	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/afhqdog-mirror-paper512-ada.pkl)	| 7.40	| 7.41 ± 0.02	| 7.61 ± 0.02	| 1.16	| 1.17 ± 0.03	| 1.28 ± 0.03	| train	| 4739	| 50000	| afhq_dog	| 512	| few_shot_generation	|
+| stylegan2	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/afhqwild-mirror-stylegan2-noaug.pkl)	| 3.48	| 3.55 ± 0.03	| 3.66 ± 0.02	| 0.77	| 0.78 ± 0.02	| 0.83 ± 0.01	| train	| 4738	| 50000	| afhq_wild	| 512	| few_shot_generation	|
+| stylegan2-ada	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/afhqwild-mirror-paper512-ada.pkl)	| 3.05	| 3.01 ± 0.02	| 3.03 ± 0.02	| 0.45	| 0.45 ± 0.01	| 0.45 ± 0.01	| train	| 4738	| 50000	| afhq_wild	| 512	| few_shot_generation	|
+
+
+<br>
+
+**BreCaHAD**
+| Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reported-KID (x 10^3)	| Legacy-KID (reproduced) (x 10^3)	| Clean-KID (x 10^3)	| Reference Split	| # reference images used	| # generated images used	| dataset_name	| dataset_res	| task_name	|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| stylegan2	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/brecahad-mirror-stylegan2-noaug.pkl)	| 97.72	| 97.46 ± 0.17	| 98.35 ± 0.17	| 89.76	| 89.90 ± 0.31	| 92.51 ± 0.32	| train	| 1944	| 50000	| brecahad	| 512	| few_shot_generation	|
+
+<br>
+
+**MetFaces**
+| Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reported-KID (x 10^3)	| Legacy-KID (reproduced) (x 10^3)	| Clean-KID (x 10^3)	| Reference Split	| # reference images used	| # generated images used	| dataset_name	| dataset_res	| task_name	|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| stylegan2	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/metfaces-mirror-stylegan2-noaug.pkl)	| 57.26	| 57.36 ± 0.10	| 65.74 ± 0.11	| 35.66	| 35.69 ± 0.16	| 40.90 ± 0.14	| train	| 1336	| 50000	| metfaces	| 1024	| few_shot_generation	|
 
 
 <br>
