@@ -202,6 +202,8 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
 
 ### Computing KID
 The KID score can be computed using a similar interface as FID. 
+The dataset statistics for KID are only precomputed for smaller datasets `AFHQ`, `BreCaHAD`, and `MetFaces`.
+
 - Compute FID between two image folders
     ```
     from cleanfid import fid
