@@ -184,7 +184,7 @@ def get_model_features(G, model, mode="clean", z_dim=512,
     for idx in tqdm(range(num_iters), desc=desc):
         with torch.no_grad():
             z_batch = torch.randn((batch_size, z_dim)).to(device)
-            # generated image is in range [0,1]
+            # generated image is in range [0,255]
             img_batch = G(z_batch)
             # split into individual batches for resizing if needed
             if mode != "legacy_tensorflow":

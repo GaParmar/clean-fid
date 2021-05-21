@@ -8,7 +8,7 @@
 
 
 
-[**Project**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222) | [**Colab Demo**](https://colab.research.google.com/drive/1ElGAHvlwTilIf_3D3cw1boirCEkFsAWI?usp=sharing) | [**Leaderboard**](#cleanfid-leaderboard-for-common-tasks)
+[**Project**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222) | [**Colab Demo**](https://colab.research.google.com/drive/1ElGAHvlwTilIf_3D3cw1boirCEkFsAWI?usp=sharing) | [**Leaderboard**](#cleanfid-leaderboard-for-common-tasks) | [**Quick Start**](#quick-start) | [**KID**](#computing-kid)
 
 
 The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly.
@@ -180,32 +180,46 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
     ```
     pip install clean-fid
     ```
+### Example Usage
 - Compute FID between two image folders
     ```
     from cleanfid import fid
-
     score = fid.compute_fid(fdir1, fdir2)
     ```
-
-
 - Compute FID between one folder of images and pre-computed datasets statistics (e.g., `FFHQ`)
     ```
     from cleanfid import fid
-
-    score = fid.compute_fid(fdir1, dataset_name="FFHQ", dataset_res=1024)
-
+    score = fid.compute_fid(fdir1, dataset_name="FFHQ", dataset_res=1024, dataset_split="trainval70k")
     ```
-
 - Compute FID using a generative model and pre-computed dataset statistics:
     ```
     from cleanfid import fid
-
     # function that accepts a latent and returns an image in range[0,255]
     gen = lambda z: GAN(latent=z, ... , <other_flags>)
-
     score = fid.compute_fid(gen=gen, dataset_name="FFHQ",
-            dataset_res=256, num_gen=50_000)
+            dataset_res=256, num_gen=50_000, dataset_split="trainval70k")
+    ```
 
+### Computing KID
+The KID score can be computed using a similar interface as FID. 
+The dataset statistics for KID are only precomputed for smaller datasets `AFHQ`, `BreCaHAD`, and `MetFaces`.
+
+- Compute FID between two image folders
+    ```
+    from cleanfid import fid
+    score = fid.compute_kid(fdir1, fdir2)
+    ```
+- Compute FID between one folder of images and pre-computed datasets statistics
+    ```
+    from cleanfid import fid
+    score = fid.compute_kid(fdir1, dataset_name="brecahad", dataset_res=512, dataset_split="train")
+    ```
+- Compute FID using a generative model and pre-computed dataset statistics:
+    ```
+    from cleanfid import fid
+    # function that accepts a latent and returns an image in range[0,255]
+    gen = lambda z: GAN(latent=z, ... , <other_flags>)
+    score = fid.compute_kid(gen=gen, dataset_name="brecahad", dataset_res=512, num_gen=50_000, dataset_split="train")
     ```
 
 ---
