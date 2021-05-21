@@ -253,10 +253,20 @@ def compare_folders(fdir1, fdir2, feat_model, mode, num_workers=0,
     return fid
 
 
+"""
+Test if a custom statistic exists
+"""
+def test_stats_exists(name, mode):
+    stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
+    split, res="custom", "na"
+    fname = f"{name}_{mode}_{split}_{res}.npz"
+    fpath = os.path.join(stats_folder, fname)
+    return os.path.exists(fpath)
+
 def remove_custom_stats(name, mode="clean"):
     stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
     split, res="custom", "na"
-    outname = f"{name}_{mode}_{split}_{res}_0.npz"
+    outname = f"{name}_{mode}_{split}_{res}.npz"
     outf = os.path.join(stats_folder, outname)
     if not os.path.exists(outf):
         msg = f"The stats file {name} does not exist."
@@ -271,7 +281,7 @@ def make_custom_stats(name, fdir, num=None, mode="clean",
                     num_workers=0, batch_size=64, device=torch.device("cuda")):
     stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
     split, res = "custom", "na"
-    outname = f"{name}_{mode}_{split}_{res}_0.npz"
+    outname = f"{name}_{mode}_{split}_{res}.npz"
     outf = os.path.join(stats_folder, outname)
     # if the custom stat file already exists
     if os.path.exists(outf):
@@ -305,12 +315,12 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
         fbname1 = os.path.basename(fdir1)
         np_feats1 = get_folder_features(fdir1, None, num_workers=num_workers,
                             batch_size=batch_size, device=device, mode=mode, 
-                            description=f"FID {fbname1} : ")
+                            description=f"KID {fbname1} : ")
         # get all inception features for the second folder
         fbname2 = os.path.basename(fdir2)
         np_feats2 = get_folder_features(fdir2, None, num_workers=num_workers,
                             batch_size=batch_size, device=device, mode=mode, 
-                            description=f"FID {fbname2} : ")
+                            description=f"KID {fbname2} : ")
         score = kernel_distance(np_feats1, np_feats2)
         return score
 

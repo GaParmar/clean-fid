@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='clean-fid',
-    version='0.1.11',
+    version='0.1.12',
     author="Gaurav Parmar",
     author_email="gparmar@andrew.cmu.edu",
     description="FID calculation in PyTorch with proper image resizing and quantization steps",

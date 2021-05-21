@@ -264,6 +264,12 @@ In order to compute the FID score with the precomputed dataset statistics, use t
   fid.remove_custom_stats(custom_name, mode="clean")
   ```
 
+- Check if a custom statistic already exists
+  ```
+  from cleanfid import fid
+  fid.test_stats_exists(custom_name, mode)
+  ```
+
 ---
 
 ## Backwards Compatibility

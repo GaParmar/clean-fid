@@ -27,7 +27,7 @@ L_EXPS = [
         "reported_fid"         : "18.22",
         "reported_kid"         : "2.41",
         "task_name"            : "few_shot_generation",
-        "model_url"            : f"{BASE_URL}/metfaces-mirror-stylegan2-ada.pkl",
+        "model_url"            : f"{BASE_URL}/metfaces-mirror-paper1024-ada.pkl",
         "num_generated_images" : 50_000
     }
 ]
