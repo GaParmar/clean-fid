@@ -8,7 +8,11 @@
 
 
 
-[**Project**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222) | [**Colab Demo**](https://colab.research.google.com/drive/1ElGAHvlwTilIf_3D3cw1boirCEkFsAWI?usp=sharing) | [**Leaderboard**](#cleanfid-leaderboard-for-common-tasks) | [**Quick Start**](#quick-start) | [**KID**](#computing-kid)
+[**Project**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222) | 
+[**Colab-FID**](https://colab.research.google.com/drive/1ElGAHvlwTilIf_3D3cw1boirCEkFsAWI?usp=sharing) |
+[**Colab-Resize**](https://colab.research.google.com/drive/1ElGAHvlwTilIf_3D3cw1boirCEkFsAWI?usp=sharing) |
+[**Leaderboard Tables**](#cleanfid-leaderboard-for-common-tasks) <br>
+**Quick start:** [**Calculate FID**](#computing-fid) | [**Calculate KID**](#computing-kid) | [**Leaderboard API**](#cleanfid-leaderboard-api)
 
 
 The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly.
@@ -32,7 +36,7 @@ CMU and Adobe
 
 ---
 
-## CleanFID Leaderboard for common tasks
+### CleanFID Leaderboard API
 
 We compute the FID scores using the corresponding methods used in the original papers and using the Clean-FID proposed here. 
 All values are computed using 10 evaluation runs. <br>
@@ -42,6 +46,182 @@ the results.
 <p align="center">
 <img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/demo_leaderboard_cropped.gif" />
 </p>
+
+
+**Buggy Resizing Operations** <br>
+
+
+  The definitions of resizing functions are mathematical and <em>should never be a function of the library being used</em>. Unfortunately, implementations differ across commonly-used libraries.  They are often implemented incorrectly by popular libraries. Try out the different resizing implementations in the Google colab notebook [here](https://colab.research.google.com/drive/1Q-N94S2mnLsFLpuT7WwY6d5WxGVWLGpg?usp=sharing).
+
+  <img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/resize_circle_extended.png"  width="800" />
+<br>
+
+The inconsistencies among implementations can have a drastic effect of the evaluations metrics. The table below shows that FFHQ dataset images resized with  bicubic implementation from other libraries (OpenCV, PyTorch, TensorFlow, OpenCV) have a large FID score (≥ 6) when compared to the same images resized with the correctly implemented PIL-bicubic filter. Other correctly implemented filters from PIL (Lanczos, bilinear, box) all result in relatively smaller FID score (≤ 0.75). Note that since TF 2.0, the new flag `antialias` (default: `False`) can produce results close to PIL. However, it was not used in the existing TF-FID repo and set as `False` by default.
+
+ <p align="center"><img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/table_resize_sc.png"  width="500" /></p>
+
+**JPEG Image Compression**
+
+  Image compression can have a surprisingly large effect on FID.  Images are perceptually indistinguishable from each other but have a large FID score. The FID scores under the images are calculated between all FFHQ images saved using the corresponding JPEG format and the PNG format.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/jpeg_effects.png"  width="800" />
+</p>
+
+Below, we study the effect of JPEG compression for StyleGAN2 models trained on the FFHQ dataset (left) and LSUN outdoor Church dataset (right). Note that LSUN dataset images were collected with JPEG compression (quality 75), whereas FFHQ images were collected as PNG. Interestingly, for LSUN dataset, the best FID score (3.48) is obtained when the generated images are compressed with JPEG quality 87.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/jpeg_plots.png"  width="800" />
+</p>
+
+---
+
+## Quick Start
+
+
+- install requirements
+    ```
+    pip install -r requirements.txt
+    ```
+- install the library
+    ```
+    pip install clean-fid
+    ```
+### Computing FID
+- Compute FID between two image folders
+    ```
+    from cleanfid import fid
+    score = fid.compute_fid(fdir1, fdir2)
+    ```
+- Compute FID between one folder of images and pre-computed datasets statistics (e.g., `FFHQ`)
+    ```
+    from cleanfid import fid
+    score = fid.compute_fid(fdir1, dataset_name="FFHQ", dataset_res=1024, dataset_split="trainval70k")
+    ```
+- Compute FID using a generative model and pre-computed dataset statistics:
+    ```
+    from cleanfid import fid
+    # function that accepts a latent and returns an image in range[0,255]
+    gen = lambda z: GAN(latent=z, ... , <other_flags>)
+    score = fid.compute_fid(gen=gen, dataset_name="FFHQ",
+            dataset_res=256, num_gen=50_000, dataset_split="trainval70k")
+    ```
+
+### Computing KID
+The KID score can be computed using a similar interface as FID. 
+The dataset statistics for KID are only precomputed for smaller datasets `AFHQ`, `BreCaHAD`, and `MetFaces`.
+
+- Compute KID between two image folders
+    ```
+    from cleanfid import fid
+    score = fid.compute_kid(fdir1, fdir2)
+    ```
+- Compute KID between one folder of images and pre-computed datasets statistics
+    ```
+    from cleanfid import fid
+    score = fid.compute_kid(fdir1, dataset_name="brecahad", dataset_res=512, dataset_split="train")
+    ```
+- Compute KID using a generative model and pre-computed dataset statistics:
+    ```
+    from cleanfid import fid
+    # function that accepts a latent and returns an image in range[0,255]
+    gen = lambda z: GAN(latent=z, ... , <other_flags>)
+    score = fid.compute_kid(gen=gen, dataset_name="brecahad", dataset_res=512, num_gen=50_000, dataset_split="train")
+    ```
+
+---
+### Supported Precomputed Datasets
+
+We provide precompute statistics for the following commonly used configurations
+
+| Task             | Dataset   | Resolution | Reference Split          | # Reference Images | mode |
+| :-:              | :---:     | :-:        | :-:            |  :-:          | :-: |
+| Image Generation | [`cifar10`](https://www.cs.toronto.edu/~kriz/cifar.html)     | 32         | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | [`cifar10`](https://www.cs.toronto.edu/~kriz/cifar.html)     | 32         | `test`         |  10,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | [`ffhq`](https://github.com/NVlabs/ffhq-dataset)        | 1024, 256  | `trainval`     |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | [`ffhq`](https://github.com/NVlabs/ffhq-dataset)        | 1024, 256  | `trainval70k`  |  70,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | [`lsun_church`](https://www.yf.io/p/lsun/) | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | [`lsun_horse`](https://www.yf.io/p/lsun/)  | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | [`lsun_cat`](https://www.yf.io/p/lsun/)    | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | [`lsun_cat`](https://www.yf.io/p/lsun/)    | 256        | `trainfull`    |  1,657,264    |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Few Shot Generation | [`afhq_cat`](https://github.com/clovaai/stargan-v2/)  | 512        | `train`       |  5153         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Few Shot Generation | [`afhq_dog`](https://github.com/clovaai/stargan-v2/)  | 512        | `train`       |  4739         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Few Shot Generation | [`afhq_wild`](https://github.com/clovaai/stargan-v2/) | 512        | `train`       |  4738         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Few Shot Generation | [`brecahad`](https://figshare.com/articles/dataset/BreCaHAD_A_Dataset_for_Breast_Cancer_Histopathological_Annotation_and_Diagnosis/7379186)  | 512        | `train`       |  1944         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Few Shot Generation | [`metfaces`](https://github.com/NVlabs/metfaces-dataset)  | 1024       | `train`       |  1336         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image to Image   | `horse2zebra`  | 256        | `test`        |  140          |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image to Image   | `cat2dog`      | 256        | `test`        |  500          |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+
+
+
+**Using precomputed statistics**
+In order to compute the FID score with the precomputed dataset statistics, use the corresponding options. For instance, to compute the clean-fid score on generated 256x256 FFHQ images use the command:
+  ```
+  fid_score = fid.compute_fid(fdir1, dataset_name="ffhq", dataset_res=256,  mode="clean", dataset_split="trainval70k")
+  ```
+
+---
+
+### Create Custom Dataset Statistics
+- *dataset_path*: folder where the dataset images are stored
+- *custom_name*: name to be used for the statistics
+- Generating custom statistics (saved to local cache)
+  ```
+  from cleanfid import fid
+  fid.make_custom_stats(custom_name, dataset_path, mode="clean")
+  ```
+
+- Using the generated custom statistics
+  ```
+  from cleanfid import fid
+  score = fid.compute_fid("folder_fake", dataset_name=custom_name,
+            mode="clean", dataset_split="custom")
+  ```
+
+- Removing the custom stats
+  ```
+  from cleanfid import fid
+  fid.remove_custom_stats(custom_name, mode="clean")
+  ```
+
+- Check if a custom statistic already exists
+  ```
+  from cleanfid import fid
+  fid.test_stats_exists(custom_name, mode)
+  ```
+
+---
+
+## Backwards Compatibility
+
+We provide two flags to reproduce the legacy FID score.
+
+- `mode="legacy_pytorch"` <br>
+    This flag is equivalent to using the popular PyTorch FID implementation provided [here](https://github.com/mseitzer/pytorch-fid/)
+    <br>
+    The difference between using clean-fid with this option and [code](https://github.com/mseitzer/pytorch-fid/) is **~2e-06**
+    <br>
+    See [doc](https://github.com/GaParmar/clean-fid/blob/main/docs/pytorch_fid.md) for how the methods are compared
+
+
+- `mode="legacy_tensorflow"` <br>
+    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors.
+    <br>
+    The difference between using clean-fid with this option and [code](https://github.com/bioinf-jku/TTUR) is **~2e-05**
+    <br>
+  See [doc](https://github.com/GaParmar/clean-fid/blob/main/docs/tensorflow_fid.md) for detailed steps for how the methods are compared
+
+---
+
+## Building clean-fid locally from source
+   ```
+   python setup.py bdist_wheel
+   pip install dist/*
+   ```
+
+---
+
+## CleanFID Leaderboard for common tasks
 
 **CIFAR-10**
 | Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reference Split	| # reference images used 	| # generated images used	| dataset_name	| dataset_res	| task_name	|
@@ -139,181 +319,6 @@ Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/sty
 ---
 
 
-<br>
-
-**Buggy Resizing Operations** <br>
-
-
-  The definitions of resizing functions are mathematical and <em>should never be a function of the library being used</em>. Unfortunately, implementations differ across commonly-used libraries.  They are often implemented incorrectly by popular libraries. Try out the different resizing implementations in the Google colab notebook [here](https://colab.research.google.com/drive/1Q-N94S2mnLsFLpuT7WwY6d5WxGVWLGpg?usp=sharing).
-
-  <img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/resize_circle_extended.png"  width="800" />
-<br>
-
-The inconsistencies among implementations can have a drastic effect of the evaluations metrics. The table below shows that FFHQ dataset images resized with  bicubic implementation from other libraries (OpenCV, PyTorch, TensorFlow, OpenCV) have a large FID score (≥ 6) when compared to the same images resized with the correctly implemented PIL-bicubic filter. Other correctly implemented filters from PIL (Lanczos, bilinear, box) all result in relatively smaller FID score (≤ 0.75). Note that since TF 2.0, the new flag `antialias` (default: `False`) can produce results close to PIL. However, it was not used in the existing TF-FID repo and set as `False` by default.
-
- <p align="center"><img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/table_resize_sc.png"  width="500" /></p>
-
-**JPEG Image Compression**
-
-  Image compression can have a surprisingly large effect on FID.  Images are perceptually indistinguishable from each other but have a large FID score. The FID scores under the images are calculated between all FFHQ images saved using the corresponding JPEG format and the PNG format.
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/jpeg_effects.png"  width="800" />
-</p>
-
-Below, we study the effect of JPEG compression for StyleGAN2 models trained on the FFHQ dataset (left) and LSUN outdoor Church dataset (right). Note that LSUN dataset images were collected with JPEG compression (quality 75), whereas FFHQ images were collected as PNG. Interestingly, for LSUN dataset, the best FID score (3.48) is obtained when the generated images are compressed with JPEG quality 87.
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/jpeg_plots.png"  width="800" />
-</p>
-
----
-
-## Quick Start
-
-
-- install requirements
-    ```
-    pip install -r requirements.txt
-    ```
-- install the library
-    ```
-    pip install clean-fid
-    ```
-### Example Usage
-- Compute FID between two image folders
-    ```
-    from cleanfid import fid
-    score = fid.compute_fid(fdir1, fdir2)
-    ```
-- Compute FID between one folder of images and pre-computed datasets statistics (e.g., `FFHQ`)
-    ```
-    from cleanfid import fid
-    score = fid.compute_fid(fdir1, dataset_name="FFHQ", dataset_res=1024, dataset_split="trainval70k")
-    ```
-- Compute FID using a generative model and pre-computed dataset statistics:
-    ```
-    from cleanfid import fid
-    # function that accepts a latent and returns an image in range[0,255]
-    gen = lambda z: GAN(latent=z, ... , <other_flags>)
-    score = fid.compute_fid(gen=gen, dataset_name="FFHQ",
-            dataset_res=256, num_gen=50_000, dataset_split="trainval70k")
-    ```
-
-### Computing KID
-The KID score can be computed using a similar interface as FID. 
-The dataset statistics for KID are only precomputed for smaller datasets `AFHQ`, `BreCaHAD`, and `MetFaces`.
-
-- Compute FID between two image folders
-    ```
-    from cleanfid import fid
-    score = fid.compute_kid(fdir1, fdir2)
-    ```
-- Compute FID between one folder of images and pre-computed datasets statistics
-    ```
-    from cleanfid import fid
-    score = fid.compute_kid(fdir1, dataset_name="brecahad", dataset_res=512, dataset_split="train")
-    ```
-- Compute FID using a generative model and pre-computed dataset statistics:
-    ```
-    from cleanfid import fid
-    # function that accepts a latent and returns an image in range[0,255]
-    gen = lambda z: GAN(latent=z, ... , <other_flags>)
-    score = fid.compute_kid(gen=gen, dataset_name="brecahad", dataset_res=512, num_gen=50_000, dataset_split="train")
-    ```
-
----
-### Supported Precomputed Datasets
-
-We provide precompute statistics for the following commonly used configurations
-
-| Task             | Dataset   | Resolution | Reference Split          | # Reference Images | mode |
-| :-:              | :---:     | :-:        | :-:            |  :-:          | :-: |
-| Image Generation | `cifar10`     | 32         | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Image Generation | `cifar10`     | 32         | `test`         |  10,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Image Generation | `ffhq`        | 1024, 256  | `trainval`     |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Image Generation | `ffhq`        | 1024, 256  | `trainval70k`  |  70,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Image Generation | `lsun_church` | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Image Generation | `lsun_horse`  | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Image Generation | `lsun_cat`    | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Image Generation | `lsun_cat`    | 256        | `trainfull`    |  1,657,264    |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Few Shot Generation | `afhq_cat`  | 512        | `train`       |  5153         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Few Shot Generation | `afhq_dog`  | 512        | `train`       |  4739         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Few Shot Generation | `afhq_wild` | 512        | `train`       |  4738         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Few Shot Generation | `brecahad`  | 512        | `train`       |  1944         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Few Shot Generation | `metfaces`  | 1024       | `train`       |  1336         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Image to Image   | `horse2zebra`  | 256        | `test`        |  140          |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-| Image to Image   | `cat2dog`      | 256        | `test`        |  500          |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
-
-<!-- | Image to Image | horse2zebra | 256      | `train`, `test`, `train+test` | `clean`, `legacy_pytorch`, `legacy_tensorflow`|
-| Image to Image | cat2dog     | 256      | `train`, `test`, `train+test` | `clean`, `legacy_pytorch`, `legacy_tensorflow`| -->
-
-
-**Using precomputed statistics**
-In order to compute the FID score with the precomputed dataset statistics, use the corresponding options. For instance, to compute the clean-fid score on generated 256x256 FFHQ images use the command:
-  ```
-  fid_score = fid.compute_fid(fdir1, dataset_name="ffhq", dataset_res=256,  mode="clean", dataset_split="trainval70k")
-  ```
-
----
-### Create Custom Dataset Statistics
-- *dataset_path*: folder where the dataset images are stored
-- *custom_name*: name to be used for the statistics
-- Generating custom statistics (saved to local cache)
-  ```
-  from cleanfid import fid
-  fid.make_custom_stats(custom_name, dataset_path, mode="clean")
-  ```
-
-- Using the generated custom statistics
-  ```
-  from cleanfid import fid
-  score = fid.compute_fid("folder_fake", dataset_name=custom_name,
-            mode="clean", dataset_split="custom")
-  ```
-
-- Removing the custom stats
-  ```
-  from cleanfid import fid
-  fid.remove_custom_stats(custom_name, mode="clean")
-  ```
-
-- Check if a custom statistic already exists
-  ```
-  from cleanfid import fid
-  fid.test_stats_exists(custom_name, mode)
-  ```
-
----
-
-## Backwards Compatibility
-
-We provide two flags to reproduce the legacy FID score.
-
-- `mode="legacy_pytorch"` <br>
-    This flag is equivalent to using the popular PyTorch FID implementation provided [here](https://github.com/mseitzer/pytorch-fid/)
-    <br>
-    The difference between using clean-fid with this option and [code](https://github.com/mseitzer/pytorch-fid/) is **~2e-06**
-    <br>
-    See [doc](https://github.com/GaParmar/clean-fid/blob/main/docs/pytorch_fid.md) for how the methods are compared
-
-
-- `mode="legacy_tensorflow"` <br>
-    This flag is equivalent to using the official [implementation of FID](https://github.com/bioinf-jku/TTUR) released by the authors.
-    <br>
-    The difference between using clean-fid with this option and [code](https://github.com/bioinf-jku/TTUR) is **~2e-05**
-    <br>
-  See [doc](https://github.com/GaParmar/clean-fid/blob/main/docs/tensorflow_fid.md) for detailed steps for how the methods are compared
-
----
-
-## Building clean-fid locally from source
-   ```
-   python setup.py bdist_wheel
-   pip install dist/*
-   ```
-
----
 
 ## Citation
 
