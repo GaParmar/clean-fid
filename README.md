@@ -233,6 +233,8 @@ We provide two flags to reproduce the legacy FID score.
 | stylegan2-mirror-flips (10%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar10-0.1.pkl)	| 36.02	| 35.94 ± 0.17	| 43.60 ± 0.17	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
 | stylegan2-diff-augment (10%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar10-0.1.pkl)	| 14.50	| 14.53 ± 0.12	| 16.98 ± 0.18	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
 
+<br>
+
 **CIFAR-100**
 | Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reference Split	| # reference images used 	| # generated images used	| dataset_name	| dataset_res	| task_name	|
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -251,12 +253,16 @@ We provide two flags to reproduce the legacy FID score.
  | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | 2.84 | 2.86 ± 0.025 | 3.07 ± 0.025 | trainval | 50,000 | 50,000 
  | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | N/A | 2.76 ± 0.025 | 2.98 ± 0.025 | trainval70k | 50,000 | 70,000 
  
+ <br>
+ 
  **LSUN Categories**
 | Category | Model     | Checkpoint | Reported-FID | Legacy-FID (reproduced)    | Clean-FID  | Reference Split | # generated images used | # reference images used | 
 |:-: | :---:     | :-: | :-:          | :-:          | :-:         | :-: | :-: | :-: |
 Outdoor Churches | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-church-config-f.pkl) | 3.86 | 3.87 ± 0.029 | 4.08 ± 0.028 | train | 50,000 | 50,000 
 Horses | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-horse-config-f.pkl) | 3.43 | 3.41 ± 0.021 | 3.62 ± 0.023 | train | 50,000 | 50,000 
 Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/stylegan2-cat-config-f.pkl) | 6.93 | 7.02 ± 0.039 | 7.47 ± 0.035 | train | 50,000 | 50,000 
+
+<br>
 
 **FFHQ @ 256x256 (Few Show Generation)**
 | Model     | Checkpoint | Reported-FID | Legacy-FID (reproduced)    | Clean-FID  | Reference Split | # generated images used| # reference images used |
@@ -301,6 +307,7 @@ Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/sty
 | Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reported-KID (x 10^3)	| Legacy-KID (reproduced) (x 10^3)	| Clean-KID (x 10^3)	| Reference Split	| # reference images used	| # generated images used	| dataset_name	| dataset_res	| task_name	|
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | stylegan2	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/brecahad-mirror-stylegan2-noaug.pkl)	| 97.72	| 97.46 ± 0.17	| 98.35 ± 0.17	| 89.76	| 89.90 ± 0.31	| 92.51 ± 0.32	| train	| 1944	| 50000	| brecahad	| 512	| few_shot_generation	|
+| stylegan2-ada	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/brecahad-mirror-paper512-ada.pkl)	| 15.71	| 15.70 ± 0.06	| 15.63 ± 0.06	| 2.88	| 2.93 ± 0.08	| 3.08 ± 0.08	| train	| 1944	| 50000	| brecahad	| 512	| few_shot_generation	|
 
 <br>
 
@@ -308,6 +315,7 @@ Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/sty
 | Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reported-KID (x 10^3)	| Legacy-KID (reproduced) (x 10^3)	| Clean-KID (x 10^3)	| Reference Split	| # reference images used	| # generated images used	| dataset_name	| dataset_res	| task_name	|
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | stylegan2	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/metfaces-mirror-stylegan2-noaug.pkl)	| 57.26	| 57.36 ± 0.10	| 65.74 ± 0.11	| 35.66	| 35.69 ± 0.16	| 40.90 ± 0.14	| train	| 1336	| 50000	| metfaces	| 1024	| few_shot_generation	|
+| stylegan2-ada	| [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/paper-fig11a-small-datasets/metfaces-mirror-paper1024-ada.pkl)	| 18.22	| 18.18 ± 0.03	| 19.60 ± 0.03	| 2.41	| 2.38 ± 0.05	| 2.86 ± 0.04	| train	| 1336	| 50000	| metfaces	| 1024	| few_shot_generation	|
 
 
 <br>
