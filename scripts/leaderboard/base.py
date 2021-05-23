@@ -68,7 +68,7 @@ if __name__=="__main__":
                     G = legacy.load_network_pkl(f)['G_ema'].cuda()
                 zdim=512
             elif "/biggan" in exp_config["model_url"]:
-                pdb.set_trace()
+                # pdb.set_trace()
                 parser = utils.prepare_parser()
                 config = vars(parser.parse_args(""))
                 config['resolution'] = int(exp_config["dataset_res"])
@@ -76,6 +76,7 @@ if __name__=="__main__":
                     config['n_classes'] = 10
                 config['G_activation'] = nn.ReLU(inplace=False)
                 config['D_activation'] = nn.ReLU(inplace=False)
+                config['batch_size'] = args.batch_size
                 config = utils.update_config_roots(config)
                 config['skip_init'] = True
                 config['no_optim'] = True
@@ -83,25 +84,35 @@ if __name__=="__main__":
                 model = __import__(config['model'])
                 G = model.Generator(**config).cuda()
                 G.load_state_dict(torch.load(dnnlib.util.open_file_or_url(exp_config["model_url"])))
+                z_, y_ = utils.prepare_z_y(args.batch_size, G.dim_z, config['n_classes'],
+                                device=device, fp16=config['G_fp16'], z_var=config['z_var'])
                 zdim = G.dim_z
+        
         elif "stylegan2-ada-pytorch" in exp_config["model_url"]:
             path = downloads_helper.check_download_url("tmp", exp_config["model_url"])
             with open(path, 'rb') as f:
                 G = pickle.load(f)['G_ema'].cuda()
             zdim = 512
-        G = torch.nn.DataParallel(G)
+        # G = torch.nn.DataParallel(G)
         G.eval()
         if "conditional" in exp_config["task_name"]:
               def fg(z):
                 bs = z.shape[0]
-                c = torch.zeros((bs, 10)).float().cuda()
-                c2 = torch.zeros((bs)).int().cuda()
-                for _i in range(bs):
-                    l = np.random.randint(10)
-                    c[_i,l]=1.0
-                    c2[_i]=l
-                return (G(z,G.module.shared(c2)) * 127.5 + 128).clamp(0, 255).to(torch.uint8)
+                z_.sample_()
+                y_.sample_()
+                #c = torch.zeros((bs, 10)).float().cuda()
+                #c2 = torch.zeros((bs)).int().cuda()
+                #for _i in range(bs):
+                #    l = np.random.randint(10)
+                #    c[_i,l]=1.0
+                #    c2[_i]=l
+                #return (G(z,G.module.shared(c2)) * 127.5 + 128).clamp(0, 255).to(torch.uint8)
+                # return ( * 127.5 + 128).clamp(0, 255).to(torch.uint8)
+                v = nn.parallel.data_parallel(G, (z_, G.shared(y_)))
+                images = ((v * 0.5 + 0.5)* 255 + 0.5).to(torch.uint8)
+                return images
         else:
+            assert False
             fg = lambda z: (G(z,None) * 127.5 + 128).clamp(0, 255).to(torch.uint8)
 
         set_random_seed(args.seed)
