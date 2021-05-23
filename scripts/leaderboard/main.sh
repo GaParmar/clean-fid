@@ -18,11 +18,11 @@ fi
 #################################################
 # Build Cifar-10 table
 #################################################
-for idx in 0 1 2 3 4 5; do
+for idx in 0 1 2 3 4 5 6; do
     args_str="--config_file CONFIGS.config_cifar_table --exp_idx $idx"
     args_str="$args_str --batch_size 32 --output_table OUT/table_cifar.json"
     ./parallelize.sh $args_str --mode legacy_tensorflow
-    ./parallelize.sh $args_str --mode clean
+    # ./parallelize.sh $args_str --mode clean
 done
 
 

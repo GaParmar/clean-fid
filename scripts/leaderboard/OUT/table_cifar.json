@@ -178,5 +178,17 @@
         "num_generated_images": 10000,
         "reported_fid": "14.50",
         "task_name": "few_shot_generation"
+    },
+    "EXP_6": {
+        "dataset_name": "cifar10",
+        "dataset_res": "32",
+        "dataset_split": "test",
+        "legacy_tensorflow_0": 11.352606257389311,
+        "legacy_tensorflow_1": 11.510934037477114,
+        "model_name": "(class conditional) biggan-mirror-flips (100%)",
+        "model_url": "https://hanlab.mit.edu/projects/data-efficient-gans/models/biggan-cifar10.pth",
+        "num_generated_images": 10000,
+        "reported_fid": "9.59",
+        "task_name": "conditional_few_shot_generation"
     }
 }

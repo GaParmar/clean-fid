@@ -28,7 +28,6 @@ L_EXPS = [
         "model_url"            : f"{DIFF_AUG_URL}/DiffAugment-stylegan2-cifar10.pkl",
         "num_generated_images" : 10_000
     },
-    # TODO: BigGAN-cifar10 + diffaug
 
     #############################################
     # 20% data
@@ -77,5 +76,19 @@ L_EXPS = [
         "model_url"            : f"{DIFF_AUG_URL}/DiffAugment-stylegan2-cifar10-0.1.pkl",
         "num_generated_images" : 10_000
     },
+
+    #############################################
+    # 100% data (BigGAN)
+    #############################################
+    {
+        "model_name"           : "(class conditional) biggan-mirror-flips (100%)",
+        "dataset_name"         : "cifar10",
+        "dataset_res"          : "32",
+        "dataset_split"        : "test",
+        "reported_fid"         : "9.59",
+        "task_name"            : "conditional_few_shot_generation",
+        "model_url"            : f"{DIFF_AUG_URL}/biggan-cifar10.pth",
+        "num_generated_images" : 10_000
+    }
 ]
 
