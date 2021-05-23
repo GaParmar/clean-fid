@@ -233,6 +233,15 @@ We provide two flags to reproduce the legacy FID score.
 | stylegan2-mirror-flips (10%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar10-0.1.pkl)	| 36.02	| 35.94 ± 0.17	| 43.60 ± 0.17	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
 | stylegan2-diff-augment (10%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar10-0.1.pkl)	| 14.50	| 14.53 ± 0.12	| 16.98 ± 0.18	| test	| 10000	| 10000	| cifar10	| 32	| few_shot_generation	|
 
+**CIFAR-100**
+| Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reference Split	| # reference images used 	| # generated images used	| dataset_name	| dataset_res	| task_name	|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| stylegan2-mirror-flips (100%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar100.pkl)	| 16.54	| 16.44 ± 0.19	| 18.44 ± 0.24	| test	| 10000	| 10000	| cifar100	| 32	| few_shot_generation	|
+| stylegan2-diff-augment (100%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar100.pkl)	| 15.22	| 15.15 ± 0.13	| 16.80 ± 0.13	| test	| 10000	| 10000	| cifar100	| 32	| few_shot_generation	|
+| stylegan2-mirror-flips (20%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar100-0.2.pkl)	| 32.30	| 32.26 ± 0.19	| 34.88 ± 0.14	| test	| 10000	| 10000	| cifar100	| 32	| few_shot_generation	|
+| stylegan2-diff-augment (20%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar100-0.2.pkl)	| 16.65	| 16.74 ± 0.10	| 18.49 ± 0.08	| test	| 10000	| 10000	| cifar100	| 32	| few_shot_generation	|
+| stylegan2-mirror-flips (10%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar100-0.1.pkl)	| 45.87	| 45.97 ± 0.20	| 46.77 ± 0.19	| test	| 10000	| 10000	| cifar100	| 32	| few_shot_generation	|
+| stylegan2-diff-augment (10%)	| [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar100-0.1.pkl)	| 20.75	| 20.69 ± 0.12	| 23.40 ± 0.09	| test	| 10000	| 10000	| cifar100	| 32	| few_shot_generation	|
 
 <br>
 
@@ -317,7 +326,6 @@ Cat | stylegan2 | [ckpt](https://nvlabs-fi-cdn.nvidia.com/stylegan2/networks/sty
 | CUT     | 76.2 | 76.21 | 77.58 | test | 500 | 500 |
 | FastCUT | 94.0 | 93.95 | 95.37 | test | 500 | 500 |
 ---
-
 
 
 ## Citation

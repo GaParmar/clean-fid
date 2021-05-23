@@ -27,6 +27,8 @@ L_table_columns = [
 def get_ref_num(c):
     if c["dataset_name"]=="cifar10" and c["dataset_split"]=="test":
         return 10_000
+    elif c["dataset_name"]=="cifar100" and c["dataset_split"]=="test":
+        return 10_000
     elif c["dataset_name"]=="lsun_cat" and c["dataset_split"]=="trainfull":
         return 1657264
     elif c["dataset_name"]=="afhq_dog" and c["dataset_split"]=="train":
