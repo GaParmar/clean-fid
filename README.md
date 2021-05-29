@@ -132,7 +132,7 @@ The dataset statistics for KID are only precomputed for smaller datasets `AFHQ`,
 ---
 ### Supported Precomputed Datasets
 
-We provide precompute statistics for the following commonly used configurations
+We provide precompute statistics for the following commonly used configurations. Please contact us if you want to add statistics for your new datasets. 
 
 | Task             | Dataset   | Resolution | Reference Split          | # Reference Images | mode |
 | :-:              | :---:     | :-:        | :-:            |  :-:          | :-: |
@@ -222,6 +222,11 @@ We provide two flags to reproduce the legacy FID score.
 ---
 
 ## CleanFID Leaderboard for common tasks
+
+We compute the FID scores using the corresponding methods used in the original papers and using the Clean-FID proposed here. 
+All values are computed using 10 evaluation runs. We provide an [API](#cleanfid-leaderboard-api) to query the results shown in the tables below directly from the pip package.
+
+If you would like to add new numbers and models to our leaderboard, feel free to contact us. 
 
 **CIFAR-10**
 | Model	| Checkpoint	| Reported-FID	| Legacy-FID (reproduced)	| Clean-FID	| Reference Split	| # reference images used 	| # generated images used	| dataset_name	| dataset_res	| task_name	|
