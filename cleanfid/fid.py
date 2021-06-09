@@ -127,7 +127,9 @@ def get_folder_features(fdir, model=None, num_workers=12, num=None,
                         mode="clean", custom_fn_resize=None, description=""):
     # get all relevant files in the dataset
     files = sorted([file for ext in EXTENSIONS
-                    for file in glob(os.path.join(fdir, f"*.{ext}"))])
+                    for file in glob(os.path.join(fdir, f"**/*.{ext}"), recursive=True)])
+    print(f"Found {len(files)} images in the folder {fdir}")
+    # use a subset number of files if needed
     if num is not None:
         if shuffle:
             random.seed(seed)
