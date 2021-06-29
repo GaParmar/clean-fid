@@ -265,14 +265,14 @@ The `test` set is used as the reference distribution and compared to 10k generat
 **20% data**
 | Model	| Legacy-FID<br>(reported)	| Legacy-FID<br>(reproduced)	| Clean-FID	|
 | :---: | :---: | :---: | :---: |
-| stylegan2-mirror-flips [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar100-0.2.pkl)	| 32.30	| 32.26 ± 0.19	| 34.88 ± 0.14	|
-| stylegan2-diff-augment [[Zhao et al, 2020]](https://arxiv.org/pdf/2006.10738.pdf) [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar100-0.2.pkl)	| 16.65	| 16.74 ± 0.10	| 18.49 ± 0.08	|
+| stylegan2-mirror-flips [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar100-0.2.pkl)	| 32.30	| 32.26 ± 0.19	| 34.88 ± 0.14	|
+| stylegan2-diff-augment [[Zhao et al, 2020]](https://arxiv.org/pdf/2006.10738.pdf) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar100-0.2.pkl)	| 16.65	| 16.74 ± 0.10	| 18.49 ± 0.08	|
 
 **10% data**
 | Model	| Legacy-FID<br>(reported)	| Legacy-FID<br>(reproduced)	| Clean-FID	|
 | :---: | :---: | :---: | :---: |
-| stylegan2-mirror-flips [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar100-0.1.pkl)	| 45.87	| 45.97 ± 0.20	| 46.77 ± 0.19	|
-| stylegan2-diff-augment [[Zhao et al, 2020]](https://arxiv.org/pdf/2006.10738.pdf) [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar100-0.1.pkl)	| 20.75	| 20.69 ± 0.12	| 23.40 ± 0.09	|
+| stylegan2-mirror-flips [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar100-0.1.pkl)	| 45.87	| 45.97 ± 0.20	| 46.77 ± 0.19	|
+| stylegan2-diff-augment [[Zhao et al, 2020]](https://arxiv.org/pdf/2006.10738.pdf) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar100-0.1.pkl)	| 20.75	| 20.69 ± 0.12	| 23.40 ± 0.09	|
 
 <br>
 
@@ -296,23 +296,23 @@ Values are computed using 50k generated images
 The 70k images from `trainval70k` set is used as the reference images and compared to 50k generated images.
 | Model     | Legacy-FID<br>(reported) | Legacy-FID<br>(reproduced)    | Clean-FID  |
 | :---:     | :-:          | :-:          | :-:         |
-| stylegan2 [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-10k.pkl) | 14.75 | 14.88 ± 0.070 | 16.04 ± 0.078 |
-| DiffAugment-stylegan2 [[Zhao et al, 2020]](https://arxiv.org/pdf/2006.10738.pdf) [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-10k.pkl) | 7.86 | 7.82 ± 0.045 | 8.12 ± 0.044 |
+| stylegan2 [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-10k.pkl) | 14.75 | 14.88 ± 0.070 | 16.04 ± 0.078 |
+| DiffAugment-stylegan2 [[Zhao et al, 2020]](https://arxiv.org/pdf/2006.10738.pdf) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-10k.pkl) | 7.86 | 7.82 ± 0.045 | 8.12 ± 0.044 |
 
 
 **5k - images @ 256x256 (Few Shot Generation)**<br>
 The 70k images from `trainval70k` set is used as the reference images and compared to 50k generated images.
 | Model     | Legacy-FID<br>(reported) | Legacy-FID<br>(reproduced)    | Clean-FID  |
 | :---:     | :-:          | :-:          | :-:         |
-| stylegan2 [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-5k.pkl) | 26.60 | 26.64 ± 0.086 | 28.17 ± 0.090 |
-| DiffAugment-stylegan2 [[Zhao et al, 2020]](https://arxiv.org/pdf/2006.10738.pdf) [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-5k.pkl) | 10.45 | 10.45 ± 0.047 | 10.99 ± 0.050 |
+| stylegan2 [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-5k.pkl) | 26.60 | 26.64 ± 0.086 | 28.17 ± 0.090 |
+| DiffAugment-stylegan2 [[Zhao et al, 2020]](https://arxiv.org/pdf/2006.10738.pdf) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-5k.pkl) | 10.45 | 10.45 ± 0.047 | 10.99 ± 0.050 |
 
 **1k - images @ 256x256 (Few Shot Generation)** <br>
 The 70k images from `trainval70k` set is used as the reference images and compared to 50k generated images.
 | Model     | Legacy-FID<br>(reported) | Legacy-FID<br>(reproduced)    | Clean-FID  |
 | :---:     | :-:          | :-:          | :-:         |
-| stylegan2 [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-1k.pkl) | 62.16 | 62.14 ± 0.108 | 64.17 ± 0.113 |
-| DiffAugment-stylegan2 [[Zhao et al, 2020]](https://arxiv.org/pdf/2006.10738.pdf) [ckpt](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-1k.pkl) | 25.66 | 25.60 ± 0.071 | 27.26 ± 0.077 |
+| stylegan2 [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-ffhq-1k.pkl) | 62.16 | 62.14 ± 0.108 | 64.17 ± 0.113 |
+| DiffAugment-stylegan2 [[Zhao et al, 2020]](https://arxiv.org/pdf/2006.10738.pdf) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-ffhq-1k.pkl) | 25.66 | 25.60 ± 0.071 | 27.26 ± 0.077 |
 
  <br>
 
