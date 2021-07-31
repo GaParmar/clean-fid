@@ -396,8 +396,18 @@ All 1336 images from `train` split are used as the reference images and compared
 
 ### Horse2Zebra (Image to Image Translation)
 All 140 images from `test` split are used as the reference images and compared to 120 translated images.
+
+† The translated images for these methods were intitially compared by [[Part et al, 2020]](https://arxiv.org/abs/2007.15651) using .jpeg compressions. 
+We retrained the using these models using the same settings and generated the images as .png for a fair comparision
+
 | Model     | Legacy-FID<br>(reported) | Legacy-FID<br>(reproduced)    | Clean-FID  |
-| :---:     | :-:          | :-:          | :-:         |
+| :---      | :-:          | :-:          | :-:         |
+| CycleGAN [[Zhu et al, 2017]](https://arxiv.org/pdf/1703.10593.pdf) reported by [[Part et al, 2020]](https://arxiv.org/abs/2007.15651)       | 77.2  | 77.20  | 75.17 |
+| MUNIT  [[Huang et al, 2018]](https://arxiv.org/pdf/1804.04732.pdf) reported by [[Part et al, 2020]](https://arxiv.org/abs/2007.15651) †   | 133.8 | N/A |120.48 |
+| DRIT   [[Lee et al, 2017]](https://arxiv.org/pdf/1808.00948.pdf) reported by [[Part et al, 2020]](https://arxiv.org/abs/2007.15651) †     | 140.0 | N/A | 99.56 |
+| Distance     [[Benaim and Wolf et al, 2017]](https://arxiv.org/pdf/1706.00826.pdf) reported by [[Part et al, 2020]](https://arxiv.org/abs/2007.15651)   | 72.0 | 71.97 | 71.01 |
+| SelfDistance [[Benaim and Wolf et al, 2017]](https://arxiv.org/pdf/1706.00826.pdf) reported by [[Part et al, 2020]](https://arxiv.org/abs/2007.15651)   | 80.8 | 80.78 | 79.28 |
+| GCGAN        [[Fu et al, 2019]](https://arxiv.org/pdf/1809.05852.pdf) reported by [[Part et al, 2020]](https://arxiv.org/abs/2007.15651)                | 86.7 | 85.86 | 83.65 |
 | CUT     [[Part et al, 2020]](https://arxiv.org/abs/2007.15651)| 45.5 | 45.51 | 43.71 |
 | FastCUT [[Part et al, 2020]](https://arxiv.org/abs/2007.15651) | 73.4 | 73.38 | 72.53 |
 
