@@ -397,28 +397,37 @@ All 1336 images from `train` split are used as the reference images and compared
 ### Horse2Zebra (Image to Image Translation)
 All 140 images from `test` split are used as the reference images and compared to 120 translated images.
 
-† The translated images for these methods were intitially compared by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) using .jpeg compressions. 
-We retrained the using these models using the same settings and generated the images as .png for a fair comparision
-
 | Model     | Legacy-FID<br>(reported) | Legacy-FID<br>(reproduced)    | Clean-FID  |
 | :---      | :-:          | :-:          | :-:         |
-| CycleGAN [[Zhu et al, 2017]](https://arxiv.org/pdf/1703.10593.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651)       | 77.2  | 77.20  | 75.17 |
-| MUNIT  [[Huang et al, 2018]](https://arxiv.org/pdf/1804.04732.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651)    | 133.8 | - † |120.48 |
-| DRIT   [[Lee et al, 2017]](https://arxiv.org/pdf/1808.00948.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651)      | 140.0 | - † | 99.56 |
+| CUT     [[Park et al, 2020]](https://arxiv.org/abs/2007.15651)| 45.5 | 45.51 | 43.71 |
 | Distance     [[Benaim and Wolf et al, 2017]](https://arxiv.org/pdf/1706.00826.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651)   | 72.0 | 71.97 | 71.01 |
+| FastCUT [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) | 73.4 | 73.38 | 72.53 |
+| CycleGAN [[Zhu et al, 2017]](https://arxiv.org/pdf/1703.10593.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651)       | 77.2  | 77.20  | 75.17 |
 | SelfDistance [[Benaim and Wolf et al, 2017]](https://arxiv.org/pdf/1706.00826.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651)   | 80.8 | 80.78 | 79.28 |
 | GCGAN        [[Fu et al, 2019]](https://arxiv.org/pdf/1809.05852.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651)                | 86.7 | 85.86 | 83.65 |
-| CUT     [[Park et al, 2020]](https://arxiv.org/abs/2007.15651)| 45.5 | 45.51 | 43.71 |
-| FastCUT [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) | 73.4 | 73.38 | 72.53 |
+| MUNIT  [[Huang et al, 2018]](https://arxiv.org/pdf/1804.04732.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651)    | 133.8 | - † |120.48 |
+| DRIT   [[Lee et al, 2017]](https://arxiv.org/pdf/1808.00948.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651)      | 140.0 | - † | 99.56 |
+
+† The translated images for these methods were intitially compared by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) using .jpeg compression. 
+We retrain these two methods using the same protocal and generate the images as .png for a fair comparision. 
 
 <br>
 
 ### Cat2Dog (Image to Image Translation)
 All 500 images from `test` split are used as the reference images and compared to 500 translated images.
 | Model     | Legacy-FID<br>(reported) | Legacy-FID<br>(reproduced)    | Clean-FID  |
-| :---:     | :-:          | :-:          | :-:         |
+| :---      | :-:          | :-:          | :-:         |
 | CUT     [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) | 76.2 | 76.21 | 77.58 |
 | FastCUT [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) | 94.0 | 93.95 | 95.37 |
+| GCGAN   [[Fu et al, 2019]](https://arxiv.org/pdf/1809.05852.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) | 96.6 | 96.61 | 96.49 |
+| MUNIT  [[Huang et al, 2018]](https://arxiv.org/pdf/1804.04732.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) | 104.4 | - † | 123.73 |
+| DRIT [[Lee et al, 2017]](https://arxiv.org/pdf/1808.00948.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) | 123.4 | - † | 127.21 |
+| SelfDistance [[Benaim and Wolf et al, 2017]](https://arxiv.org/pdf/1706.00826.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) | 144.4 | 144.42 | 147.23 |
+| Distance     [[Benaim and Wolf et al, 2017]](https://arxiv.org/pdf/1706.00826.pdf) reported by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) | 155.3 | 155.34 | 158.39 |
+
+† The translated images for these methods were intitially compared by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) using .jpeg compression. 
+We retrain these two methods using the same protocal and generate the images as .png for a fair comparision. 
+
 
 
 ---
