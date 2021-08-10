@@ -232,11 +232,17 @@ If you would like to add new numbers and models to our leaderboard, feel free to
 
 The `test` set is used as the reference distribution and compared to 10k generated images.
 
-**100% data**
+**100% data (unconditional)**
 | Model	| Legacy-FID<br>(reported)	| Legacy-FID<br>(reproduced)	| Clean-FID	|
 | :---: | :---: | :---: | :---: |
-| stylegan2-diff-augment [[Zhao et al, 2020]](https://arxiv.org/pdf/2006.10738.pdf) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar10.pkl)	| 9.89	| 9.90 ± 0.09	| 10.85 ± 0.10	|
-| stylegan2-mirror-flips 	[[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar10.pkl)	| 11.07	| 11.07 ± 0.10	| 12.96 ± 0.07	|
+| stylegan2 (+ada + tuning) [[Karras et al, 2020]](https://arxiv.org/abs/2006.06676) | - | - | 8.20 ± 0.10
+| stylegan2 (+ada) [[Karras et al, 2020]](https://arxiv.org/abs/2006.06676) | - | - | 9.26 ± 0.06
+| stylegan2 (diff-augment) [[Zhao et al, 2020]](https://arxiv.org/abs/2006.10738) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/DiffAugment-stylegan2-cifar10.pkl)	| 9.89	| 9.90 ± 0.09	| 10.85 ± 0.10	|
+| stylegan2 (mirror-flips) 	[[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [[ckpt]](https://hanlab.mit.edu/projects/data-efficient-gans/models/stylegan2-cifar10.pkl)	| 11.07	| 11.07 ± 0.10	| 12.96 ± 0.07	|
+| stylegan2 (without-flips) [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) | - | - | 14.53 ± 0.13 |
+| AutoGAN (config A) [[Gong et al, 2019]](https://arxiv.org/abs/1908.03835) | - | - | 21.18 ± 0.12 |
+| AutoGAN (config B) [[Gong et al, 2019]](https://arxiv.org/abs/1908.03835) | - | - | 22.46 ± 0.15 |
+| AutoGAN (config C) [[Gong et al, 2019]](https://arxiv.org/abs/1908.03835) | - | - | 23.62 ± 0.30 |
 
 **20% data**
 | Model	| Legacy-FID<br>(reported)	| Legacy-FID<br>(reproduced)	| Clean-FID	|
