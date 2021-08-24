@@ -299,14 +299,15 @@ Values are computed using 50k generated images
  The 70k images from `trainval70k` set is used as the reference images and compared to 50k generated images.
 | Model     | Legacy-FID<br>(reported) | Legacy-FID<br>(reproduced)    | Clean-FID  |
 | :---      | :-:          | :-:          | :-:         |
-| zCR [[Zhao et al, 2020]](https://arxiv.org/abs/2002.04724) reported by [[Karras et al, 2020]](https://arxiv.org/abs/2006.06676)                 | 3.45 ± 0.19 | 3.29 ± 0.01 | 3.40 ± 0.01 |
-| stylegan2 [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) reported by [[Karras et al, 2020]](https://arxiv.org/abs/2006.06676)         | 3.66 ± 0.10 | 3.57 ± 0.03 | 3.73 ± 0.03 |
-| PA-GAN [[Zhang and Khoreva et al, 2019]](https://arxiv.org/abs/1901.10422) reported by [[Karras et al, 2020]](https://arxiv.org/abs/2006.06676) | 3.78 ± 0.06 | 3.67 ± 0.03 | 3.81 ± 0.03 |
-| Auxiliary rotation [[Chen et al, 2019]](https://arxiv.org/abs/1811.11212) reported by [[Karras et al, 2020]](https://arxiv.org/abs/2006.06676)  | 4.16 ± 0.05 | 4.10 ± 0.02 | 4.29 ± 0.03 |
-| Adaptive Dropout [[Karras et al, 2020]](https://arxiv.org/abs/2006.06676)                                                                       | 4.16 ± 0.05 | 4.09 ± 0.02 | 4.20 ± 0.02 |
-| Spectral Norm [[Miyato et al, 2018]](https://arxiv.org/abs/1802.05957) reported by [[Karras et al, 2020]](https://arxiv.org/abs/2006.06676)     | 4.60 ± 0.19 | 4.43 ± 0.02 | 4.65 ± 0.02 |
-| WGAN-GP [[Gulrajani et al, 2017]](https://arxiv.org/abs/1704.00028) reported by [[Karras et al, 2020]](https://arxiv.org/abs/2006.06676)        | 6.54 ± 0.37 | 6.19 ± 0.03 | 6.62 ± 0.03 |
-
+| zCR [[Zhao et al, 2020]](https://arxiv.org/abs/2002.04724) †                  | 3.45 ± 0.19 | 3.29 ± 0.01 | 3.40 ± 0.01 |
+| stylegan2 [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) †          | 3.66 ± 0.10 | 3.57 ± 0.03 | 3.73 ± 0.03 |
+| PA-GAN [[Zhang and Khoreva et al, 2019]](https://arxiv.org/abs/1901.10422) †  | 3.78 ± 0.06 | 3.67 ± 0.03 | 3.81 ± 0.03 |
+| Auxiliary rotation [[Chen et al, 2019]](https://arxiv.org/abs/1811.11212) †   | 4.16 ± 0.05 | 4.10 ± 0.02 | 4.29 ± 0.03 |
+| Adaptive Dropout [[Karras et al, 2020]](https://arxiv.org/abs/2006.06676) †   | 4.16 ± 0.05 | 4.09 ± 0.02 | 4.20 ± 0.02 |
+| Spectral Norm [[Miyato et al, 2018]](https://arxiv.org/abs/1802.05957) †      | 4.60 ± 0.19 | 4.43 ± 0.02 | 4.65 ± 0.02 |
+| WGAN-GP [[Gulrajani et al, 2017]](https://arxiv.org/abs/1704.00028) †         | 6.54 ± 0.37 | 6.19 ± 0.03 | 6.62 ± 0.03 |
+† reported by [[Karras et al, 2020]](https://arxiv.org/abs/2006.06676)
+<br>
 
 **30k - images @ 256x256 (Few Shot Generation)**<br>
  The 70k images from `trainval70k` set is used as the reference images and compared to 50k generated images.
