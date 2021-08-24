@@ -37,3 +37,4 @@ models/*
 stats*
 scripts/leaderboard/CONFIGS/__pycache__/*
 all_stats.tar.gz
+scripts/_rebuttal
