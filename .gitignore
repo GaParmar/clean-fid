@@ -31,6 +31,7 @@ scripts/leaderboard/*
 scripts/pip_versions/*
 scripts/tf_flags/*
 scripts/upsampling_experiments/*
+scripts/figures/*
 *.json
 docs/tests.md
 models/*
@@ -38,3 +39,5 @@ stats*
 scripts/leaderboard/CONFIGS/__pycache__/*
 all_stats.tar.gz
 scripts/_rebuttal
+scripts/*
+temp.py
