@@ -479,11 +479,10 @@ If you find this repository useful for your research, please cite the following 
 [LPIPS](https://github.com/richzhang/PerceptualSimilarity): Perceptual Similarity Metric and Dataset. <br>
 
 
-### Credits
-[PyTorch-StyleGAN2](https://github.com/rosinality/stylegan2-pytorch) ([LICENSE](https://github.com/rosinality/stylegan2-pytorch/blob/master/LICENSE))
+--- 
+### Licenses
+All material in this repository is made available under the [MIT License](https://github.com/GaParmar/clean-fid/blob/main/LICENSE). 
 
-[PyTorch-FID](https://github.com/mseitzer/pytorch-fid/) ([LICENSE](https://github.com/mseitzer/pytorch-fid/blob/master/LICENSE))
+[inception_pytorch.py](https://github.com/GaParmar/clean-fid/blob/main/cleanfid/inception_pytorch.py) is derived from the PyTorch implementation of FID provided by Maximilian Seitzer. These files were originally shared under the [Apache 2.0 License.](https://github.com/mseitzer/pytorch-fid/blob/master/LICENSE)  
 
-[StyleGAN2](https://github.com/NVlabs/stylegan2) ([LICENSE](https://nvlabs.github.io/stylegan2/license.html))
-
-converted FFHQ weights: [code](https://github.com/eladrich/pixel2style2pixel) |  [LICENSE](https://github.com/eladrich/pixel2style2pixel/blob/master/LICENSE)
+[inception-2015-12-05.pt](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/metrics/inception-2015-12-05.pt) is a torchscript model of the pre-trained Inception-v3 network by Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jonathon Shlens, and Zbigniew Wojna. The network was originally shared under Apache 2.0 license on the TensorFlow Models repository. The torchscript wrapper is provided by Tero Karras and Miika Aittala and Janne Hellsten and Samuli Laine and Jaakko Lehtinen and Timo Aila which is released under the [Nvidia Source Code License.](https://nvlabs.github.io/stylegan2-ada-pytorch/license.html) 
