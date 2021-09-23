@@ -41,3 +41,4 @@ all_stats.tar.gz
 scripts/_rebuttal
 scripts/*
 temp.py
+notebooks/*

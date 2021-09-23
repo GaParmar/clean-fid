@@ -10,27 +10,24 @@ from cleanfid.utils import *
 from cleanfid.features import *
 from cleanfid.resize import *
 
+
 """
-Compute the FID score given the mu, sigma of two sets
+Numpy implementation of the Frechet Distance.
+The Frechet distance between two multivariate Gaussians X_1 ~ N(mu_1, C_1)
+and X_2 ~ N(mu_2, C_2) is
+        d^2 = ||mu_1 - mu_2||^2 + Tr(C_1 + C_2 - 2*sqrt(C_1*C_2)).
+Stable version by Danica J. Sutherland.
+Params:
+    mu1   : Numpy array containing the activations of a layer of the
+            inception net (like returned by the function 'get_predictions')
+            for generated samples.
+    mu2   : The sample mean over activations, precalculated on an
+            representative data set.
+    sigma1: The covariance matrix over activations for generated samples.
+    sigma2: The covariance matrix over activations, precalculated on an
+            representative data set.
 """
 def frechet_distance(mu1, sigma1, mu2, sigma2, eps=1e-6):
-    """Numpy implementation of the Frechet Distance.
-    The Frechet distance between two multivariate Gaussians X_1 ~ N(mu_1, C_1)
-    and X_2 ~ N(mu_2, C_2) is
-            d^2 = ||mu_1 - mu_2||^2 + Tr(C_1 + C_2 - 2*sqrt(C_1*C_2)).
-    Stable version by Danica J. Sutherland.
-    Params:
-    -- mu1   : Numpy array containing the activations of a layer of the
-               inception net (like returned by the function 'get_predictions')
-               for generated samples.
-    -- mu2   : The sample mean over activations, precalculated on an
-               representative data set.
-    -- sigma1: The covariance matrix over activations for generated samples.
-    -- sigma2: The covariance matrix over activations, precalculated on an
-               representative data set.
-    Returns:
-    --   : The Frechet Distance.
-    """
     mu1 = np.atleast_1d(mu1)
     mu2 = np.atleast_1d(mu2)
     sigma1 = np.atleast_2d(sigma1)
@@ -89,6 +86,7 @@ def get_batch_features(batch, model, device):
         feat = model(batch.to(device))
     return feat.detach().cpu().numpy()
 
+
 """
 Compute the inception features for a list of files
 """
@@ -119,8 +117,9 @@ def get_files_features(l_files, model=None, num_workers=12,
     np_feats = np.concatenate(l_feats)
     return np_feats
 
+
 """
-Compute the inception features for a folder of features
+Compute the inception features for a folder of image files
 """
 def get_folder_features(fdir, model=None, num_workers=12, num=None,
                         shuffle=False, seed=0, batch_size=128, device=torch.device("cuda"),
@@ -142,6 +141,7 @@ def get_folder_features(fdir, model=None, num_workers=12, num=None,
                                   description=description)
     return np_feats
 
+
 """
 Compute the FID score given the inception features stack
 """
@@ -149,6 +149,7 @@ def fid_from_feats(feats1, feats2):
     mu1, sig1 = np.mean(feats1, axis=0), np.cov(feats1, rowvar=False)
     mu2, sig2 = np.mean(feats2, axis=0), np.cov(feats2, rowvar=False)
     return frechet_distance(mu1, sig1, mu2, sig2)
+
 
 """
 Computes the FID score for a folder of images for a specific dataset 
@@ -172,6 +173,7 @@ def fid_folder(fdir, dataset_name, dataset_res, dataset_split,
     sigma = np.cov(np_feats, rowvar=False)
     fid = frechet_distance(mu, sigma, ref_mu, ref_sigma)
     return fid
+
 
 """
 Compute the FID stats from a generator model
@@ -265,6 +267,10 @@ def test_stats_exists(name, mode):
     fpath = os.path.join(stats_folder, fname)
     return os.path.exists(fpath)
 
+
+"""
+Remove the custom FID features from the stats folder
+"""
 def remove_custom_stats(name, mode="clean"):
     stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
     split, res="custom", "na"

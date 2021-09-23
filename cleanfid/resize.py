@@ -15,6 +15,13 @@ dict_name_to_filter = {
         "lanczos" : Image.LANCZOS,
         "box"     : Image.BOX
     },
+    "OpenCV": {
+        "bilinear": cv2.INTER_LINEAR,
+        "bicubic" : cv2.INTER_CUBIC,
+        "lanczos" : cv2.INTER_LANCZOS4,
+        "nearest" : cv2.INTER_NEAREST,
+        "area"    : cv2.INTER_AREA
+    }
 }
 
 def build_resizer(mode):
@@ -39,7 +46,6 @@ def make_resizer(library, quantize_after, filter, output_size):
             x = x.resize(output_size, resample=dict_name_to_filter[library][filter])
             x = np.asarray(x).astype(np.uint8)
             return x
-
     elif library == "PIL" and not quantize_after:
         s1, s2 = output_size
         def resize_single_channel(x_np):
@@ -50,7 +56,6 @@ def make_resizer(library, quantize_after, filter, output_size):
             x = [resize_single_channel(x[:, :, idx]) for idx in range(3)]
             x = np.concatenate(x, axis=2).astype(np.float32)
             return x
-
     elif library == "PyTorch":
         import warnings
         # ignore the numpy warnings
@@ -62,7 +67,6 @@ def make_resizer(library, quantize_after, filter, output_size):
             if quantize_after:
                 x = x.astype(np.uint8)
             return x
-
     elif library == "TensorFlow":
         import warnings
         # ignore the numpy warnings
@@ -75,7 +79,6 @@ def make_resizer(library, quantize_after, filter, output_size):
             if quantize_after:
                 x = x.astype(np.uint8)
             return x
-    
     elif library=="OpenCV":
         import cv2
         name_to_filter = {
