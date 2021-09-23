@@ -290,8 +290,13 @@ The `test` set is used as the reference distribution and compared to 10k generat
 Values are computed using 50k generated images
 | Model     | Legacy-FID<br>(reported) | Legacy-FID<br>(reproduced)    | Clean-FID  | Reference Split |
 | :---:     | :-:          | :-:          | :-:         | :-: |
- | stylegan2 [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [[ckpt]](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | 2.84 | 2.86 ± 0.025 | 3.07 ± 0.025 | `trainval` |
- | stylegan2 [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [[ckpt]](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | N/A | 2.76 ± 0.025 | 2.98 ± 0.025 | `trainval70k` |
+ | stylegan1 (config A) [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) | 4.4  | 4.39 ± 0.03 | 4.77 ± 0.03 | `trainval` |
+ | stylegan2 (config B) [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) | 4.39 | 4.43 ± 0.03 | 4.89 ± 0.03 | `trainval` |
+ | stylegan2 (config C) [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) | 4.38 | 4.40 ± 0.02 | 4.79 ± 0.02 | `trainval` |
+ | stylegan2 (config D) [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) | 4.34 | 4.34 ± 0.02 | 4.78 ± 0.03 | `trainval` |
+ | stylegan2 (config E) [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) | 3.31 | 3.33 ± 0.02 | 3.79 ± 0.02 | `trainval` |
+ | stylegan2 (config F) [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [[ckpt]](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | 2.84 | 2.83 +- 0.03 | 3.06 +- 0.02 | `trainval` |
+ | stylegan2 [[Karras et al, 2020]](https://arxiv.org/abs/1912.04958) [[ckpt]](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/ffhq.pkl) | N/A | 2.76 ± 0.03 | 2.98 ± 0.03 | `trainval70k` |
  
 <br>
 
