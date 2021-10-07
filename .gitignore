@@ -42,3 +42,4 @@ scripts/_rebuttal
 scripts/*
 temp.py
 notebooks/*
+figures/*

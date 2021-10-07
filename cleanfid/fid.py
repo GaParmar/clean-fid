@@ -98,14 +98,8 @@ def get_files_features(l_files, model=None, num_workers=12,
     if model is None:
         model = build_feature_extractor(mode, device)
     
-    # build resizing function based on options
-    if custom_fn_resize is not None:
-        fn_resize = custom_fn_resize
-    else:
-        fn_resize = build_resizer(mode)
-    
     # wrap the images in a dataloader for parallelizing the resize operation
-    dataset = ResizeDataset(l_files, fn_resize=fn_resize)
+    dataset = ResizeDataset(l_files, mode=mode)
     dataloader = torch.utils.data.DataLoader(dataset,
                     batch_size=batch_size, shuffle=False,
                     drop_last=False, num_workers=num_workers)

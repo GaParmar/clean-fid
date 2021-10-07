@@ -1,5 +1,5 @@
 """
-helpers for extractign features from image
+helpers for extracting features from image
 """
 import os
 import numpy as np
@@ -40,6 +40,7 @@ def build_feature_extractor(mode, device=torch.device("cuda")):
     elif mode=="clean":
         feat_model = feature_extractor(name="torchscript_inception", resize_inside=False, device=device)
     return feat_model
+
 
 
 """

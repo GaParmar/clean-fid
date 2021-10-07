@@ -7,6 +7,7 @@ import urllib.request
 import requests
 import shutil
 import torch.nn.functional as F
+from cleanfid.resize import *
 
 
 class ResizeDataset(torch.utils.data.Dataset):
@@ -18,11 +19,12 @@ class ResizeDataset(torch.utils.data.Dataset):
     fn_resize: function that takes an np_array as input [0,255]
     """
 
-    def __init__(self, files, size=(299, 299), fn_resize=None):
+    def __init__(self, files, mode, size=(299, 299)):
         self.files = files
         self.transforms = torchvision.transforms.ToTensor()
         self.size = size
-        self.fn_resize = fn_resize
+        self.fn_resize = build_resizer(mode)
+
 
     def __len__(self):
         return len(self.files)

@@ -5,7 +5,9 @@ import numpy as np
 import torch
 from PIL import Image
 import torch.nn.functional as F
+import cv2
 from cleanfid.utils import *
+
 
 dict_name_to_filter = {
     "PIL": {
