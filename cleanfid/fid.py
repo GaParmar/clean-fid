@@ -282,6 +282,7 @@ Cache a custom dataset statistics file
 def make_custom_stats(name, fdir, num=None, mode="clean", 
                     num_workers=0, batch_size=64, device=torch.device("cuda")):
     stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
+    os.makedirs(stats_folder, exist_ok=True)
     split, res = "custom", "na"
     outname = f"{name}_{mode}_{split}_{res}.npz"
     outf = os.path.join(stats_folder, outname)
