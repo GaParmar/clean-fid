@@ -254,10 +254,13 @@ def compare_folders(fdir1, fdir2, feat_model, mode, num_workers=0,
 """
 Test if a custom statistic exists
 """
-def test_stats_exists(name, mode):
+def test_stats_exists(name, mode, metric="FID"):
     stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
     split, res="custom", "na"
-    fname = f"{name}_{mode}_{split}_{res}.npz"
+    if metric=="FID":
+        fname = f"{name}_{mode}_{split}_{res}.npz"
+    elif metric=="KID":
+        fname = f"{name}_{mode}_{split}_{res}_kid.npz"
     fpath = os.path.join(stats_folder, fname)
     return os.path.exists(fpath)
 
@@ -267,6 +270,7 @@ Remove the custom FID features from the stats folder
 """
 def remove_custom_stats(name, mode="clean"):
     stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
+    # remove the FID stats
     split, res="custom", "na"
     outname = f"{name}_{mode}_{split}_{res}.npz"
     outf = os.path.join(stats_folder, outname)
@@ -274,7 +278,12 @@ def remove_custom_stats(name, mode="clean"):
         msg = f"The stats file {name} does not exist."
         raise Exception(msg)
     os.remove(outf)
-
+    # remove the KID stats
+    outf = os.path.join(stats_folder, f"{name}_{mode}_{split}_{res}_kid.npz")
+    if not os.path.exists(outf):
+        msg = f"The stats file {name} does not exist."
+        raise Exception(msg)
+    os.remove(outf)
 
 """
 Cache a custom dataset statistics file
@@ -297,11 +306,16 @@ def make_custom_stats(name, fdir, num=None, mode="clean",
     # get all inception features for folder images
     np_feats = get_folder_features(fdir, feat_model, num_workers=num_workers, num=num,
                                     batch_size=batch_size, device=device,
-                                    mode=mode, description=f"FID {fbname} : ")
+                                    mode=mode, description=f"custom stats: {fbname} : ")
     mu = np.mean(np_feats, axis=0)
     sigma = np.cov(np_feats, rowvar=False)
-    print(f"saving custom stats to {outf}")
+    print(f"saving custom FID stats to {outf}")
     np.savez_compressed(outf, mu=mu, sigma=sigma)
+    # KID stats
+    outf = os.path.join(stats_folder, f"{name}_{mode}_{split}_{res}_kid.npz")
+    print(f"saving custom KID stats to {outf}")
+    np.savez_compressed(outf, feats=np_feats)
+
 
 
 def compute_kid(fdir1=None, fdir2=None, gen=None, 

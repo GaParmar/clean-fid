@@ -43,3 +43,5 @@ scripts/*
 temp.py
 notebooks/*
 figures/*
+
+docs/build.md
