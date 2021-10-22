@@ -45,3 +45,4 @@ notebooks/*
 figures/*
 
 docs/build.md
+temp/**/*.*

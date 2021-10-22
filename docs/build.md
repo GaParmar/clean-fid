@@ -6,7 +6,7 @@
 
 ## Installing locally
 ```
-    python -m pip install dist/clean_fid-0.1.14-py3-none-any.whl --force-reinstall
+    python -m pip install dist/clean_fid-0.1.16-py3-none-any.whl --force-reinstall
 ```
 
 ## Run the tests locally
@@ -17,5 +17,5 @@
 
 ## Push to pip
 ```
-python -m twine upload dist/clean_fid-0.1.14-py3-none-any.whl
+python -m twine upload dist/clean_fid-0.1.15-py3-none-any.whl
 ```

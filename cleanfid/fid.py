@@ -100,6 +100,8 @@ def get_files_features(l_files, model=None, num_workers=12,
     
     # wrap the images in a dataloader for parallelizing the resize operation
     dataset = ResizeDataset(l_files, mode=mode)
+    if custom_fn_resize is not None:
+        dataset.fn_resize = custom_fn_resize
     dataloader = torch.utils.data.DataLoader(dataset,
                     batch_size=batch_size, shuffle=False,
                     drop_last=False, num_workers=num_workers)
