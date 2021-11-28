@@ -387,9 +387,13 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
 def compute_fid(fdir1=None, fdir2=None, gen=None, 
             mode="clean", num_workers=12, batch_size=32,
             device=torch.device("cuda"), dataset_name="FFHQ",
-            dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512):
+            dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512,
+            custom_feat_model=None):
     # build the feature extractor based on the mode
-    feat_model = build_feature_extractor(mode, device)
+    if custom_feat_mode is None:
+        feat_model = build_feature_extractor(mode, device)
+    else:
+        feat_model = custom_feat_mode
     
     # if both dirs are specified, compute FID between folders
     if fdir1 is not None and fdir2 is not None:
