@@ -5,6 +5,7 @@ from glob import glob
 import torch
 import numpy as np
 from scipy import linalg
+import zipfile
 import cleanfid
 from cleanfid.utils import *
 from cleanfid.features import *
@@ -121,7 +122,12 @@ def get_folder_features(fdir, model=None, num_workers=12, num=None,
                         shuffle=False, seed=0, batch_size=128, device=torch.device("cuda"),
                         mode="clean", custom_fn_resize=None, description=""):
     # get all relevant files in the dataset
-    files = sorted([file for ext in EXTENSIONS
+    if ".zip" in fdir:
+        files = list(set(zipfile.ZipFile(fdir).namelist()))
+        # remove the non-image files inside the zip
+        files = [x for x in files if os.path.splitext(x)[1].lower()[1:] in EXTENSIONS]
+    else:
+        files = sorted([file for ext in EXTENSIONS
                     for file in glob(os.path.join(fdir, f"**/*.{ext}"), recursive=True)])
     print(f"Found {len(files)} images in the folder {fdir}")
     # use a subset number of files if needed

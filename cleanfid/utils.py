@@ -8,6 +8,7 @@ import requests
 import shutil
 import torch.nn.functional as F
 from cleanfid.resize import *
+import zipfile
 
 
 class ResizeDataset(torch.utils.data.Dataset):
@@ -19,18 +20,21 @@ class ResizeDataset(torch.utils.data.Dataset):
     fn_resize: function that takes an np_array as input [0,255]
     """
 
-    def __init__(self, files, mode, size=(299, 299)):
+    def __init__(self, files, mode, size=(299, 299), fdir=None):
         self.files = files
+        self.fdir=fdir
         self.transforms = torchvision.transforms.ToTensor()
         self.size = size
         self.fn_resize = build_resizer(mode)
-
 
     def __len__(self):
         return len(self.files)
 
     def __getitem__(self, i):
         path = str(self.files[i])
+        if '.zip' in self.fdir:
+            with zipfile.ZipFile(self.fdir).open(path, 'r') as f:
+                img_np = np.array(Image.open(f).convert('RGB'))
         if ".npy" in path:
             img_np = np.load(path)
         else:
