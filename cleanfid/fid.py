@@ -5,7 +5,6 @@ from glob import glob
 import torch
 import numpy as np
 from scipy import linalg
-import zipfile
 import cleanfid
 from cleanfid.utils import *
 from cleanfid.features import *
@@ -101,11 +100,9 @@ def get_files_features(l_files, model=None, num_workers=12,
     
     # wrap the images in a dataloader for parallelizing the resize operation
     dataset = ResizeDataset(l_files, mode=mode)
-    if custom_fn_resize is not None:
-        dataset.fn_resize = custom_fn_resize
     dataloader = torch.utils.data.DataLoader(dataset,
                     batch_size=batch_size, shuffle=False,
-                    drop_last=False, num_workers=num_workers)
+                    drop_last=False, num_workers=num_workers if os.name != "nt" else 0)
 
     # collect all inception features
     l_feats = []
@@ -122,12 +119,7 @@ def get_folder_features(fdir, model=None, num_workers=12, num=None,
                         shuffle=False, seed=0, batch_size=128, device=torch.device("cuda"),
                         mode="clean", custom_fn_resize=None, description=""):
     # get all relevant files in the dataset
-    if ".zip" in fdir:
-        files = list(set(zipfile.ZipFile(fdir).namelist()))
-        # remove the non-image files inside the zip
-        files = [x for x in files if os.path.splitext(x)[1].lower()[1:] in EXTENSIONS]
-    else:
-        files = sorted([file for ext in EXTENSIONS
+    files = sorted([file for ext in EXTENSIONS
                     for file in glob(os.path.join(fdir, f"**/*.{ext}"), recursive=True)])
     print(f"Found {len(files)} images in the folder {fdir}")
     # use a subset number of files if needed
@@ -387,13 +379,9 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
 def compute_fid(fdir1=None, fdir2=None, gen=None, 
             mode="clean", num_workers=12, batch_size=32,
             device=torch.device("cuda"), dataset_name="FFHQ",
-            dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512,
-            custom_feat_model=None):
+            dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512):
     # build the feature extractor based on the mode
-    if custom_feat_mode is None:
-        feat_model = build_feature_extractor(mode, device)
-    else:
-        feat_model = custom_feat_mode
+    feat_model = build_feature_extractor(mode, device)
     
     # if both dirs are specified, compute FID between folders
     if fdir1 is not None and fdir2 is not None:
