@@ -141,7 +141,9 @@ We provide precompute statistics for the following commonly used configurations.
 | Image Generation | [`ffhq`](https://github.com/NVlabs/ffhq-dataset)        | 1024, 256  | `trainval`     |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Image Generation | [`ffhq`](https://github.com/NVlabs/ffhq-dataset)        | 1024, 256  | `trainval70k`  |  70,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Image Generation | [`lsun_church`](https://www.yf.io/p/lsun/) | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | [`lsun_church`](https://www.yf.io/p/lsun/) | 256        | `trainfull`    |  126,227       |`clean`|
 | Image Generation | [`lsun_horse`](https://www.yf.io/p/lsun/)  | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
+| Image Generation | [`lsun_horse`](https://www.yf.io/p/lsun/)  | 256        | `trainfull`    |  2,000,340       |`clean`|
 | Image Generation | [`lsun_cat`](https://www.yf.io/p/lsun/)    | 256        | `train`        |  50,000       |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Image Generation | [`lsun_cat`](https://www.yf.io/p/lsun/)    | 256        | `trainfull`    |  1,657,264    |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
 | Few Shot Generation | [`afhq_cat`](https://github.com/clovaai/stargan-v2/)  | 512        | `train`       |  5153         |`clean`, `legacy_tensorflow`, `legacy_pytorch`|
