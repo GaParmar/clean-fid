@@ -2,7 +2,7 @@ name: test 1 - fid between folders
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, testing ]
   pull_request:
     branches: [ main ]
 
@@ -29,7 +29,6 @@ jobs:
     
     - name: run the test
       run: |
-        cd ..
         mkdir tmp
         # download zipped folder of real and fake test images
         cd tmp/
@@ -42,4 +41,4 @@ jobs:
         unzip folder_fake.zip
         rm folder_fake.zip
         cd ..
-        CUDA_VISIBLE_DEVICES=0 python tests/src/1_cmp_folders.py
+        python tests/src/1_cmp_folders.py

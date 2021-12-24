@@ -24,7 +24,9 @@ figures/*
 setup.cfg
 examples/*
 
+tests/tmp/*
 tests/*
+
 scripts/tmp/*
 scripts/dataset_stats/*
 scripts/leaderboard/*
