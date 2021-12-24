@@ -1,0 +1,19 @@
+name: clean_fid_test
+channels:
+  - pytorch
+  - defaults
+  - conda-forge
+dependencies:
+  - cudatoolkit=10.2
+  - cython=0.29
+  - ffmpeg=4.0
+  - pip:
+    - lmdb==1.2.1
+    - lpips==0.1.4
+    - ninja==1.10
+    - numpy==1.21.2
+    - pillow==8.4.0
+    - torch==1.9.1
+    - torchvision==0.10.1
+    - tqdm==4.62.3
+    - clean-fid==0.1.16
