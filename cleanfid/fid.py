@@ -388,7 +388,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
             mode="clean", num_workers=12, batch_size=32,
             device=torch.device("cuda"), dataset_name="FFHQ",
             dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512,
-            custom_feat_model=None):
+            custom_feat_mode=None):
     # build the feature extractor based on the mode
     if custom_feat_mode is None:
         feat_model = build_feature_extractor(mode, device)
