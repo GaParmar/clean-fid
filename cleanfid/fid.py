@@ -94,7 +94,7 @@ Compute the inception features for a list of files
 def get_files_features(l_files, model=None, num_workers=12,
                        batch_size=128, device=torch.device("cuda"),
                        mode="clean", custom_fn_resize=None,
-                       description=""):
+                       description="", verbose=True):
     # define the model if it is not specified
     if model is None:
         model = build_feature_extractor(mode, device)
@@ -109,6 +109,11 @@ def get_files_features(l_files, model=None, num_workers=12,
 
     # collect all inception features
     l_feats = []
+    if verbose:
+        pbar = tqdm(dataloader, desc=description)
+    else:
+        pbar = dataloader
+    
     for batch in tqdm(dataloader, desc=description):
         l_feats.append(get_batch_features(batch, model, device))
     np_feats = np.concatenate(l_feats)
@@ -120,7 +125,7 @@ Compute the inception features for a folder of image files
 """
 def get_folder_features(fdir, model=None, num_workers=12, num=None,
                         shuffle=False, seed=0, batch_size=128, device=torch.device("cuda"),
-                        mode="clean", custom_fn_resize=None, description=""):
+                        mode="clean", custom_fn_resize=None, description="", verbose=True):
     # get all relevant files in the dataset
     if ".zip" in fdir:
         files = list(set(zipfile.ZipFile(fdir).namelist()))
@@ -129,7 +134,8 @@ def get_folder_features(fdir, model=None, num_workers=12, num=None,
     else:
         files = sorted([file for ext in EXTENSIONS
                     for file in glob(os.path.join(fdir, f"**/*.{ext}"), recursive=True)])
-    print(f"Found {len(files)} images in the folder {fdir}")
+    if verbose:
+        print(f"Found {len(files)} images in the folder {fdir}")
     # use a subset number of files if needed
     if num is not None:
         if shuffle:
@@ -137,10 +143,9 @@ def get_folder_features(fdir, model=None, num_workers=12, num=None,
             random.shuffle(files)
         files = files[:num]
     np_feats = get_files_features(files, model, num_workers=num_workers,
-                                  batch_size=batch_size, device=device,
-                                  mode=mode,
+                                  batch_size=batch_size, device=device, mode=mode,
                                   custom_fn_resize=custom_fn_resize,
-                                  description=description)
+                                  description=description, verbose=verbose)
     return np_feats
 
 
@@ -159,7 +164,7 @@ and a specific resolution
 """
 def fid_folder(fdir, dataset_name, dataset_res, dataset_split,
                model=None, mode="clean", num_workers=12,
-               batch_size=128, device=torch.device("cuda")):
+               batch_size=128, device=torch.device("cuda"), verbose=True):
     # define the model if it is not specified
     if model is None:
         model = build_feature_extractor(mode, device)
@@ -170,7 +175,7 @@ def fid_folder(fdir, dataset_name, dataset_res, dataset_split,
     # get all inception features for folder images
     np_feats = get_folder_features(fdir, model, num_workers=num_workers,
                                     batch_size=batch_size, device=device,
-                                    mode=mode, description=f"FID {fbname} : ")
+                                    mode=mode, description=f"FID {fbname} : ", verbose=verbose)
     mu = np.mean(np_feats, axis=0)
     sigma = np.cov(np_feats, rowvar=False)
     fid = frechet_distance(mu, sigma, ref_mu, ref_sigma)
@@ -182,12 +187,16 @@ Compute the FID stats from a generator model
 """
 def get_model_features(G, model, mode="clean", z_dim=512,
         num_gen=50_000, batch_size=128,
-        device=torch.device("cuda"), desc="FID model: "):
+        device=torch.device("cuda"), desc="FID model: ", verbose=True):
     fn_resize = build_resizer(mode)
     # Generate test features
     num_iters = int(np.ceil(num_gen / batch_size))
     l_feats = []
-    for idx in tqdm(range(num_iters), desc=desc):
+    if verbose:
+        pbar = tqdm(range(num_iters), desc=desc)
+    else:
+        pbar = range(num_iters)
+    for idx in pbar:
         with torch.no_grad():
             z_batch = torch.randn((batch_size, z_dim)).to(device)
             # generated image is in range [0,255]
@@ -215,18 +224,18 @@ and a specific resolution
 def fid_model(G, dataset_name, dataset_res, dataset_split,
               model=None, z_dim=512, num_gen=50_000,
               mode="clean", num_workers=0, batch_size=128,
-              device=torch.device("cuda")):
+              device=torch.device("cuda"), verbose=verbose):
     # define the model if it is not specified
     if model is None:
         model = build_feature_extractor(mode, device)
     # Load reference FID statistics (download if needed)
     ref_mu, ref_sigma = get_reference_statistics(dataset_name, dataset_res,
-                                                 mode=mode, seed=0, split=dataset_split)
+                                                 mode=mode, seed=0, split=dataset_split,)
 
     # Generate test features
     np_feats = get_model_features(G, model, mode=mode,
         z_dim=z_dim, num_gen=num_gen,
-        batch_size=batch_size, device=device)
+        batch_size=batch_size, device=device, verbose=verbose)
 
     mu = np.mean(np_feats, axis=0)
     sigma = np.cov(np_feats, rowvar=False)
@@ -238,19 +247,19 @@ def fid_model(G, dataset_name, dataset_res, dataset_split,
 Computes the FID score between the two given folders
 """
 def compare_folders(fdir1, fdir2, feat_model, mode, num_workers=0,
-                    batch_size=8, device=torch.device("cuda")):
+                    batch_size=8, device=torch.device("cuda"), verbose=True):
     # get all inception features for the first folder
     fbname1 = os.path.basename(fdir1)
     np_feats1 = get_folder_features(fdir1, feat_model, num_workers=num_workers,
                                     batch_size=batch_size, device=device, mode=mode,
-                                    description=f"FID {fbname1} : ")
+                                    description=f"FID {fbname1} : ", verbose=verbose)
     mu1 = np.mean(np_feats1, axis=0)
     sigma1 = np.cov(np_feats1, rowvar=False)
     # get all inception features for the second folder
     fbname2 = os.path.basename(fdir2)
     np_feats2 = get_folder_features(fdir2, feat_model, num_workers=num_workers,
                                     batch_size=batch_size, device=device, mode=mode,
-                                    description=f"FID {fbname2} : ")
+                                    description=f"FID {fbname2} : ", verbose=verbose)
     mu2 = np.mean(np_feats2, axis=0)
     sigma2 = np.cov(np_feats2, rowvar=False)
     fid = frechet_distance(mu1, sigma1, mu2, sigma2)
@@ -384,7 +393,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
             mode="clean", num_workers=12, batch_size=32,
             device=torch.device("cuda"), dataset_name="FFHQ",
             dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512,
-            custom_feat_mode=None):
+            custom_feat_mode=None, verbose=True):
     # build the feature extractor based on the mode
     if custom_feat_mode is None:
         feat_model = build_feature_extractor(mode, device)
@@ -396,7 +405,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
         print("compute FID between two folders")
         score = compare_folders(fdir1, fdir2, feat_model,
             mode=mode, batch_size=batch_size,
-            num_workers=num_workers, device=device)
+            num_workers=num_workers, device=device, verbose=verbose)
         return score
 
     # compute fid of a folder
@@ -404,7 +413,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
         print(f"compute FID of a folder with {dataset_name} statistics")
         score = fid_folder(fdir1, dataset_name, dataset_res, dataset_split,
             model=feat_model, mode=mode, num_workers=num_workers,
-            batch_size=batch_size, device=device)
+            batch_size=batch_size, device=device, verbose=verbose)
         return score
 
     # compute fid for a generator
@@ -413,7 +422,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
         score = fid_model(gen, dataset_name, dataset_res, dataset_split,
                 model=feat_model, z_dim=z_dim, num_gen=num_gen,
                 mode=mode, num_workers=num_workers, batch_size=batch_size,
-                device=device)
+                device=device, verbose=verbose)
         return score
 
     else:
