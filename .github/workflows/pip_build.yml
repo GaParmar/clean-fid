@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
 
     steps:
     - uses: actions/checkout@v2
@@ -33,5 +33,4 @@ jobs:
     - name: build locally
       run: |
         python setup.py bdist_wheel
-        python -m pip install dist/clean_fid-0.1.16-py3-none-any.whl --force-reinstall
-    
+        python -m pip install dist/clean_fid-0.1.16-py3-none-any.whl

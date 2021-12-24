@@ -16,4 +16,3 @@ dependencies:
     - torch==1.9.1
     - torchvision==0.10.1
     - tqdm==4.62.3
-    - clean-fid==0.1.15
