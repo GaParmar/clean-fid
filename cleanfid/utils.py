@@ -32,7 +32,7 @@ class ResizeDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, i):
         path = str(self.files[i])
-        if '.zip' in self.fdir:
+        if self.fdir is not None and '.zip' in self.fdir:
             with zipfile.ZipFile(self.fdir).open(path, 'r') as f:
                 img_np = np.array(Image.open(f).convert('RGB'))
         if ".npy" in path:
