@@ -16,31 +16,8 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: "3.8"
-
-    - name: Install dependencies
-      run: |
-        echo $CONDA/bin >> $GITHUB_PATH
-        conda env update --file environment.yml --name base
-    
-    - name: build locally
-      run: |
-        python setup.py bdist_wheel
-        python -m pip install dist/clean_fid-0.1.16-py3-none-any.whl
     
     - name: run the test
       run: |
-        cd ..
         ls -la
-        mkdir tmp
-        # download zipped folder of real and fake test images
-        cd tmp/
-        wget https://www.cs.cmu.edu/~clean-fid/tests/folder_real.zip
-        unzip folder_real.zip
-        rm folder_real.zip
-        cd ..
-        cd tmp
-        wget https://www.cs.cmu.edu/~clean-fid/tests/folder_fake.zip
-        unzip folder_fake.zip
-        rm folder_fake.zip
-        cd ..
-        CUDA_VISIBLE_DEVICES=0 python tests/src/1_cmp_folders.py
+        
