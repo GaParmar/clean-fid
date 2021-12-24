@@ -30,6 +30,7 @@ jobs:
     - name: run the test
       run: |
         cd ..
+        ls -la
         mkdir tmp
         # download zipped folder of real and fake test images
         cd tmp/
