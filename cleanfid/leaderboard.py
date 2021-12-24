@@ -18,11 +18,11 @@ def get_score(model_name=None, dataset_name=None,
         csvreader = csv.reader(f)
         l_fields = next(csvreader)
         for idx, val in enumerate(l_fields):
-            d_field2idx[ val.strip() ]=idx
+            d_field2idx[val.strip()] = idx
         # iterate through all rows
         for row in csvreader:
             # skip empty rows
-            if len(row)==0:
+            if len(row) == 0:
                 continue
             # skip if the filter doesn't match
             if model_name is not None and (row[d_field2idx["model_name"]].strip() != model_name):

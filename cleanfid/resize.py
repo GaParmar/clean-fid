@@ -84,7 +84,7 @@ def make_resizer(library, quantize_after, filter, output_size):
             if quantize_after:
                 x = x.astype(np.uint8)
             return x
-    elif library=="OpenCV":
+    elif library == "OpenCV":
         import cv2
         name_to_filter = {
             "bilinear": cv2.INTER_LINEAR,
@@ -95,7 +95,8 @@ def make_resizer(library, quantize_after, filter, output_size):
         }
         def func(x):
             x = cv2.resize(x, output_size, interpolation=name_to_filter[filter])
-            if quantize_after: x = x.astype(np.uint8)
+            if quantize_after:
+                x = x.astype(np.uint8)
             return x
     else:
         raise NotImplementedError('library [%s] is not include' % library)

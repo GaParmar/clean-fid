@@ -180,7 +180,7 @@ def fid_folder(fdir, dataset_name, dataset_res, dataset_split,
 """
 Compute the FID stats from a generator model
 """
-def get_model_features(G, model, mode="clean", z_dim=512, 
+def get_model_features(G, model, mode="clean", z_dim=512,
         num_gen=50_000, batch_size=128,
         device=torch.device("cuda"), desc="FID model: "):
     fn_resize = build_resizer(mode)
@@ -209,7 +209,7 @@ def get_model_features(G, model, mode="clean", z_dim=512,
 
 
 """
-Computes the FID score for a generator model for a specific dataset 
+Computes the FID score for a generator model for a specific dataset
 and a specific resolution
 """
 def fid_model(G, dataset_name, dataset_res, dataset_split,
@@ -262,7 +262,7 @@ Test if a custom statistic exists
 """
 def test_stats_exists(name, mode, metric="FID"):
     stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
-    split, res="custom", "na"
+    split, res = "custom", "na"
     if metric == "FID":
         fname = f"{name}_{mode}_{split}_{res}.npz"
     elif metric == "KID":
@@ -277,7 +277,7 @@ Remove the custom FID features from the stats folder
 def remove_custom_stats(name, mode="clean"):
     stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
     # remove the FID stats
-    split, res="custom", "na"
+    split, res = "custom", "na"
     outname = f"{name}_{mode}_{split}_{res}.npz"
     outf = os.path.join(stats_folder, outname)
     if not os.path.exists(outf):
@@ -305,7 +305,7 @@ def make_custom_stats(name, fdir, num=None, mode="clean",
     # if the custom stat file already exists
     if os.path.exists(outf):
         msg = f"The statistics file {name} already exists. "
-        msg += f"Use remove_custom_stats function to delete it first."
+        msg += "Use remove_custom_stats function to delete it first."
         raise Exception(msg)
 
     feat_model = build_feature_extractor(mode, device)
@@ -330,7 +330,7 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
             dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512):
     # build the feature extractor based on the mode
     feat_model = build_feature_extractor(mode, device)
-    
+
     # if both dirs are specified, compute KID between folders
     if fdir1 is not None and fdir2 is not None:
         print("compute KID between two folders")
@@ -375,12 +375,12 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
             batch_size=batch_size, device=device)
         score = kernel_distance(ref_feats, np_feats)
         return score
-    
+
     else:
         raise ValueError("invalid combination of directories and models entered")
 
 
-def compute_fid(fdir1=None, fdir2=None, gen=None, 
+def compute_fid(fdir1=None, fdir2=None, gen=None,
             mode="clean", num_workers=12, batch_size=32,
             device=torch.device("cuda"), dataset_name="FFHQ",
             dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512,
@@ -415,6 +415,6 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
                 mode=mode, num_workers=num_workers, batch_size=batch_size,
                 device=device)
         return score
-    
+
     else:
         raise ValueError("invalid combination of directories and models entered")
