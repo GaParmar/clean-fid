@@ -1,3 +1,4 @@
+import torch
 from cleanfid import fid
 
 folder_fake = "tmp/folder_fake"

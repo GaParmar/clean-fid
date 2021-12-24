@@ -21,6 +21,7 @@ jobs:
       run: |
         echo $CONDA/bin >> $GITHUB_PATH
         conda env update --file environment.yml --name base
+        conda install pytorch torchvision torchaudio cpuonly -c pytorch
     
     - name: build locally
       run: |
