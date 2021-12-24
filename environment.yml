@@ -8,7 +8,7 @@ dependencies:
   - cython=0.29
   - ffmpeg=4.0
   - pip:
-    - opencv==3.4.2
+    - opencv-python==3.4.2
     - lmdb==1.2.1
     - lpips==0.1.4
     - ninja==1.10
