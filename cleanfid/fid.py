@@ -224,7 +224,7 @@ and a specific resolution
 def fid_model(G, dataset_name, dataset_res, dataset_split,
               model=None, z_dim=512, num_gen=50_000,
               mode="clean", num_workers=0, batch_size=128,
-              device=torch.device("cuda"), verbose=verbose):
+              device=torch.device("cuda"), verbose=True):
     # define the model if it is not specified
     if model is None:
         model = build_feature_extractor(mode, device)
