@@ -33,13 +33,13 @@ jobs:
         mkdir tmp
         # download zipped folder of real and fake test images
         cd tmp/
-        wget https://www.cs.cmu.edu/~clean-fid/tests/folder_real.zip
-        unzip folder_real.zip
+        wget -q https://www.cs.cmu.edu/~clean-fid/tests/folder_real.zip
+        unzip -qq folder_real.zip
         rm folder_real.zip
         cd ..
         cd tmp
-        wget https://www.cs.cmu.edu/~clean-fid/tests/folder_fake.zip
-        unzip folder_fake.zip
+        wget -q https://www.cs.cmu.edu/~clean-fid/tests/folder_fake.zip
+        unzip -qq folder_fake.zip
         rm folder_fake.zip
         cd ..
         python tests/src/1_cmp_folders.py
