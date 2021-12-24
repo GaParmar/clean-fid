@@ -1,6 +1,4 @@
 import os
-import sys
-from argparse import ArgumentParser
 import urllib.request
 import requests
 import shutil

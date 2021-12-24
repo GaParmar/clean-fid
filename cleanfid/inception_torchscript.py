@@ -34,15 +34,14 @@ class InceptionV3W(nn.Module):
         path = os.path.join(path, "inception-2015-12-05.pt")
         self.base = torch.jit.load(path).eval()
         self.layers = self.base.layers
-        self.resize_inside=resize_inside
-
+        self.resize_inside = resize_inside
 
     """
     Get the inception features without resizing
     x: Image with values in range [0,255]
     """
     def forward(self, x):
-        with disable_gpu_fuser_on_pt19() :
+        with disable_gpu_fuser_on_pt19():
             bs = x.shape[0]
             if self.resize_inside:
                 features = self.base(x, return_features=True).view((bs, 2048))

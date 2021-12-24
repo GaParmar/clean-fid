@@ -1,6 +1,7 @@
 """
 Helpers for resizing with multiple CPU cores
 """
+import os
 import numpy as np
 import torch
 from PIL import Image
@@ -13,21 +14,22 @@ dict_name_to_filter = {
     "PIL": {
         "bicubic": Image.BICUBIC,
         "bilinear": Image.BILINEAR,
-        "nearest" : Image.NEAREST,
-        "lanczos" : Image.LANCZOS,
-        "box"     : Image.BOX
+        "nearest": Image.NEAREST,
+        "lanczos": Image.LANCZOS,
+        "box": Image.BOX
     },
     "OpenCV": {
         "bilinear": cv2.INTER_LINEAR,
-        "bicubic" : cv2.INTER_CUBIC,
-        "lanczos" : cv2.INTER_LANCZOS4,
-        "nearest" : cv2.INTER_NEAREST,
-        "area"    : cv2.INTER_AREA
+        "bicubic": cv2.INTER_CUBIC,
+        "lanczos": cv2.INTER_LANCZOS4,
+        "nearest": cv2.INTER_NEAREST,
+        "area": cv2.INTER_AREA
     }
 }
 
+
 def build_resizer(mode):
-    if mode=="clean":
+    if mode == "clean":
         return make_resizer("PIL", False, "bicubic", (299,299))
     # if using legacy tensorflow, do not manually resize outside the network
     elif mode == "legacy_tensorflow":
@@ -37,9 +39,10 @@ def build_resizer(mode):
     else:
         raise ValueError(f"Invalid mode {mode} specified")
 
+
 """
 Construct a function that resizes a numpy image based on the
-flags passed in. 
+flags passed in.
 """
 def make_resizer(library, quantize_after, filter, output_size):
     if library == "PIL" and quantize_after:
@@ -85,10 +88,10 @@ def make_resizer(library, quantize_after, filter, output_size):
         import cv2
         name_to_filter = {
             "bilinear": cv2.INTER_LINEAR,
-            "bicubic" : cv2.INTER_CUBIC,
-            "lanczos" : cv2.INTER_LANCZOS4,
-            "nearest" : cv2.INTER_NEAREST,
-            "area"    : cv2.INTER_AREA
+            "bicubic": cv2.INTER_CUBIC,
+            "lanczos": cv2.INTER_LANCZOS4,
+            "nearest": cv2.INTER_NEAREST,
+            "area": cv2.INTER_AREA
         }
         def func(x):
             x = cv2.resize(x, output_size, interpolation=name_to_filter[filter])

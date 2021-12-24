@@ -8,7 +8,7 @@ from scipy import linalg
 import zipfile
 import cleanfid
 from cleanfid.utils import *
-from cleanfid.features import *
+from cleanfid.features import build_feature_extractor, get_reference_statistics
 from cleanfid.resize import *
 
 
@@ -93,12 +93,12 @@ Compute the inception features for a list of files
 """
 def get_files_features(l_files, model=None, num_workers=12,
                        batch_size=128, device=torch.device("cuda"),
-                       mode="clean", custom_fn_resize=None, 
+                       mode="clean", custom_fn_resize=None,
                        description=""):
     # define the model if it is not specified
     if model is None:
         model = build_feature_extractor(mode, device)
-    
+
     # wrap the images in a dataloader for parallelizing the resize operation
     dataset = ResizeDataset(l_files, mode=mode)
     if custom_fn_resize is not None:
@@ -154,7 +154,7 @@ def fid_from_feats(feats1, feats2):
 
 
 """
-Computes the FID score for a folder of images for a specific dataset 
+Computes the FID score for a folder of images for a specific dataset
 and a specific resolution
 """
 def fid_folder(fdir, dataset_name, dataset_res, dataset_split,
@@ -164,7 +164,7 @@ def fid_folder(fdir, dataset_name, dataset_res, dataset_split,
     if model is None:
         model = build_feature_extractor(mode, device)
     # Load reference FID statistics (download if needed)
-    ref_mu, ref_sigma = get_reference_statistics(dataset_name, dataset_res, 
+    ref_mu, ref_sigma = get_reference_statistics(dataset_name, dataset_res,
                                     mode=mode, seed=0, split=dataset_split)
     fbname = os.path.basename(fdir)
     # get all inception features for folder images
@@ -222,8 +222,6 @@ def fid_model(G, dataset_name, dataset_res, dataset_split,
     # Load reference FID statistics (download if needed)
     ref_mu, ref_sigma = get_reference_statistics(dataset_name, dataset_res,
                                                  mode=mode, seed=0, split=dataset_split)
-    # build resizing function based on options
-    fn_resize = build_resizer(mode)
 
     # Generate test features
     np_feats = get_model_features(G, model, mode=mode,
@@ -244,7 +242,7 @@ def compare_folders(fdir1, fdir2, feat_model, mode, num_workers=0,
     # get all inception features for the first folder
     fbname1 = os.path.basename(fdir1)
     np_feats1 = get_folder_features(fdir1, feat_model, num_workers=num_workers,
-                                    batch_size=batch_size, device=device, mode=mode, 
+                                    batch_size=batch_size, device=device, mode=mode,
                                     description=f"FID {fbname1} : ")
     mu1 = np.mean(np_feats1, axis=0)
     sigma1 = np.cov(np_feats1, rowvar=False)
@@ -265,9 +263,9 @@ Test if a custom statistic exists
 def test_stats_exists(name, mode, metric="FID"):
     stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
     split, res="custom", "na"
-    if metric=="FID":
+    if metric == "FID":
         fname = f"{name}_{mode}_{split}_{res}.npz"
-    elif metric=="KID":
+    elif metric == "KID":
         fname = f"{name}_{mode}_{split}_{res}_kid.npz"
     fpath = os.path.join(stats_folder, fname)
     return os.path.exists(fpath)
@@ -293,10 +291,11 @@ def remove_custom_stats(name, mode="clean"):
         raise Exception(msg)
     os.remove(outf)
 
+
 """
 Cache a custom dataset statistics file
 """
-def make_custom_stats(name, fdir, num=None, mode="clean", 
+def make_custom_stats(name, fdir, num=None, mode="clean",
                     num_workers=0, batch_size=64, device=torch.device("cuda")):
     stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
     os.makedirs(stats_folder, exist_ok=True)
@@ -325,8 +324,7 @@ def make_custom_stats(name, fdir, num=None, mode="clean",
     np.savez_compressed(outf, feats=np_feats)
 
 
-
-def compute_kid(fdir1=None, fdir2=None, gen=None, 
+def compute_kid(fdir1=None, fdir2=None, gen=None,
             mode="clean", num_workers=12, batch_size=32,
             device=torch.device("cuda"), dataset_name="FFHQ",
             dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512):
@@ -339,12 +337,12 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
         # get all inception features for the first folder
         fbname1 = os.path.basename(fdir1)
         np_feats1 = get_folder_features(fdir1, None, num_workers=num_workers,
-                            batch_size=batch_size, device=device, mode=mode, 
+                            batch_size=batch_size, device=device, mode=mode,
                             description=f"KID {fbname1} : ")
         # get all inception features for the second folder
         fbname2 = os.path.basename(fdir2)
         np_feats2 = get_folder_features(fdir2, None, num_workers=num_workers,
-                            batch_size=batch_size, device=device, mode=mode, 
+                            batch_size=batch_size, device=device, mode=mode,
                             description=f"KID {fbname2} : ")
         score = kernel_distance(np_feats1, np_feats2)
         return score
@@ -371,8 +369,6 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
         model = build_feature_extractor(mode, device)
         ref_feats = get_reference_statistics(dataset_name, dataset_res,
                             mode=mode, seed=0, split=dataset_split, metric="KID")
-        # build resizing function based on options
-        fn_resize = build_resizer(mode)
         # Generate test features
         np_feats = get_model_features(gen, model, mode=mode,
             z_dim=z_dim, num_gen=num_gen, desc="KID model: ",
@@ -381,7 +377,7 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
         return score
     
     else:
-        raise ValueError(f"invalid combination of directories and models entered")
+        raise ValueError("invalid combination of directories and models entered")
 
 
 def compute_fid(fdir1=None, fdir2=None, gen=None, 
@@ -394,7 +390,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
         feat_model = build_feature_extractor(mode, device)
     else:
         feat_model = custom_feat_mode
-    
+
     # if both dirs are specified, compute FID between folders
     if fdir1 is not None and fdir2 is not None:
         print("compute FID between two folders")
@@ -421,4 +417,4 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
         return score
     
     else:
-        raise ValueError(f"invalid combination of directories and models entered")
+        raise ValueError("invalid combination of directories and models entered")

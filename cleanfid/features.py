@@ -6,7 +6,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import cleanfid
-from cleanfid.downloads_helper import *
+from cleanfid.downloads_helper import check_download_url
 from cleanfid.inception_pytorch import InceptionV3
 from cleanfid.inception_torchscript import InceptionV3W
 
@@ -33,14 +33,13 @@ def feature_extractor(name="torchscript_inception", device=torch.device("cuda"),
 Build a feature extractor for each of the modes
 """
 def build_feature_extractor(mode, device=torch.device("cuda")):
-    if mode=="legacy_pytorch":
+    if mode == "legacy_pytorch":
         feat_model = feature_extractor(name="pytorch_inception", resize_inside=False, device=device)
-    elif mode=="legacy_tensorflow":
+    elif mode == "legacy_tensorflow":
         feat_model = feature_extractor(name="torchscript_inception", resize_inside=True, device=device)
-    elif mode=="clean":
+    elif mode == "clean":
         feat_model = feature_extractor(name="torchscript_inception", resize_inside=False, device=device)
     return feat_model
-
 
 
 """
@@ -48,8 +47,9 @@ Load precomputed reference statistics for commonly used datasets
 """
 def get_reference_statistics(name, res, mode="clean", seed=0, split="test", metric="FID"):
     base_url = "https://www.cs.cmu.edu/~clean-fid/stats/"
-    if split=="custom": res = "na"
-    if metric=="FID":
+    if split == "custom":
+        res = "na"
+    if metric == "FID":
         rel_path = (f"{name}_{mode}_{split}_{res}.npz").lower()
         url = f"{base_url}/{rel_path}"
         mod_path = os.path.dirname(cleanfid.__file__)
@@ -58,7 +58,7 @@ def get_reference_statistics(name, res, mode="clean", seed=0, split="test", metr
         stats = np.load(fpath)
         mu, sigma = stats["mu"], stats["sigma"]
         return mu, sigma
-    elif metric=="KID":
+    elif metric == "KID":
         rel_path = (f"{name}_{mode}_{split}_{res}_kid.npz").lower()
         url = f"{base_url}/{rel_path}"
         mod_path = os.path.dirname(cleanfid.__file__)

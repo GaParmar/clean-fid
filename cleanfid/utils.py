@@ -1,13 +1,8 @@
-import os
 import numpy as np
 import torch
 import torchvision
 from PIL import Image
-import urllib.request
-import requests
-import shutil
-import torch.nn.functional as F
-from cleanfid.resize import *
+from cleanfid.resize import build_resizer
 import zipfile
 
 
@@ -22,7 +17,7 @@ class ResizeDataset(torch.utils.data.Dataset):
 
     def __init__(self, files, mode, size=(299, 299), fdir=None):
         self.files = files
-        self.fdir=fdir
+        self.fdir = fdir
         self.transforms = torchvision.transforms.ToTensor()
         self.size = size
         self.fn_resize = build_resizer(mode)
