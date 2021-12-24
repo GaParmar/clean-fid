@@ -2,7 +2,7 @@ name: test 1 - fid between folders
 
 on:
   push:
-    branches: [ main, testing ]
+    branches: [ testing ]
   pull_request:
     branches: [ main ]
 

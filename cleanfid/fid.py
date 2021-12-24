@@ -114,7 +114,7 @@ def get_files_features(l_files, model=None, num_workers=12,
     else:
         pbar = dataloader
     
-    for batch in tqdm(dataloader, desc=description):
+    for batch in pbar:
         l_feats.append(get_batch_features(batch, model, device))
     np_feats = np.concatenate(l_feats)
     return np_feats
