@@ -49,6 +49,7 @@ def make_resizer(library, quantize_after, filter, output_size):
         def func(x):
             x = Image.fromarray(x)
             x = x.resize(output_size, resample=dict_name_to_filter[library][filter])
+            x = x.clip(0, 255)
             x = np.asarray(x).astype(np.uint8)
             return x
     elif library == "PIL" and not quantize_after:
@@ -86,15 +87,11 @@ def make_resizer(library, quantize_after, filter, output_size):
             return x
     elif library == "OpenCV":
         import cv2
-        name_to_filter = {
-            "bilinear": cv2.INTER_LINEAR,
-            "bicubic": cv2.INTER_CUBIC,
-            "lanczos": cv2.INTER_LANCZOS4,
-            "nearest": cv2.INTER_NEAREST,
-            "area": cv2.INTER_AREA
-        }
+        
+        name_to_filter = dict_name_to_filter["OpenCV"]
         def func(x):
             x = cv2.resize(x, output_size, interpolation=name_to_filter[filter])
+            x = x.clip(0, 255)
             if quantize_after:
                 x = x.astype(np.uint8)
             return x
