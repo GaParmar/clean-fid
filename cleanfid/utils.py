@@ -21,6 +21,7 @@ class ResizeDataset(torch.utils.data.Dataset):
         self.transforms = torchvision.transforms.ToTensor()
         self.size = size
         self.fn_resize = build_resizer(mode)
+        self.custom_image_tranform = lambda x: x
 
     def __len__(self):
         return len(self.files)
@@ -36,6 +37,8 @@ class ResizeDataset(torch.utils.data.Dataset):
             img_pil = Image.open(path).convert('RGB')
             img_np = np.array(img_pil)
 
+        # apply a custom image transform before resizing the image to 299x299
+        img_np = self.custom_image_tranform(img_np)
         # fn_resize expects a np array and returns a np array
         img_resized = self.fn_resize(img_np)
 

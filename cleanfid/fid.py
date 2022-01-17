@@ -94,15 +94,19 @@ Compute the inception features for a list of files
 def get_files_features(l_files, model=None, num_workers=12,
                        batch_size=128, device=torch.device("cuda"),
                        mode="clean", custom_fn_resize=None,
-                       description="", verbose=True):
+                       description="", verbose=True,
+                       custom_image_tranform=None):
     # define the model if it is not specified
     if model is None:
         model = build_feature_extractor(mode, device)
 
     # wrap the images in a dataloader for parallelizing the resize operation
     dataset = ResizeDataset(l_files, mode=mode)
+    if custom_image_tranform is not None:
+        dataset.custom_image_tranform=custom_image_tranform
     if custom_fn_resize is not None:
         dataset.fn_resize = custom_fn_resize
+        
     dataloader = torch.utils.data.DataLoader(dataset,
                     batch_size=batch_size, shuffle=False,
                     drop_last=False, num_workers=num_workers)
@@ -125,7 +129,8 @@ Compute the inception features for a folder of image files
 """
 def get_folder_features(fdir, model=None, num_workers=12, num=None,
                         shuffle=False, seed=0, batch_size=128, device=torch.device("cuda"),
-                        mode="clean", custom_fn_resize=None, description="", verbose=True):
+                        mode="clean", custom_fn_resize=None, description="", verbose=True,
+                        custom_image_tranform=None):
     # get all relevant files in the dataset
     if ".zip" in fdir:
         files = list(set(zipfile.ZipFile(fdir).namelist()))
@@ -145,6 +150,7 @@ def get_folder_features(fdir, model=None, num_workers=12, num=None,
     np_feats = get_files_features(files, model, num_workers=num_workers,
                                   batch_size=batch_size, device=device, mode=mode,
                                   custom_fn_resize=custom_fn_resize,
+                                  custom_image_tranform=custom_image_tranform,
                                   description=description, verbose=verbose)
     return np_feats
 
@@ -247,19 +253,22 @@ def fid_model(G, dataset_name, dataset_res, dataset_split,
 Computes the FID score between the two given folders
 """
 def compare_folders(fdir1, fdir2, feat_model, mode, num_workers=0,
-                    batch_size=8, device=torch.device("cuda"), verbose=True):
+                    batch_size=8, device=torch.device("cuda"), verbose=True,
+                    custom_image_tranform=None):
     # get all inception features for the first folder
     fbname1 = os.path.basename(fdir1)
     np_feats1 = get_folder_features(fdir1, feat_model, num_workers=num_workers,
                                     batch_size=batch_size, device=device, mode=mode,
-                                    description=f"FID {fbname1} : ", verbose=verbose)
+                                    description=f"FID {fbname1} : ", verbose=verbose,
+                                    custom_image_tranform=custom_image_tranform)
     mu1 = np.mean(np_feats1, axis=0)
     sigma1 = np.cov(np_feats1, rowvar=False)
     # get all inception features for the second folder
     fbname2 = os.path.basename(fdir2)
     np_feats2 = get_folder_features(fdir2, feat_model, num_workers=num_workers,
                                     batch_size=batch_size, device=device, mode=mode,
-                                    description=f"FID {fbname2} : ", verbose=verbose)
+                                    description=f"FID {fbname2} : ", verbose=verbose,
+                                    custom_image_tranform=custom_image_tranform)
     mu2 = np.mean(np_feats2, axis=0)
     sigma2 = np.cov(np_feats2, rowvar=False)
     fid = frechet_distance(mu1, sigma1, mu2, sigma2)
@@ -388,12 +397,16 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
     else:
         raise ValueError("invalid combination of directories and models entered")
 
-
+"""
+custom_image_tranform:
+    function that takes an np_array image as input [0,255] and 
+    applies a custom transform such as cropping
+"""
 def compute_fid(fdir1=None, fdir2=None, gen=None,
             mode="clean", num_workers=12, batch_size=32,
             device=torch.device("cuda"), dataset_name="FFHQ",
             dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512,
-            custom_feat_mode=None, verbose=True):
+            custom_feat_mode=None, verbose=True, custom_image_tranform=None):
     # build the feature extractor based on the mode
     if custom_feat_mode is None:
         feat_model = build_feature_extractor(mode, device)
@@ -406,7 +419,9 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
             print("compute FID between two folders")
         score = compare_folders(fdir1, fdir2, feat_model,
             mode=mode, batch_size=batch_size,
-            num_workers=num_workers, device=device, verbose=verbose)
+            num_workers=num_workers, device=device,
+            custom_image_tranform=custom_image_tranform,
+            verbose=verbose)
         return score
 
     # compute fid of a folder

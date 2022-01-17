@@ -7,7 +7,7 @@
 ## Installing locally
 ```
     python -m pip uninstall clean-fid
-    python -m pip install dist/clean_fid-0.1.16-py3-none-any.whl --force-reinstall
+    python -m pip install dist/clean_fid-0.1.17-py3-none-any.whl
 ```
 
 ## Run the tests locally
