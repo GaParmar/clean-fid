@@ -7,7 +7,6 @@ import torch
 from PIL import Image
 import torch.nn.functional as F
 import cv2
-from cleanfid.utils import *
 
 
 dict_name_to_filter = {
@@ -87,7 +86,6 @@ def make_resizer(library, quantize_after, filter, output_size):
             return x
     elif library == "OpenCV":
         import cv2
-        
         name_to_filter = dict_name_to_filter["OpenCV"]
         def func(x):
             x = cv2.resize(x, output_size, interpolation=name_to_filter[filter])
