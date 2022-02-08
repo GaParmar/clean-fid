@@ -7,7 +7,7 @@
 ## Installing locally
 ```
     python -m pip uninstall clean-fid
-    python -m pip install dist/clean_fid-0.1.19-py3-none-any.whl
+    python -m pip install dist/clean_fid-0.1.20-py3-none-any.whl
 ```
 
 ## Run the tests locally
@@ -17,5 +17,5 @@
 
 ## Push to pip
 ```
-python -m twine upload dist/clean_fid-0.1.19-py3-none-any.whl
+python -m twine upload dist/clean_fid-0.1.20-py3-none-any.whl
 ```

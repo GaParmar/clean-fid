@@ -36,8 +36,7 @@ def make_resizer(library, quantize_after, filter, output_size):
         def func(x):
             x = Image.fromarray(x)
             x = x.resize(output_size, resample=name_to_filter[filter])
-            x = x.clip(0, 255)
-            x = np.asarray(x).astype(np.uint8)
+            x = np.asarray(x).clip(0, 255).astype(np.uint8)
             return x
     elif library == "PIL" and not quantize_after:
         name_to_filter = {
