@@ -29,7 +29,7 @@ We provide an easy-to-use library to address the above issues and make the FID s
 
 ---
 
-[On Buggy Resizing Libraries and Surprising Subtleties in FID Calculation](https://www.cs.cmu.edu/~clean-fid/) <br>
+[On Aliased Resizing and Surprising Subtleties in GAN Evaluation](https://www.cs.cmu.edu/~clean-fid/) <br>
  [Gaurav Parmar](https://gauravparmar.com/), [Richard Zhang](https://richzhang.github.io/), [Jun-Yan Zhu](https://www.cs.cmu.edu/~junyanz/)<br>
 arXiv 2104.11222, 2021 <br>
 CMU and Adobe
@@ -48,7 +48,7 @@ the results.
 </p>
 
 
-**Buggy Resizing Operations** <br>
+**Aliased Resizing Operations** <br>
 
 
   The definitions of resizing functions are mathematical and <em>should never be a function of the library being used</em>. Unfortunately, implementations differ across commonly-used libraries.  They are often implemented incorrectly by popular libraries. Try out the different resizing implementations in the Google colab notebook [here](https://colab.research.google.com/drive/1Q-N94S2mnLsFLpuT7WwY6d5WxGVWLGpg?usp=sharing).
