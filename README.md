@@ -78,11 +78,6 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
 
 ## Quick Start
 
-
-- install requirements
-    ```
-    pip install -r requirements.txt
-    ```
 - install the library
     ```
     pip install clean-fid
