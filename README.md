@@ -29,24 +29,27 @@ We provide an easy-to-use library to address the above issues and make the FID s
 
 ---
 
+### Corresponding Manuscript
+
 [On Aliased Resizing and Surprising Subtleties in GAN Evaluation](https://www.cs.cmu.edu/~clean-fid/) <br>
  [Gaurav Parmar](https://gauravparmar.com/), [Richard Zhang](https://richzhang.github.io/), [Jun-Yan Zhu](https://www.cs.cmu.edu/~junyanz/)<br>
-arXiv 2104.11222, 2021 <br>
+CVPR, 2022 <br>
 CMU and Adobe
+
+
+If you find this repository useful for your research, please cite the following work.
+```
+@inproceedings{parmar2021cleanfid,
+  title={On Aliased Resizing and Surprising Subtleties in GAN Evaluation},
+  author={Parmar, Gaurav and Zhang, Richard and Zhu, Jun-Yan},
+  booktitle={CVPR},
+  year={2022}
+}
+```
 
 ---
 
-### CleanFID Leaderboard API
-
-We compute the FID scores using the corresponding methods used in the original papers and using the Clean-FID proposed here. 
-All values are computed using 10 evaluation runs. <br>
-We provide an API to query the results shown in the tables below directly from 
-the pip package. The arguments `model_name`, `dataset_name`, `dataset_res`, `dataset_split`, `task_name` can be used to filter
-the results.
-<p align="center">
-<img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/demo_leaderboard_cropped.gif" />
-</p>
-
+<br>
 
 **Aliased Resizing Operations** <br>
 
@@ -455,23 +458,6 @@ All 500 images from `test` split are used as the reference images and compared t
 
 † The translated images for these methods were intitially compared by [[Park et al, 2020]](https://arxiv.org/abs/2007.15651) using .jpeg compression. 
 We retrain these two methods using the same protocal and generate the images as .png for a fair comparision. 
-
-
-
----
-
-
-## Citation
-
-If you find this repository useful for your research, please cite the following work.
-```
-@inproceedings{parmar2021cleanfid,
-  title={On Aliased Resizing and Surprising Subtleties in GAN Evaluation},
-  author={Parmar, Gaurav and Zhang, Richard and Zhu, Jun-Yan},
-  booktitle={CVPR},
-  year={2022}
-}
-```
 
 ---
 
