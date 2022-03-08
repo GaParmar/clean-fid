@@ -2,6 +2,7 @@
 helpers for extracting features from image
 """
 import os
+import platform
 import numpy as np
 import torch
 import cleanfid
@@ -16,7 +17,8 @@ and outputs a feature embedding vector
 """
 def feature_extractor(name="torchscript_inception", device=torch.device("cuda"), resize_inside=False):
     if name == "torchscript_inception":
-        model = InceptionV3W("/tmp", download=True, resize_inside=resize_inside).to(device)
+        path = "./" if platform.system() == "Windows" else "/tmp"
+        model = InceptionV3W(path, download=True, resize_inside=resize_inside).to(device)
         model.eval()
         def model_fn(x): return model(x)
     elif name == "pytorch_inception":
