@@ -46,3 +46,6 @@ figures/*
 
 docs/build.md
 temp/**/*.*
+
+# PyCharm
+**/.idea/**/*
