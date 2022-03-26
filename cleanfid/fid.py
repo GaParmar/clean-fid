@@ -386,7 +386,7 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
         score = kernel_distance(ref_feats, np_feats)
         return score
 
-    # compute fid for a generator
+    # compute fid for a generator, using reference statistics
     elif gen is not None:
         print(f"compute KID of a model with {dataset_name}-{dataset_res} statistics")
         # define the model if it is not specified
@@ -397,6 +397,23 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
         np_feats = get_model_features(gen, model, mode=mode,
             z_dim=z_dim, num_gen=num_gen, desc="KID model: ",
             batch_size=batch_size, device=device)
+        score = kernel_distance(ref_feats, np_feats)
+        return score
+
+    # compute kid for a generator, using images in fdir2
+    elif gen is not None and fdir2 is not None: 
+        print(f"compute KID of a model, using references in fdir2")
+        # define the model if it is not specified
+        model = build_feature_extractor(mode, device)
+        # get all inception features for the second folder
+        fbname2 = os.path.basename(fdir2)
+        ref_feats = get_folder_features(fdir2, model, num_workers=num_workers,
+                                        batch_size=batch_size, device=device, mode=mode,
+                                        description=f"KID {fbname2} : ")
+        # Generate test features
+        np_feats = get_model_features(gen, model, mode=mode,
+                                      z_dim=z_dim, num_gen=num_gen, desc="KID model: ",
+                                      batch_size=batch_size, device=device)
         score = kernel_distance(ref_feats, np_feats)
         return score
 
@@ -439,7 +456,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
             batch_size=batch_size, device=device, verbose=verbose)
         return score
 
-    # compute fid for a generator
+    # compute fid for a generator, using reference statistics
     elif gen is not None:
         if not verbose:
             print(f"compute FID of a model with {dataset_name}-{dataset_res} statistics")
@@ -448,6 +465,28 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
                 mode=mode, num_workers=num_workers, batch_size=batch_size,
                 device=device, verbose=verbose)
         return score
+
+    # compute fid for a generator, using images in fdir2
+    elif gen is not None and fdir2 is not None:
+        if not verbose:
+            print(f"compute FID of a model, using references in fdir2")
+        # get all inception features for the second folder
+        fbname2 = os.path.basename(fdir2)
+        np_feats2 = get_folder_features(fdir2, feat_model, num_workers=num_workers,
+                                        batch_size=batch_size, device=device, mode=mode,
+                                        description=f"FID {fbname2} : ", verbose=verbose,
+                                        custom_image_tranform=custom_image_tranform)
+        mu2 = np.mean(np_feats2, axis=0)
+        sigma2 = np.cov(np_feats2, rowvar=False)
+        # Generate test features
+        np_feats = get_model_features(gen, feat_model, mode=mode,
+                                      z_dim=z_dim, num_gen=num_gen,
+                                      batch_size=batch_size, device=device, verbose=verbose)
+
+        mu = np.mean(np_feats, axis=0)
+        sigma = np.cov(np_feats, rowvar=False)
+        fid = frechet_distance(mu, sigma, mu2, sigma2)
+        return fid
 
     else:
         raise ValueError("invalid combination of directories and models entered")
