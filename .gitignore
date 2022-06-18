@@ -23,6 +23,7 @@ figures/*
 
 setup.cfg
 examples/*
+notebooks/*
 
 tests/*
 scripts/tmp/*

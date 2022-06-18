@@ -222,7 +222,7 @@ def get_model_features(G, model, mode="clean", z_dim=512,
                 resized_batch = img_batch
             feat = get_batch_features(resized_batch, model, device)
         l_feats.append(feat)
-    np_feats = np.concatenate(l_feats)
+    np_feats = np.concatenate(l_feats)[:num_gen]
     if return_z:
         latents = torch.cat(latents, 0)
         return np_feats, latents
