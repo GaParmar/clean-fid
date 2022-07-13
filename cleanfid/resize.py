@@ -50,7 +50,7 @@ def make_resizer(library, quantize_after, filter, output_size):
         def resize_single_channel(x_np):
             img = Image.fromarray(x_np.astype(np.float32), mode='F')
             img = img.resize(output_size, resample=name_to_filter[filter])
-            return np.asarray(img).clip(0, 255).reshape(s1, s2, 1)
+            return np.asarray(img).clip(0, 255).reshape(s2, s1, 1)
         def func(x):
             x = [resize_single_channel(x[:, :, idx]) for idx in range(3)]
             x = np.concatenate(x, axis=2).astype(np.float32)
