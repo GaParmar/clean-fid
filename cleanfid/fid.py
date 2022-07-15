@@ -456,16 +456,6 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
             batch_size=batch_size, device=device, verbose=verbose)
         return score
 
-    # compute fid for a generator, using reference statistics
-    elif gen is not None:
-        if not verbose:
-            print(f"compute FID of a model with {dataset_name}-{dataset_res} statistics")
-        score = fid_model(gen, dataset_name, dataset_res, dataset_split,
-                model=feat_model, z_dim=z_dim, num_gen=num_gen,
-                mode=mode, num_workers=num_workers, batch_size=batch_size,
-                device=device, verbose=verbose)
-        return score
-
     # compute fid for a generator, using images in fdir2
     elif gen is not None and fdir2 is not None:
         if not verbose:
@@ -487,6 +477,16 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
         sigma = np.cov(np_feats, rowvar=False)
         fid = frechet_distance(mu, sigma, mu2, sigma2)
         return fid
+
+    # compute fid for a generator, using reference statistics
+    elif gen is not None:
+        if not verbose:
+            print(f"compute FID of a model with {dataset_name}-{dataset_res} statistics")
+        score = fid_model(gen, dataset_name, dataset_res, dataset_split,
+                model=feat_model, z_dim=z_dim, num_gen=num_gen,
+                mode=mode, num_workers=num_workers, batch_size=batch_size,
+                device=device, verbose=verbose)
+        return score
 
     else:
         raise ValueError("invalid combination of directories and models entered")
