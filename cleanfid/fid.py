@@ -438,7 +438,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
 
     # if both dirs are specified, compute FID between folders
     if fdir1 is not None and fdir2 is not None:
-        if not verbose:
+        if verbose:
             print("compute FID between two folders")
         score = compare_folders(fdir1, fdir2, feat_model,
             mode=mode, batch_size=batch_size,
@@ -449,7 +449,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
 
     # compute fid of a folder
     elif fdir1 is not None and fdir2 is None:
-        if not verbose:
+        if verbose:
             print(f"compute FID of a folder with {dataset_name} statistics")
         score = fid_folder(fdir1, dataset_name, dataset_res, dataset_split,
             model=feat_model, mode=mode, num_workers=num_workers,
@@ -458,7 +458,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
 
     # compute fid for a generator, using images in fdir2
     elif gen is not None and fdir2 is not None:
-        if not verbose:
+        if verbose:
             print(f"compute FID of a model, using references in fdir2")
         # get all inception features for the second folder
         fbname2 = os.path.basename(fdir2)
@@ -480,7 +480,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
 
     # compute fid for a generator, using reference statistics
     elif gen is not None:
-        if not verbose:
+        if verbose:
             print(f"compute FID of a model with {dataset_name}-{dataset_res} statistics")
         score = fid_model(gen, dataset_name, dataset_res, dataset_split,
                 model=feat_model, z_dim=z_dim, num_gen=num_gen,
