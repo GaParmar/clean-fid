@@ -20,10 +20,12 @@ def feature_extractor(name="torchscript_inception", device=torch.device("cuda"),
         path = "./" if platform.system() == "Windows" else "/tmp"
         model = InceptionV3W(path, download=True, resize_inside=resize_inside).to(device)
         model.eval()
+        model = torch.nn.DataParallel(model)
         def model_fn(x): return model(x)
     elif name == "pytorch_inception":
         model = InceptionV3(output_blocks=[3], resize_input=False).to(device)
         model.eval()
+        model = torch.nn.DataParallel(model)
         def model_fn(x): return model(x/255)[0].squeeze(-1).squeeze(-1)
     else:
         raise ValueError(f"{name} feature extractor not implemented")
