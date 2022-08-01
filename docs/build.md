@@ -17,5 +17,5 @@
 
 ## Push to pip
 ```
-python -m twine upload dist/clean_fid-0.1.27-py3-none-any.whl
+python -m twine upload dist/clean_fid-0.1.28-py3-none-any.whl
 ```
