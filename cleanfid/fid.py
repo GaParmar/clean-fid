@@ -260,13 +260,14 @@ Computes the FID score between the two given folders
 """
 def compare_folders(fdir1, fdir2, feat_model, mode, num_workers=0,
                     batch_size=8, device=torch.device("cuda"), verbose=True,
-                    custom_image_tranform=None):
+                    custom_image_tranform=None, custom_fn_resize=None):
     # get all inception features for the first folder
     fbname1 = os.path.basename(fdir1)
     np_feats1 = get_folder_features(fdir1, feat_model, num_workers=num_workers,
                                     batch_size=batch_size, device=device, mode=mode,
                                     description=f"FID {fbname1} : ", verbose=verbose,
-                                    custom_image_tranform=custom_image_tranform)
+                                    custom_image_tranform=custom_image_tranform,
+                                    custom_fn_resize=custom_fn_resize,)
     mu1 = np.mean(np_feats1, axis=0)
     sigma1 = np.cov(np_feats1, rowvar=False)
     # get all inception features for the second folder
@@ -274,7 +275,8 @@ def compare_folders(fdir1, fdir2, feat_model, mode, num_workers=0,
     np_feats2 = get_folder_features(fdir2, feat_model, num_workers=num_workers,
                                     batch_size=batch_size, device=device, mode=mode,
                                     description=f"FID {fbname2} : ", verbose=verbose,
-                                    custom_image_tranform=custom_image_tranform)
+                                    custom_image_tranform=custom_image_tranform,
+                                    custom_fn_resize=custom_fn_resize,)
     mu2 = np.mean(np_feats2, axis=0)
     sigma2 = np.cov(np_feats2, rowvar=False)
     fid = frechet_distance(mu1, sigma1, mu2, sigma2)
@@ -429,12 +431,13 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
             mode="clean", num_workers=12, batch_size=32,
             device=torch.device("cuda"), dataset_name="FFHQ",
             dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512,
-            custom_feat_mode=None, verbose=True, custom_image_tranform=None):
+            custom_feat_extractor=None, verbose=True,
+            custom_image_tranform=None, custom_fn_resize=None):
     # build the feature extractor based on the mode
-    if custom_feat_mode is None:
+    if custom_feat_extractor is None:
         feat_model = build_feature_extractor(mode, device)
     else:
-        feat_model = custom_feat_mode
+        feat_model = custom_feat_extractor
 
     # if both dirs are specified, compute FID between folders
     if fdir1 is not None and fdir2 is not None:
@@ -444,6 +447,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
             mode=mode, batch_size=batch_size,
             num_workers=num_workers, device=device,
             custom_image_tranform=custom_image_tranform,
+            custom_fn_resize=custom_fn_resize,
             verbose=verbose)
         return score
 

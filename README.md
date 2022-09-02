@@ -105,6 +105,16 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
             dataset_res=256, num_gen=50_000, dataset_split="trainval70k")
     ```
 
+### Computing CLIP-FID
+- Computing CLIP-FID between two folders
+    ```
+    from cleanfid import fid
+    from cleanfid.clip_features import import CLIP_fx, img_preprocess_clip
+    clip_fx = CLIP_fx()
+    score = fid.compute_fid(fdir1, fdir2, custom_feat_extractor=clip_fx, custom_fn_resize=img_preprocess_clip)
+    ```
+
+
 ### Computing KID
 The KID score can be computed using a similar interface as FID. 
 The dataset statistics for KID are only precomputed for smaller datasets `AFHQ`, `BreCaHAD`, and `MetFaces`.
