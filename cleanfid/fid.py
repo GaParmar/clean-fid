@@ -326,7 +326,7 @@ def make_custom_stats(name, fdir, num=None, mode="clean",
     stats_folder = os.path.join(os.path.dirname(cleanfid.__file__), "stats")
     os.makedirs(stats_folder, exist_ok=True)
     split, res = "custom", "na"
-    outname = f"{name}_{mode}_{split}_{res}.npz"
+    outname = f"{name}_{mode}_{split}_{res}.npz".lower()
     outf = os.path.join(stats_folder, outname)
     # if the custom stat file already exists
     if os.path.exists(outf):
@@ -345,7 +345,7 @@ def make_custom_stats(name, fdir, num=None, mode="clean",
     print(f"saving custom FID stats to {outf}")
     np.savez_compressed(outf, mu=mu, sigma=sigma)
     # KID stats
-    outf = os.path.join(stats_folder, f"{name}_{mode}_{split}_{res}_kid.npz")
+    outf = os.path.join(stats_folder, f"{name}_{mode}_{split}_{res}_kid.npz".lower())
     print(f"saving custom KID stats to {outf}")
     np.savez_compressed(outf, feats=np_feats)
 
