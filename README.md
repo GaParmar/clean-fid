@@ -14,7 +14,7 @@
 [**Leaderboard Tables**](#cleanfid-leaderboard-for-common-tasks) <br>
 **Quick start:** [**Calculate FID**](#computing-fid) | [**Calculate KID**](#computing-kid)
 
-**[New]** Computing the FID using CLIP features is now supported with the flag `model_name="clip_vit_b_32"`
+**[New]** Computing the FID using CLIP features is now supported. See [here](#computing-clip-fid) for more details. 
 
 
 The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly.
