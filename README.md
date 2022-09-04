@@ -14,7 +14,7 @@
 [**Leaderboard Tables**](#cleanfid-leaderboard-for-common-tasks) <br>
 **Quick start:** [**Calculate FID**](#computing-fid) | [**Calculate KID**](#computing-kid)
 
-**[New]** Computing the FID using CLIP features is now supported. See [here](#computing-clip-fid) for more details. 
+**[New]** Computing the FID using CLIP features [[Kynkäänniemi et al, 2020]](https://arxiv.org/pdf/2203.06026.pdf) is now supported. See [here](#computing-clip-fid) for more details. 
 
 
 The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly.
@@ -108,7 +108,7 @@ Below, we study the effect of JPEG compression for StyleGAN2 models trained on t
     ```
 
 ### Computing CLIP-FID
-To use the CLIP features when computing the FID, specify the flag `model_name="clip_vit_b_32"`
+To use the CLIP features when computing the FID [[Kynkäänniemi et al, 2020]](https://arxiv.org/pdf/2203.06026.pdf), specify the flag `model_name="clip_vit_b_32"`
 - e.g. to compute the CLIP-FID between two folders of images use the following commands. 
     ```
     from cleanfid import fid
