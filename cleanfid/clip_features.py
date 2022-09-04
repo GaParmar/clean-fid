@@ -5,11 +5,11 @@ import numpy as np
 import torch
 import torchvision.transforms as transforms
 import clip
-from fid import compute_fid
+from cleanfid.fid import compute_fid
 
 
 def img_preprocess_clip(img_np):
-    x = Image.fromarray(img_np).convert("RGB")
+    x = Image.fromarray(img_np.astype(np.uint8)).convert("RGB")
     T = transforms.Compose([
             transforms.Resize(224, interpolation=transforms.InterpolationMode.BICUBIC),
             transforms.CenterCrop(224),
@@ -18,9 +18,10 @@ def img_preprocess_clip(img_np):
 
 
 class CLIP_fx():
-    def __init__(self):
-        self.model, _ = clip.load("ViT-B/32", device="cuda")
+    def __init__(self, name="ViT-B/32"):
+        self.model, _ = clip.load(name, device="cuda")
         self.model.eval()
+        self.name = "clip_"+name.lower().replace("-","_").replace("/","_")
     
     def __call__(self, img_t):
         img_x = img_t/255.0
@@ -33,16 +34,3 @@ class CLIP_fx():
         with torch.no_grad():
             z = self.model.encode_image(img_x)
         return z
-
-if __name__=="__main__":
-    
-    from cleanfid.clip_features import import CLIP_fx, img_preprocess_clip
-    fdir1 = "/data/gparmar/clean_fid/tests/folder_real"
-    fdir2 = "/data/gparmar/clean_fid/tests/folder_fake"
-    clip_fx = CLIP_fx()
-    score_clip = compute_fid(fdir1=fdir1, fdir2=fdir2, gen=None,
-            mode="clean", num_workers=0, batch_size=32,
-            device=torch.device("cuda"), verbose=True,
-            custom_feat_extractor=clip_fx,
-            custom_fn_resize=img_preprocess_clip)
-    print(score_clip)

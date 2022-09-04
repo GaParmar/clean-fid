@@ -7,7 +7,7 @@ if __name__=="__main__":
 
     setuptools.setup(
         name='clean-fid',
-        version="0.1.28",
+        version="0.1.29",
         author="Gaurav Parmar",
         author_email="gparmar@andrew.cmu.edu",
         description="FID calculation in PyTorch with proper image resizing and quantization steps",

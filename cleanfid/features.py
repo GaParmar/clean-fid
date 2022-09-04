@@ -48,12 +48,17 @@ def build_feature_extractor(mode, device=torch.device("cuda")):
 """
 Load precomputed reference statistics for commonly used datasets
 """
-def get_reference_statistics(name, res, mode="clean", seed=0, split="test", metric="FID"):
+def get_reference_statistics(name, res, mode="clean", model_name="inception_v3", seed=0, split="test", metric="FID"):
     base_url = "https://www.cs.cmu.edu/~clean-fid/stats/"
     if split == "custom":
         res = "na"
+    if model_name=="inception_v3":
+        model_modifier = ""
+    else:
+        model_modifier = "_"+model_name
+
     if metric == "FID":
-        rel_path = (f"{name}_{mode}_{split}_{res}.npz").lower()
+        rel_path = (f"{name}_{mode}{model_modifier}_{split}_{res}.npz").lower()
         url = f"{base_url}/{rel_path}"
         mod_path = os.path.dirname(cleanfid.__file__)
         stats_folder = os.path.join(mod_path, "stats")
@@ -62,7 +67,7 @@ def get_reference_statistics(name, res, mode="clean", seed=0, split="test", metr
         mu, sigma = stats["mu"], stats["sigma"]
         return mu, sigma
     elif metric == "KID":
-        rel_path = (f"{name}_{mode}_{split}_{res}_kid.npz").lower()
+        rel_path = (f"{name}_{mode}{model_modifier}_{split}_{res}_kid.npz").lower()
         url = f"{base_url}/{rel_path}"
         mod_path = os.path.dirname(cleanfid.__file__)
         stats_folder = os.path.join(mod_path, "stats")
