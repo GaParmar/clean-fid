@@ -6,13 +6,15 @@
 <img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/cleanfid_demo_folders.gif" />
 </p>
 
-
+[![Downloads](https://pepy.tech/badge/clean-fid)](https://pepy.tech/project/clean-fid)
 
 [**Project**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222) | 
 [**Colab-FID**](https://colab.research.google.com/drive/1ElGAHvlwTilIf_3D3cw1boirCEkFsAWI?usp=sharing) |
 [**Colab-Resize**](https://colab.research.google.com/drive/1Q-N94S2mnLsFLpuT7WwY6d5WxGVWLGpg?usp=sharing) |
 [**Leaderboard Tables**](#cleanfid-leaderboard-for-common-tasks) <br>
-**Quick start:** [**Calculate FID**](#computing-fid) | [**Calculate KID**](#computing-kid) | [**Leaderboard API**](#cleanfid-leaderboard-api)
+**Quick start:** [**Calculate FID**](#computing-fid) | [**Calculate KID**](#computing-kid)
+
+**[New]** Computing the FID using CLIP features is now supported with the flag `model_name="clip_vit_b_32"`
 
 
 The FID calculation involves many steps that can produce inconsistencies in the final metric. As shown below, different implementations use different low-level image quantization and resizing functions, the latter of which are often implemented incorrectly.
