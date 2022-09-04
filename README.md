@@ -6,7 +6,7 @@
 <img src="https://raw.githubusercontent.com/GaParmar/clean-fid/main/docs/images/cleanfid_demo_folders.gif" />
 </p>
 
-[![Downloads](https://pepy.tech/badge/clean-fid)](https://pepy.tech/project/clean-fid)
+[![Downloads](https://pepy.tech/badge/clean-fid)](https://pepy.tech/project/clean-fid) [![Downloads](https://pepy.tech/badge/clean-fid/month)](https://pepy.tech/project/clean-fid)
 
 [**Project**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222) | 
 [**Colab-FID**](https://colab.research.google.com/drive/1ElGAHvlwTilIf_3D3cw1boirCEkFsAWI?usp=sharing) |
