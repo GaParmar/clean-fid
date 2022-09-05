@@ -56,7 +56,6 @@ def get_reference_statistics(name, res, mode="clean", model_name="inception_v3",
         model_modifier = ""
     else:
         model_modifier = "_"+model_name
-
     if metric == "FID":
         rel_path = (f"{name}_{mode}{model_modifier}_{split}_{res}.npz").lower()
         url = f"{base_url}/{rel_path}"
