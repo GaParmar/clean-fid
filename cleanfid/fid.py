@@ -388,12 +388,12 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
         print("compute KID between two folders")
         # get all inception features for the first folder
         fbname1 = os.path.basename(fdir1)
-        np_feats1 = get_folder_features(fdir1, None, num_workers=num_workers,
+        np_feats1 = get_folder_features(fdir1, feat_model, num_workers=num_workers,
                             batch_size=batch_size, device=device, mode=mode,
                             description=f"KID {fbname1} : ")
         # get all inception features for the second folder
         fbname2 = os.path.basename(fdir2)
-        np_feats2 = get_folder_features(fdir2, None, num_workers=num_workers,
+        np_feats2 = get_folder_features(fdir2, feat_model, num_workers=num_workers,
                             batch_size=batch_size, device=device, mode=mode,
                             description=f"KID {fbname2} : ")
         score = kernel_distance(np_feats1, np_feats2)
