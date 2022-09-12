@@ -52,4 +52,4 @@ class ResizeDataset(torch.utils.data.Dataset):
 
 
 EXTENSIONS = {'bmp', 'jpg', 'jpeg', 'pgm', 'png', 'ppm',
-              'tif', 'tiff', 'webp', 'npy'}
+              'tif', 'tiff', 'webp', 'npy', 'JPEG'}
