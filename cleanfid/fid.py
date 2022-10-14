@@ -4,6 +4,7 @@ from tqdm import tqdm
 from glob import glob
 import torch
 import numpy as np
+from PIL import Image
 from scipy import linalg
 import zipfile
 import cleanfid
@@ -464,7 +465,7 @@ def compute_fid(fdir1=None, fdir2=None, gen=None,
         feat_model = build_feature_extractor(mode, device)
     elif custom_feat_extractor is None and model_name=="clip_vit_b_32":
         from cleanfid.clip_features import CLIP_fx, img_preprocess_clip
-        clip_fx = CLIP_fx("ViT-B/32")
+        clip_fx = CLIP_fx("ViT-B/32", device=device)
         feat_model = clip_fx
         custom_fn_resize = img_preprocess_clip
     else:
