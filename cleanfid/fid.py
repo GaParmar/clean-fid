@@ -380,74 +380,73 @@ def make_custom_stats(name, fdir, num=None, mode="clean", model_name="inception_
 def compute_kid(fdir1=None, fdir2=None, gen=None,
             mode="clean", num_workers=12, batch_size=32,
             device=torch.device("cuda"), dataset_name="FFHQ",
-            dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512):
+            dataset_res=1024, dataset_split="train", num_gen=50_000, z_dim=512,
+            verbose=True, use_dataparallel=True):
     # build the feature extractor based on the mode
-    feat_model = build_feature_extractor(mode, device)
+    feat_model = build_feature_extractor(mode, device, use_dataparallel=use_dataparallel)
 
     # if both dirs are specified, compute KID between folders
     if fdir1 is not None and fdir2 is not None:
-        print("compute KID between two folders")
+        if verbose:
+            print("compute KID between two folders")
         # get all inception features for the first folder
         fbname1 = os.path.basename(fdir1)
         np_feats1 = get_folder_features(fdir1, feat_model, num_workers=num_workers,
                             batch_size=batch_size, device=device, mode=mode,
-                            description=f"KID {fbname1} : ")
+                            description=f"KID {fbname1} : ", verbose=verbose)
         # get all inception features for the second folder
         fbname2 = os.path.basename(fdir2)
         np_feats2 = get_folder_features(fdir2, feat_model, num_workers=num_workers,
                             batch_size=batch_size, device=device, mode=mode,
-                            description=f"KID {fbname2} : ")
+                            description=f"KID {fbname2} : ", verbose=verbose)
         score = kernel_distance(np_feats1, np_feats2)
         return score
 
     # compute kid of a folder
     elif fdir1 is not None and fdir2 is None:
-        print(f"compute KID of a folder with {dataset_name} statistics")
-        # define the model if it is not specified
-        model = build_feature_extractor(mode, device)
+        if verbose:
+            print(f"compute KID of a folder with {dataset_name} statistics")
         ref_feats = get_reference_statistics(dataset_name, dataset_res,
                             mode=mode, seed=0, split=dataset_split, metric="KID")
         fbname = os.path.basename(fdir1)
         # get all inception features for folder images
-        np_feats = get_folder_features(fdir1, model, num_workers=num_workers,
-                                        batch_size=batch_size, device=device,
-                                        mode=mode, description=f"KID {fbname} : ")
-        score = kernel_distance(ref_feats, np_feats)
-        return score
-
-    # compute fid for a generator, using reference statistics
-    elif gen is not None:
-        print(f"compute KID of a model with {dataset_name}-{dataset_res} statistics")
-        # define the model if it is not specified
-        model = build_feature_extractor(mode, device)
-        ref_feats = get_reference_statistics(dataset_name, dataset_res,
-                            mode=mode, seed=0, split=dataset_split, metric="KID")
-        # Generate test features
-        np_feats = get_model_features(gen, model, mode=mode,
-            z_dim=z_dim, num_gen=num_gen, desc="KID model: ",
-            batch_size=batch_size, device=device)
+        np_feats = get_folder_features(fdir1, feat_model, num_workers=num_workers,
+                            batch_size=batch_size, device=device, mode=mode,
+                            description=f"KID {fbname} : ", verbose=verbose)
         score = kernel_distance(ref_feats, np_feats)
         return score
 
     # compute kid for a generator, using images in fdir2
     elif gen is not None and fdir2 is not None: 
         print(f"compute KID of a model, using references in fdir2")
-        # define the model if it is not specified
-        model = build_feature_extractor(mode, device)
         # get all inception features for the second folder
         fbname2 = os.path.basename(fdir2)
-        ref_feats = get_folder_features(fdir2, model, num_workers=num_workers,
+        ref_feats = get_folder_features(fdir2, feat_model, num_workers=num_workers,
                                         batch_size=batch_size, device=device, mode=mode,
                                         description=f"KID {fbname2} : ")
         # Generate test features
-        np_feats = get_model_features(gen, model, mode=mode,
+        np_feats = get_model_features(gen, feat_model, mode=mode,
                                       z_dim=z_dim, num_gen=num_gen, desc="KID model: ",
                                       batch_size=batch_size, device=device)
         score = kernel_distance(ref_feats, np_feats)
         return score
 
+    # compute fid for a generator, using reference statistics
+    elif gen is not None:
+        if verbose:
+            print(f"compute KID of a model with {dataset_name}-{dataset_res} statistics")
+        ref_feats = get_reference_statistics(dataset_name, dataset_res,
+                            mode=mode, seed=0, split=dataset_split, metric="KID")
+        # Generate test features
+        np_feats = get_model_features(gen, feat_model, mode=mode,
+            z_dim=z_dim, num_gen=num_gen, desc="KID model: ",
+            batch_size=batch_size, device=device, verbose=verbose)
+        score = kernel_distance(ref_feats, np_feats)
+        return score
+
     else:
         raise ValueError("invalid combination of directories and models entered")
+
 
 """
 custom_image_tranform:
