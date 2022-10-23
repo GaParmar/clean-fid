@@ -95,10 +95,10 @@ Compute the inception features for a list of files
 def get_files_features(l_files, model=None, num_workers=12,
                        batch_size=128, device=torch.device("cuda"),
                        mode="clean", custom_fn_resize=None,
-                       description="", verbose=True,
+                       description="", fdir=None, verbose=True,
                        custom_image_tranform=None):
     # wrap the images in a dataloader for parallelizing the resize operation
-    dataset = ResizeDataset(l_files, mode=mode)
+    dataset = ResizeDataset(l_files, fdir=fdir, mode=mode)
     if custom_image_tranform is not None:
         dataset.custom_image_tranform=custom_image_tranform
     if custom_fn_resize is not None:
@@ -148,7 +148,7 @@ def get_folder_features(fdir, model=None, num_workers=12, num=None,
                                   batch_size=batch_size, device=device, mode=mode,
                                   custom_fn_resize=custom_fn_resize,
                                   custom_image_tranform=custom_image_tranform,
-                                  description=description, verbose=verbose)
+                                  description=description, fdir=fdir, verbose=verbose)
     return np_feats
 
 
