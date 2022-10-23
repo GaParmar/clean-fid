@@ -418,7 +418,8 @@ def compute_kid(fdir1=None, fdir2=None, gen=None,
 
     # compute kid for a generator, using images in fdir2
     elif gen is not None and fdir2 is not None: 
-        print(f"compute KID of a model, using references in fdir2")
+        if verbose:
+            print(f"compute KID of a model, using references in fdir2")
         # get all inception features for the second folder
         fbname2 = os.path.basename(fdir2)
         ref_feats = get_folder_features(fdir2, feat_model, num_workers=num_workers,
