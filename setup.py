@@ -7,7 +7,7 @@ if __name__=="__main__":
 
     setuptools.setup(
         name='clean-fid',
-        version="0.1.34",
+        version="0.1.35",
         author="Gaurav Parmar",
         author_email="gparmar@andrew.cmu.edu",
         description="FID calculation in PyTorch with proper image resizing and quantization steps",
@@ -20,7 +20,7 @@ if __name__=="__main__":
             "scipy>=1.0.1",
             "tqdm>=4.28.1",
             "pillow>=8.1",
-            "requests==2.25.1"
+            "requests"
         ],
         url="https://github.com/GaParmar/clean-fid",
         packages=['cleanfid'],
