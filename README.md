@@ -8,7 +8,7 @@
 
 [![Downloads](https://pepy.tech/badge/clean-fid)](https://pepy.tech/project/clean-fid) [![Downloads](https://pepy.tech/badge/clean-fid/month)](https://pepy.tech/project/clean-fid)
 
-[**Project**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222) | 
+[**Project**](https://www.cs.cmu.edu/~clean-fid/) | [**Paper**](https://arxiv.org/abs/2104.11222) | [**Slides**](https://www.cs.cmu.edu/~clean-fid/clean_fid_slides.pptx) |
 [**Colab-FID**](https://colab.research.google.com/drive/1ElGAHvlwTilIf_3D3cw1boirCEkFsAWI?usp=sharing) |
 [**Colab-Resize**](https://colab.research.google.com/drive/1Q-N94S2mnLsFLpuT7WwY6d5WxGVWLGpg?usp=sharing) |
 [**Leaderboard Tables**](#cleanfid-leaderboard-for-common-tasks) <br>
