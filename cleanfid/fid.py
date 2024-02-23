@@ -43,13 +43,13 @@ def frechet_distance(mu1, sigma1, mu2, sigma2, eps=1e-6):
     diff = mu1 - mu2
 
     # Product might be almost singular
-    covmean, _ = linalg.sqrtm(sigma1.dot(sigma2), disp=False)
+    covmean = linalg.fractional_matrix_power(sigma1.dot(sigma2), 0.5)
     if not np.isfinite(covmean).all():
         msg = ('fid calculation produces singular product; '
                'adding %s to diagonal of cov estimates') % eps
         print(msg)
         offset = np.eye(sigma1.shape[0]) * eps
-        covmean = linalg.sqrtm((sigma1 + offset).dot(sigma2 + offset))
+        covmean = linalg.fractional_matrix_power((sigma1 + offset).dot(sigma2 + offset), 0.5)
 
     # Numerical error might give slight imaginary component
     if np.iscomplexobj(covmean):
