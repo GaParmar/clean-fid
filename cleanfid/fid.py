@@ -30,6 +30,7 @@ Params:
             representative data set.
 """
 def frechet_distance(mu1, sigma1, mu2, sigma2, eps=1e-6):
+    
     mu1 = np.atleast_1d(mu1)
     mu2 = np.atleast_1d(mu2)
     sigma1 = np.atleast_2d(sigma1)
@@ -129,7 +130,9 @@ def get_folder_features(fdir, model=None, num_workers=12, num=None,
                         mode="clean", custom_fn_resize=None, description="", verbose=True,
                         custom_image_tranform=None):
     # get all relevant files in the dataset
-    if ".zip" in fdir:
+    if isinstance(fdir , list):
+        files = fdir
+    elif ".zip" in fdir:
         files = list(set(zipfile.ZipFile(fdir).namelist()))
         # remove the non-image files inside the zip
         files = [x for x in files if os.path.splitext(x)[1].lower()[1:] in EXTENSIONS]
@@ -265,7 +268,11 @@ def compare_folders(fdir1, fdir2, feat_model, mode, num_workers=0,
                     batch_size=8, device=torch.device("cuda"), verbose=True,
                     custom_image_tranform=None, custom_fn_resize=None):
     # get all inception features for the first folder
-    fbname1 = os.path.basename(fdir1)
+
+    if not isinstance(fdir2 , list):
+        fbname1 = os.path.basename(fdir1)
+    else:
+        fbname1 = os.path.basename(fdir1[0])
     np_feats1 = get_folder_features(fdir1, feat_model, num_workers=num_workers,
                                     batch_size=batch_size, device=device, mode=mode,
                                     description=f"FID {fbname1} : ", verbose=verbose,
@@ -274,7 +281,10 @@ def compare_folders(fdir1, fdir2, feat_model, mode, num_workers=0,
     mu1 = np.mean(np_feats1, axis=0)
     sigma1 = np.cov(np_feats1, rowvar=False)
     # get all inception features for the second folder
-    fbname2 = os.path.basename(fdir2)
+    if not isinstance(fdir2 , list):
+        fbname2 = os.path.basename(fdir2)
+    else:
+        fbname2 = os.path.basename(fdir2[0])
     np_feats2 = get_folder_features(fdir2, feat_model, num_workers=num_workers,
                                     batch_size=batch_size, device=device, mode=mode,
                                     description=f"FID {fbname2} : ", verbose=verbose,
@@ -356,6 +366,8 @@ def make_custom_stats(name, fdir, num=None, mode="clean", model_name="inception_
         feat_model = clip_fx
         custom_fn_resize = img_preprocess_clip
         custom_image_tranform = None
+        print ("Using Clip")
+
     else:
         raise ValueError(f"The entered model name - {model_name} was not recognized.")
 
