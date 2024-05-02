@@ -28,6 +28,7 @@ ARGS:
     url - the weburl to download
 """
 def check_download_url(local_folder, url):
+    print(url)
     name = os.path.basename(url)
     local_path = os.path.join(local_folder, name)
     if not os.path.exists(local_path):

@@ -15,7 +15,7 @@ class ResizeDataset(torch.utils.data.Dataset):
     fn_resize: function that takes an np_array as input [0,255]
     """
 
-    def __init__(self, files, mode, size=(299, 299), fdir=None):
+    def __init__(self, files, mode, size=(299, 299), fdir=None, is_image_bgr=False):
         self.files = files
         self.fdir = fdir
         self.transforms = torchvision.transforms.ToTensor()
@@ -23,6 +23,7 @@ class ResizeDataset(torch.utils.data.Dataset):
         self.fn_resize = build_resizer(mode)
         self.custom_image_tranform = lambda x: x
         self._zipfile = None
+        self.is_image_bgr = is_image_bgr
 
     def _get_zipfile(self):
         assert self.fdir is not None and '.zip' in self.fdir
@@ -54,8 +55,10 @@ class ResizeDataset(torch.utils.data.Dataset):
             img_t = self.transforms(np.array(img_resized))*255
         elif img_resized.dtype == "float32":
             img_t = self.transforms(img_resized)
-
-        return img_t
+        if self.is_image_bgr:
+            return img_t[[2,1,0]]
+        else:
+            return img_t
 
 
 EXTENSIONS = {'bmp', 'jpg', 'jpeg', 'pgm', 'png', 'ppm',

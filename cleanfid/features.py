@@ -17,7 +17,7 @@ and outputs a feature embedding vector
 """
 def feature_extractor(name="torchscript_inception", device=torch.device("cuda"), resize_inside=False, use_dataparallel=True):
     if name == "torchscript_inception":
-        path = "./" if platform.system() == "Windows" else "/tmp"
+        path = "./pretrained"
         model = InceptionV3W(path, download=True, resize_inside=resize_inside).to(device)
         model.eval()
         if use_dataparallel:
@@ -51,7 +51,7 @@ def build_feature_extractor(mode, device=torch.device("cuda"), use_dataparallel=
 Load precomputed reference statistics for commonly used datasets
 """
 def get_reference_statistics(name, res, mode="clean", model_name="inception_v3", seed=0, split="test", metric="FID"):
-    base_url = "https://www.cs.cmu.edu/~clean-fid/stats/"
+    base_url = "https://www.cs.cmu.edu/~clean-fid/stats"
     if split == "custom":
         res = "na"
     if model_name=="inception_v3":

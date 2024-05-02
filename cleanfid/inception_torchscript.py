@@ -31,6 +31,7 @@ class InceptionV3W(nn.Module):
         # use the current directory by default
         if download:
             check_download_inception(fpath=path)
+        print(path)
         path = os.path.join(path, "inception-2015-12-05.pt")
         self.base = torch.jit.load(path).eval()
         self.layers = self.base.layers
