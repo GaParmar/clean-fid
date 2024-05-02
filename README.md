@@ -1,4 +1,4 @@
-We use clean-fid to compute FID scores to evaluate our results, and we slightly modify the codes to fit our requirement. [Original GitHub](https://github.com/GaParmar/clean-fid).
+We modified this repo to fit our experiments for the paper <a href="https://openreview.net/pdf?id=9hjVoPWPnh">Machine Unlearning for Image-to-Image Generative Models</a> (ICLR 2024).
 
 
 # clean-fid for Evaluating Generative Models
