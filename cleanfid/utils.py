@@ -25,7 +25,7 @@ class ResizeDataset(torch.utils.data.Dataset):
         self._zipfile = None
 
     def _get_zipfile(self):
-        assert self.fdir is not None and '.zip' in self.fdir
+        assert self.fdir is not None and ".zip" in self.fdir
         if self._zipfile is None:
             self._zipfile = zipfile.ZipFile(self.fdir)
         return self._zipfile
@@ -35,13 +35,13 @@ class ResizeDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, i):
         path = str(self.files[i])
-        if self.fdir is not None and '.zip' in self.fdir:
-            with self._get_zipfile().open(path, 'r') as f:
-                img_np = np.array(Image.open(f).convert('RGB'))
+        if self.fdir is not None and ".zip" in self.fdir:
+            with self._get_zipfile().open(path, "r") as f:
+                img_np = np.array(Image.open(f).convert("RGB"))
         elif ".npy" in path:
             img_np = np.load(path)
         else:
-            img_pil = Image.open(path).convert('RGB')
+            img_pil = Image.open(path).convert("RGB")
             img_np = np.array(img_pil)
 
         # apply a custom image transform before resizing the image to 299x299
@@ -51,12 +51,25 @@ class ResizeDataset(torch.utils.data.Dataset):
 
         # ToTensor() converts to [0,1] only if input in uint8
         if img_resized.dtype == "uint8":
-            img_t = self.transforms(np.array(img_resized))*255
+            img_t = self.transforms(np.array(img_resized)) * 255
         elif img_resized.dtype == "float32":
             img_t = self.transforms(img_resized)
 
         return img_t
 
 
-EXTENSIONS = {'bmp', 'jpg', 'jpeg', 'pgm', 'png', 'ppm',
-              'tif', 'tiff', 'webp', 'npy', 'JPEG', 'JPG', 'PNG'}
+EXTENSIONS = {
+    "bmp",
+    "jpg",
+    "jpeg",
+    "pgm",
+    "png",
+    "ppm",
+    "tif",
+    "tiff",
+    "webp",
+    "npy",
+    "JPEG",
+    "JPG",
+    "PNG",
+}
