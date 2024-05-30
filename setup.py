@@ -1,12 +1,11 @@
 import setuptools
 
-if __name__=="__main__":
-
+if __name__ == "__main__":
     with open("README.md", "r") as fh:
         long_description = fh.read()
 
     setuptools.setup(
-        name='clean-fid',
+        name="clean-fid",
         version="0.1.35",
         author="Gaurav Parmar",
         author_email="gparmar@andrew.cmu.edu",
@@ -20,10 +19,10 @@ if __name__=="__main__":
             "scipy>=1.0.1",
             "tqdm>=4.28.1",
             "pillow>=8.1",
-            "requests"
+            "requests",
         ],
         url="https://github.com/GaParmar/clean-fid",
-        packages=['cleanfid'],
+        packages=["cleanfid"],
         include_package_data=True,
         classifiers=[
             "Programming Language :: Python :: 3",
