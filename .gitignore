@@ -25,7 +25,6 @@ setup.cfg
 examples/*
 notebooks/*
 
-tests/*
 scripts/tmp/*
 scripts/dataset_stats/*
 scripts/leaderboard/*
