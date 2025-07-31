@@ -20,6 +20,7 @@ if __name__ == "__main__":
             "tqdm>=4.28.1",
             "pillow>=8.1",
             "requests",
+            "clip @ git+https://github.com/openai/CLIP.git",
         ],
         # add dev dependencies
         extras_require={"dev": ["pytest"]},
