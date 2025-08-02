@@ -90,8 +90,6 @@ def frechet_distance(
 """
 Compute the KID score given the sets of features
 """
-
-
 def kernel_distance(
     feats1: ndarray,
     feats2: ndarray,
@@ -115,8 +113,6 @@ def kernel_distance(
 """
 Compute the inception features for a batch of images
 """
-
-
 def get_batch_features(
     batch: torch.Tensor, model: nn.Module, device: Union[str, torch.device]
 ):
@@ -128,8 +124,6 @@ def get_batch_features(
 """
 Compute the inception features for a list of files
 """
-
-
 def get_files_features(
     l_files: List[str],
     model: Optional[torch.nn.Module] = None,
@@ -197,8 +191,6 @@ def get_files_features(
 """
 Compute the inception features for a folder of image files
 """
-
-
 def get_folder_features(
     fdir: str,
     model: Optional[torch.nn.Module] = None,
@@ -275,8 +267,6 @@ def get_folder_features(
 """
 Compute the FID score given the inception features stack
 """
-
-
 def fid_from_feats(feats1, feats2):
     mu1, sig1 = np.mean(feats1, axis=0), np.cov(feats1, rowvar=False)
     mu2, sig2 = np.mean(feats2, axis=0), np.cov(feats2, rowvar=False)
@@ -287,8 +277,6 @@ def fid_from_feats(feats1, feats2):
 Computes the FID score for a folder of images for a specific dataset
 and a specific resolution
 """
-
-
 def fid_folder(
     fdir: str,
     dataset_name: str,
@@ -359,8 +347,6 @@ def fid_folder(
 """
 Compute the FID stats from a generator model
 """
-
-
 def get_model_features(
     G: Callable,
     model: torch.nn.Module,
@@ -446,8 +432,6 @@ def get_model_features(
 Computes the FID score for a generator model for a specific dataset
 and a specific resolution
 """
-
-
 def fid_model(
     G: Callable,
     dataset_name: str,
@@ -520,8 +504,6 @@ def fid_model(
 """
 Computes the FID score between the two given folders
 """
-
-
 def compare_folders(
     fdir1: str,
     fdir2: str,
@@ -591,8 +573,6 @@ def compare_folders(
 """
 Test if a custom statistic exists
 """
-
-
 def test_stats_exists(
     name: str, mode: str, model_name: str = "inception_v3", metric: str = "FID"
 ) -> bool:
@@ -625,8 +605,6 @@ def test_stats_exists(
 """
 Remove the custom FID features from the stats folder
 """
-
-
 def remove_custom_stats(
     name: str, mode: str = "clean", model_name: str = "inception_v3"
 ) -> None:
@@ -648,17 +626,13 @@ def remove_custom_stats(
         model_modifier = ""
     else:
         model_modifier = "_" + model_name
-    outf = os.path.join(
-        stats_folder, f"{name}_{mode}{model_modifier}_{split}_{res}.npz".lower()
-    )
+    outf = os.path.join(stats_folder, f"{name}_{mode}{model_modifier}_{split}_{res}.npz".lower())
     if not os.path.exists(outf):
         msg = f"The stats file {name} does not exist."
         raise Exception(msg)
     os.remove(outf)
     # remove the KID stats
-    outf = os.path.join(
-        stats_folder, f"{name}_{mode}{model_modifier}_{split}_{res}_kid.npz"
-    )
+    outf = os.path.join(stats_folder, f"{name}_{mode}{model_modifier}_{split}_{res}_kid.npz")
     if not os.path.exists(outf):
         msg = f"The stats file {name} does not exist."
         raise Exception(msg)
@@ -668,8 +642,6 @@ def remove_custom_stats(
 """
 Cache a custom dataset statistics file
 """
-
-
 def make_custom_stats(
     name: str,
     fdir: str,
@@ -888,9 +860,7 @@ def compute_kid(
     # compute fid for a generator, using reference statistics
     elif gen is not None:
         if verbose:
-            print(
-                f"compute KID of a model with {dataset_name}-{dataset_res} statistics"
-            )
+            print(f"compute KID of a model with {dataset_name}-{dataset_res} statistics")
         ref_feats = get_reference_statistics(
             dataset_name,
             dataset_res,
@@ -923,8 +893,6 @@ custom_image_tranform:
     function that takes an np_array image as input [0,255] and 
     applies a custom transform such as cropping
 """
-
-
 def compute_fid(
     fdir1: Optional[str] = None,
     fdir2: Optional[str] = None,
